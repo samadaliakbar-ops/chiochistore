@@ -1,0 +1,9 @@
+{
+  "name": "chiochi-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Chiochi spice shop storefront with a Netlify Function for cross-device data sync.",
+  "dependencies": {
+    "@netlify/blobs": "^8.0.0"
+  }
+}

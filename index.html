@@ -1,0 +1,3218 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>چیوچی | فروشگاه ادویه‌جات اصیل ایرانی — Chiochi Spice Shop</title>
+<meta name="description" content="فروشگاه آنلاین چیوچی، عرضه‌کننده زعفران، پاپریکا، سیر خشک و ادویه‌جات ممتاز ایرانی. سفارش سریع از طریق واتس‌اپ و ایتا.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#dc9417">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chiochi">
+<meta property="og:title" content="چیوچی — طعم اصالت | ادویه‌جات اصیل ایرانی">
+<meta property="og:description" content="بهترین ادویه‌جات ایرانی، مستقیم از مزرعه تا سفره شما.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&q=80">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Preconnects: shave connection setup time off the render-critical assets -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1400&q=80" fetchpriority="high">
+
+<!--
+  NOTE ON THE TAILWIND CDN SCRIPT:
+  cdn.tailwindcss.com compiles Tailwind in the browser on every load, which is
+  fine for a prototype but is heavier than shipping a pre-built stylesheet.
+  For production, swap this for a compiled Tailwind build (CLI or PostCSS)
+  and this whole block becomes a single small <link rel="stylesheet">.
+-->
+<script src="https://cdn.tailwindcss.com/3.4.17" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Chiochi",
+  "description": "فروشگاه آنلاین ادویه‌جات اصیل ایرانی: زعفران، پاپریکا، سیر خشک و بیشتر.",
+  "image": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&q=80"
+}
+</script>
+
+<style>
+  :root{--ink:#243024;--paper:#fff8e8;--saffron:#dc9417;--paprika:#a73820;--olive:#52613c;--line:rgba(72,57,31,.18)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Vazirmatn,sans-serif;color:var(--ink);background:var(--paper)}
+  .brand-serif{font-family:Fraunces,serif}
+  .grain{background-image:radial-gradient(rgba(112,68,14,.13) .7px,transparent .7px);background-size:9px 9px}
+  .hero-photo{filter:saturate(.95) contrast(1.05)}
+  .hero-slide{position:absolute;inset:0;height:100%;width:100%;object-fit:cover;filter:saturate(.95) contrast(1.05);opacity:0;transition:opacity 1.4s ease-in-out}
+  .hero-slide.is-active{opacity:1}
+  @media (prefers-reduced-motion:reduce){.hero-slide{transition:none}}
+  .hero-wash{background:linear-gradient(90deg,rgba(37,48,36,.94) 0%,rgba(37,48,36,.64) 48%,rgba(37,48,36,.14) 100%)}
+  [dir="ltr"] .hero-wash{background:linear-gradient(270deg,rgba(37,48,36,.94) 0%,rgba(37,48,36,.64) 48%,rgba(37,48,36,.14) 100%)}
+  .leaf-mark{width:10px;height:10px;background:var(--saffron);border-radius:50% 0 50% 50%;transform:rotate(-35deg);display:inline-block}
+  .product-card{position:relative;z-index:1;border:1px solid var(--line);box-shadow:0 12px 28px rgba(56,38,13,.08);transition:transform .3s ease,box-shadow .3s ease,z-index 0s;transform-origin:center bottom}
+  .product-card:hover,.product-card:focus-within{transform:translateY(-6px) scale(1.055);box-shadow:0 28px 52px rgba(56,38,13,.22);z-index:5}
+  @media (prefers-reduced-motion:reduce){.product-card:hover,.product-card:focus-within{transform:none}}
+  .site-logo-img{height:34px;width:auto;max-width:160px;object-fit:contain;display:block}
+  .upload-tile{border:1.5px dashed #d8cbb2;border-radius:14px;background:#fffdf7;cursor:pointer;transition:border-color .2s,background .2s}
+  .upload-tile:hover{border-color:var(--saffron);background:#fdf6e3}
+  .upload-preview{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:#f3ece0;display:block}
+  .logo-preview{height:52px;width:auto;max-width:100%;object-fit:contain;border-radius:8px;background:#f3ece0}
+  .hero-preview{width:100%;height:90px;object-fit:cover;border-radius:12px;background:#f3ece0}
+  .contact-card{border:1px solid var(--line);background:#fffdf7;transition:transform .2s ease,box-shadow .2s ease}
+  .contact-card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(56,38,13,.14)}
+  .instagram-badge{background:radial-gradient(circle at 30% 110%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+  .gallery-img{cursor:zoom-in}
+  .lightbox-backdrop{position:fixed;inset:0;z-index:70;background:rgba(20,15,6,.92);display:flex;align-items:center;justify-content:center;padding:1.25rem}
+  .lightbox-stage{position:relative;width:100%;max-width:720px}
+  .lightbox-img-wrap{position:relative;width:100%;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:#1a1208}
+  .lightbox-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .3s}
+  .lightbox-img-wrap img.active-img{opacity:1;animation:spin-slow 22s linear infinite}
+  .lightbox-img-wrap img.active-img:hover{animation-play-state:paused}
+  @keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.lightbox-img-wrap img.active-img{animation:none}}
+  .lightbox-nav{position:absolute;top:50%;translate:0 -50%;width:44px;height:44px;border-radius:50%;border:none;
+                background:rgba(255,255,255,.15);color:#fff;display:grid;place-items:center;cursor:pointer}
+  .lightbox-nav:hover{background:rgba(255,255,255,.3)}
+  .lightbox-close{position:absolute;top:-46px;inset-inline-end:0;width:38px;height:38px;border-radius:50%;border:none;
+                   background:rgba(255,255,255,.15);color:#fff;display:grid;place-items:center;cursor:pointer}
+  .lightbox-close:hover{background:rgba(255,255,255,.3)}
+  .lightbox-caption{color:#fdf1cf;text-align:center;margin-top:1rem;font-weight:700}
+  .spice-stamp{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#f5dd9b;color:#8c4b0e;flex-shrink:0}
+  .panel-shadow{box-shadow:0 22px 70px rgba(36,48,36,.22)}
+  .is-hidden{display:none!important}
+  .fade-in{animation:rise .55s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion:reduce){.fade-in{animation:none}.product-card,.img-gallery img{transition:none}}
+  .focus-ring:focus-visible{outline:3px solid #dc9417;outline-offset:3px}
+  input,textarea,select{font:inherit}
+  .field{width:100%;border:1px solid #d8cbb2;border-radius:12px;background:#fffdf7;padding:.75rem .85rem;color:var(--ink)}
+  .field:focus{outline:2px solid #dc9417;border-color:#dc9417}
+  .lang-en{display:none}
+  [data-lang="en"] .lang-fa{display:none}
+  [data-lang="en"] .lang-en{display:inline}
+  [data-lang="en"] .lang-en.block-text{display:block}
+  [data-lang="en"] .lang-fa.block-text{display:none}
+  .dynamic-en{display:none}
+  [data-lang="en"] .dynamic-fa{display:none}
+  [data-lang="en"] .dynamic-en{display:block}
+  .modal-backdrop{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+  .img-gallery{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:16px;background:#f3ece0}
+  .img-gallery img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+  .img-gallery img.active-img{opacity:1}
+  .gallery-dots{display:flex;gap:5px;justify-content:center;margin-top:8px;min-height:8px}
+  .gallery-dot{width:8px;height:8px;border-radius:50%;background:#d8cbb2;border:none;cursor:pointer;padding:0}
+  .gallery-dot.active-dot{background:var(--saffron);width:18px;border-radius:4px}
+  .btn-gold{background:var(--saffron);color:#fff;border:none;cursor:pointer;font-family:inherit;font-weight:700}
+  .btn-gold:hover{background:#c4840f}
+  .btn-gold:disabled{opacity:.6;cursor:not-allowed}
+  .btn-outline{background:transparent;border:1.5px solid var(--line);cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink)}
+  .btn-outline:hover{border-color:var(--saffron);color:var(--saffron)}
+  .btn-danger{background:#a73820;color:#fff;border:none;cursor:pointer;font-family:inherit;font-weight:700}
+  .btn-danger:hover{background:#8c2e18}
+  .card-bg{background:#fffdf7;border:1px solid var(--line)}
+  .toast{position:fixed;bottom:24px;left:50%;z-index:80;transform:translateX(-50%) translateY(24px);opacity:0;pointer-events:none;
+         background:var(--ink);color:#fff8e8;padding:.7rem 1.2rem;border-radius:999px;font-size:.9rem;font-weight:600;
+         box-shadow:0 12px 30px rgba(0,0,0,.25);transition:opacity .25s,transform .25s;max-width:90vw;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .badge-off{background:#f6e3de;color:var(--paprika)}
+  .badge-on{background:#e4efd8;color:var(--olive)}
+  .badge-soon{background:#fdeccb;color:#8c4b0e}
+  .order-btn{border:none;cursor:pointer;font-family:inherit}
+  .discount-ribbon{position:absolute;top:10px;inset-inline-start:10px;z-index:2;background:var(--paprika);color:#fff;
+                    font-weight:800;font-size:.78rem;padding:.3rem .65rem;border-radius:999px;box-shadow:0 6px 14px rgba(167,56,32,.35)}
+  .coming-soon-overlay{position:absolute;inset:0;z-index:2;background:rgba(36,48,36,.6);display:flex;align-items:center;justify-content:center}
+  .coming-soon-overlay span{background:var(--saffron);color:#fff;font-weight:800;padding:.5rem 1.1rem;border-radius:999px;font-size:.9rem;letter-spacing:.02em}
+  .price-original{text-decoration:line-through;color:#a79c86;font-weight:600}
+  /* ---- cart / auth / checkout / invoice ---- */
+  .auth-tabs{display:flex;gap:.5rem;margin-bottom:1.25rem;background:#f3ece0;border-radius:999px;padding:4px}
+  .auth-tab{flex:1;border:none;background:transparent;cursor:pointer;font-family:inherit;font-weight:700;font-size:.85rem;padding:.55rem .5rem;border-radius:999px;color:#6b6658}
+  .auth-tab.active-tab{background:var(--saffron);color:#fff}
+  .cart-modal-panel{width:100%;max-width:480px;max-height:88vh;display:flex;flex-direction:column}
+  .cart-items-scroll{overflow-y:auto;flex:1;min-height:0}
+  .cart-row{display:flex;gap:.75rem;align-items:center;padding:.75rem 0;border-bottom:1px solid rgba(113,95,58,.12)}
+  .cart-row img{width:56px;height:56px;object-fit:cover;border-radius:10px;background:#f3ece0;flex-shrink:0}
+  .qty-stepper{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .qty-stepper button{width:28px;height:28px;border:none;background:#f3ece0;cursor:pointer;font-weight:800;font-size:1rem;display:grid;place-items:center;color:var(--ink)}
+  .qty-stepper button:hover{background:#e9dcc0}
+  .qty-stepper span{min-width:26px;text-align:center;font-weight:700;font-size:.85rem}
+  .cart-remove-btn{border:none;background:none;cursor:pointer;color:#a79c86;padding:4px}
+  .cart-remove-btn:hover{color:var(--paprika)}
+  #invoice-print{display:none}
+  .invoice-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:1rem}
+  .invoice-table th,.invoice-table td{padding:.55rem .4rem;text-align:start;border-bottom:1px solid rgba(113,95,58,.15)}
+  .invoice-table th{color:#6b6658;font-size:.75rem;text-transform:uppercase;letter-spacing:.03em}
+  @media print{
+    body *{visibility:hidden}
+    #invoice-print,#invoice-print *{visibility:visible}
+    #invoice-print{display:block!important;position:absolute;inset-inline-start:0;top:0;width:100%;padding:24px}
+  }
+  .account-order-card{border:1px solid var(--line);border-radius:16px;padding:1rem;background:#fffdf7}
+  /* ---- branded invoice ---- */
+  .invoice-paper{background:#fffdf7;border:1px solid rgba(93,85,60,.15)}
+  .invoice-paper-head{display:flex;align-items:center;gap:.6rem;padding:1rem 1.25rem;background:linear-gradient(135deg,var(--saffron),var(--paprika));color:#fff}
+  .invoice-brand-mark{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;flex-shrink:0;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+  .invoice-brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
+  .invoice-brand-mark i{color:var(--paprika)}
+  .invoice-brand-name{font-weight:800;font-size:1.05rem;flex:1}
+  .invoice-status-badge{font-size:.72rem;font-weight:800;padding:.3rem .65rem;border-radius:999px;background:rgba(255,255,255,.25);white-space:nowrap}
+  .invoice-status-badge.status-approved{background:var(--olive);color:#fff}
+  .invoice-status-badge.status-rejected{background:#b3413a;color:#fff}
+  .invoice-status-badge.status-pending{background:#fff;color:var(--paprika)}
+  .invoice-paper{position:relative}
+  .invoice-seal{position:absolute;top:14px;inset-inline-end:14px;width:92px;height:92px;border-radius:50%;display:none;align-items:center;justify-content:center;transform:rotate(-14deg);z-index:5;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25))}
+  .invoice-seal.is-visible{display:flex;animation:seal-stamp .45s cubic-bezier(.2,1.4,.4,1) both}
+  .invoice-seal-ring{position:absolute;inset:0;border-radius:50%;border:2.5px solid var(--olive);background:rgba(255,255,255,.9)}
+  .invoice-seal-ring::before{content:'';position:absolute;inset:5px;border-radius:50%;border:1px dashed var(--olive)}
+  .invoice-seal-logo{position:relative;width:52px;height:52px;border-radius:50%;overflow:hidden;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 2px #fff}
+  .invoice-seal-logo img{width:100%;height:100%;object-fit:cover;display:block}
+  .invoice-seal-logo i{color:var(--olive)}
+  .invoice-seal-text{position:absolute;inset:0;border-radius:50%}
+  .invoice-seal-text svg{width:100%;height:100%}
+  .invoice-seal-text text{font-size:9.2px;font-weight:800;fill:var(--olive);letter-spacing:.5px}
+  @keyframes seal-stamp{0%{opacity:0;transform:rotate(-14deg) scale(1.8)}60%{opacity:1}100%{opacity:1;transform:rotate(-14deg) scale(1)}}
+  .invoice-paper-body{padding:1.1rem 1.25rem}
+  .invoice-paper-foot{padding:.75rem 1.25rem;text-align:center;font-size:.78rem;color:#8a8168;border-top:1px dashed rgba(93,85,60,.2)}
+  .admin-order-card{border:1px solid var(--line);border-radius:16px;padding:1rem;background:#fffdf7}
+  .status-pill{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:800;padding:.28rem .6rem;border-radius:999px}
+  .status-pill.status-pending{background:#fdf1d6;color:#8a5a10}
+  .status-pill.status-approved{background:#e6ecd8;color:#4c5a2e}
+  .status-pill.status-rejected{background:#fbe1de;color:#a1372c}
+</style>
+</head>
+<body>
+<div class="grain" id="app-shell" data-lang="fa" style="min-height:100vh">
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-30 border-b border-[#76613b]/20 backdrop-blur-md" style="background:rgba(255,248,232,.92)">
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <a href="#home" id="brand-link" class="flex items-center gap-2 no-underline focus-ring rounded-lg">
+      <img id="site-logo-img" class="site-logo-img is-hidden" alt="Chiochi logo">
+      <span id="site-logo-fallback" class="flex items-center gap-2">
+        <span class="leaf-mark" aria-hidden="true"></span>
+        <span class="brand-serif font-bold text-xl" style="color:var(--ink)">Chiochi</span>
+      </span>
+    </a>
+    <nav class="hidden md:flex items-center gap-5 text-sm font-semibold" aria-label="ناوبری اصلی">
+      <a class="focus-ring rounded" href="#shop" style="color:var(--ink);text-decoration:none">
+        <span class="lang-fa">فروشگاه</span><span class="lang-en">Shop</span></a>
+      <a class="focus-ring rounded" href="#about" style="color:var(--ink);text-decoration:none">
+        <span class="lang-fa">درباره ما</span><span class="lang-en">About</span></a>
+      <a class="focus-ring rounded" href="#payment" style="color:var(--ink);text-decoration:none">
+        <span class="lang-fa">پرداخت</span><span class="lang-en">Payment</span></a>
+      <a class="focus-ring rounded" href="#contact" style="color:var(--ink);text-decoration:none">
+        <span class="lang-fa">ارتباط با ما</span><span class="lang-en">Contact</span></a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <button id="language-toggle" type="button" class="btn-outline focus-ring rounded-full px-3 py-2 text-sm" aria-label="Change language">
+        <span class="lang-fa">EN</span><span class="lang-en">فا</span>
+      </button>
+      <button id="account-toggle" type="button" class="btn-outline focus-ring rounded-full px-3 py-2 text-sm flex items-center gap-1.5">
+        <i data-lucide="user" width="16" height="16" aria-hidden="true"></i>
+        <span id="account-toggle-label" class="lang-fa">ورود / عضویت</span><span class="lang-en">Sign in</span>
+      </button>
+      <button id="cart-toggle" type="button" class="btn-outline focus-ring rounded-full px-3 py-2 text-sm relative flex items-center gap-1.5">
+        <i data-lucide="shopping-basket" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">سبد خرید</span><span class="lang-en">Cart</span>
+        <span id="cart-count-badge" class="is-hidden" style="position:absolute;top:-7px;inset-inline-end:-7px;background:var(--paprika);color:#fff;font-size:.68rem;font-weight:800;min-width:19px;height:19px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px">0</span>
+      </button>
+      <button id="admin-toggle" type="button" class="btn-gold focus-ring rounded-full px-3 py-2 text-sm flex items-center gap-1.5">
+        <i data-lucide="settings-2" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">مدیریت</span><span class="lang-en">Admin</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section id="home" class="relative overflow-hidden" style="min-height:420px">
+  <div id="hero-slideshow" class="absolute inset-0 h-full w-full"></div>
+  <div class="hero-wash absolute inset-0"></div>
+  <div class="relative w-full max-w-7xl mx-auto px-6 sm:px-10 py-20 sm:py-28 text-white">
+    <div class="max-w-2xl fade-in">
+      <p class="mb-4 tracking-[.18em] text-sm font-bold" style="color:var(--saffron)">
+        <span class="lang-fa">ادویه‌جات اصیل ایرانی</span><span class="lang-en">Premium Iranian Spices</span></p>
+      <h1 class="lang-fa block-text text-white font-extrabold leading-tight" style="font-size:clamp(2rem,5vw,3.5rem)">چیوچی — طعم اصالت</h1>
+      <h1 class="lang-en block-text brand-serif text-white font-bold leading-tight" style="font-size:clamp(2rem,5vw,3.5rem)">Chiochi — Taste of Origin</h1>
+      <p id="hero-tagline-fa" class="lang-fa block-text mt-5 max-w-xl leading-8 text-white/90">بهترین ادویه‌جات ایرانی، مستقیم از مزرعه تا سفره شما</p>
+      <p id="hero-tagline-en" class="lang-en block-text mt-5 max-w-xl leading-8 text-white/90">Finest Iranian spices, from farm to your table</p>
+      <a href="#shop" class="btn-gold focus-ring inline-flex items-center gap-2 rounded-full mt-8 px-5 py-3 no-underline">
+        <i data-lucide="shopping-basket" width="18" height="18" aria-hidden="true"></i>
+        <span class="lang-fa">مشاهده محصولات</span><span class="lang-en">View Products</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOP ============ -->
+<section id="shop" class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="flex flex-wrap items-end justify-between gap-5 mb-6">
+    <div>
+      <p class="text-sm font-bold tracking-wider" style="color:var(--saffron)">
+        <span class="lang-fa">محصولات ما</span><span class="lang-en">Our Products</span></p>
+      <h2 class="lang-fa block-text mt-2 font-extrabold" style="font-size:clamp(1.5rem,3vw,2.2rem)">ادویه‌های برتر</h2>
+      <h2 class="lang-en block-text brand-serif mt-2 font-bold" style="font-size:clamp(1.5rem,3vw,2.2rem)">Premium Spices</h2>
+    </div>
+    <p id="product-count" class="text-sm font-semibold" style="color:var(--olive)" aria-live="polite"></p>
+  </div>
+
+  <!-- toolbar -->
+  <div class="grid sm:grid-cols-[1.4fr_1fr_auto] gap-3 mb-8">
+    <label class="relative block">
+      <span class="sr-only lang-fa">جستجو</span><span class="sr-only lang-en">Search</span>
+      <input id="search-input" type="search" class="field focus-ring"
+             data-ph-fa="جستجوی نام یا دسته‌بندی…" data-ph-en="Search name or category…">
+    </label>
+    <select id="category-filter" class="field focus-ring"></select>
+    <label class="flex items-center gap-2 text-sm font-bold px-3 card-bg rounded-xl cursor-pointer">
+      <input id="stock-filter" type="checkbox" class="w-4 h-4" style="accent-color:var(--paprika)">
+      <span class="lang-fa">فقط موجود</span><span class="lang-en">In stock only</span>
+    </label>
+  </div>
+
+  <div id="empty-state" class="text-center rounded-3xl p-10 border border-dashed border-[#bca66e] is-hidden">
+    <i data-lucide="package-open" class="mx-auto mb-3" style="color:#a77824" width="36" height="36" aria-hidden="true"></i>
+    <p class="lang-fa font-bold">محصولی با این مشخصات پیدا نشد.</p>
+    <p class="lang-en brand-serif font-bold">No products matched your filters.</p>
+  </div>
+  <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="w-full" style="background:#efe3c5">
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-[.85fr_1.15fr] gap-10 items-center">
+    <div class="relative">
+      <img src="https://images.unsplash.com/photo-1775433205046-86e060feff06?w=900&q=80"
+           loading="lazy" decoding="async" alt="ادویه‌جات رنگارنگ در بازار سنتی"
+           onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&q=80';"
+           class="w-full rounded-[28px]" style="aspect-ratio:4/5;object-fit:cover;box-shadow:0 26px 60px rgba(36,48,36,.22)">
+      <div class="absolute -bottom-6 sm:-bottom-8 rounded-2xl px-5 py-4 panel-shadow"
+           style="background:var(--ink);color:#f5dd9b;inset-inline-start:1.5rem">
+        <p class="lang-fa font-bold text-sm leading-6">بیش از یک دهه<br>همراهی با مزارع ایران</p>
+        <p class="lang-en font-bold text-sm leading-6">Over a decade<br>with Iranian farms</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="text-sm font-bold tracking-wider" style="color:var(--paprika)">
+        <span class="lang-fa">درباره ما</span><span class="lang-en">About Us</span></p>
+      <h2 class="lang-fa block-text mt-2 font-extrabold" style="font-size:clamp(1.5rem,3vw,2.3rem)">روایتی از زمین تا سفره</h2>
+      <h2 class="lang-en block-text brand-serif mt-2 font-bold" style="font-size:clamp(1.5rem,3vw,2.3rem)">A Story from Soil to Table</h2>
+
+      <p class="lang-fa block-text mt-5 leading-8" style="color:#3c4536">
+        چیوچی از دل مزارع زعفران خراسان و باغ‌های ادویه جنوب ایران آغاز شد؛ جایی‌که هر خوشه زعفران با دست چیده می‌شود
+        و هر ادویه، پیش از رسیدن به آشپزخانه‌ی شما، مسیری بلند از زمین تا الک و بسته‌بندی را طی کرده است.
+        ما باور داریم طعم اصیل، محصول صبر است؛ صبر کشاورزانی که فصل به فصل زمین را می‌شناسند، و صبر ما در انتخاب بهترین‌ها برای سفره‌ی شما.
+      </p>
+      <p class="lang-en block-text mt-5 leading-8" style="color:#3c4536">
+        Chiochi began in the saffron fields of Khorasan and the spice gardens of southern Iran, where every saffron
+        thread is still picked by hand. Before any spice reaches your kitchen, it travels a long road from soil to sieve
+        to package. We believe real flavor is the fruit of patience — the patience of farmers who know their land
+        season after season, and our own patience in choosing only the best for your table.
+      </p>
+
+      <blockquote class="brand-serif mt-6 pe-4" style="border-inline-start:3px solid var(--saffron);font-style:italic;font-size:1.15rem;color:var(--paprika)">
+        <span class="lang-fa block-text">«ادویه فقط طعم نیست؛ خاطره‌ی یک سرزمین است.»</span>
+        <span class="lang-en block-text">"A spice is never just flavor — it's the memory of a land."</span>
+      </blockquote>
+
+      <div class="grid sm:grid-cols-3 gap-4 mt-8">
+        <div class="flex items-start gap-3">
+          <span class="spice-stamp" style="width:42px;height:42px;background:#e4efd8;color:var(--olive)"><i data-lucide="leaf" width="20" height="20" aria-hidden="true"></i></span>
+          <div>
+            <p class="font-bold text-sm"><span class="lang-fa">اصالت بدون مصالحه</span><span class="lang-en">Uncompromising Origin</span></p>
+            <p class="text-xs mt-1 leading-6" style="color:#6b6658"><span class="lang-fa">تهیه مستقیم از کشاورز، بدون واسطه‌های غیرضروری.</span><span class="lang-en">Sourced directly from growers, no unnecessary middlemen.</span></p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="spice-stamp" style="width:42px;height:42px;background:#f5dd9b;color:#8c4b0e"><i data-lucide="shield-check" width="20" height="20" aria-hidden="true"></i></span>
+          <div>
+            <p class="font-bold text-sm"><span class="lang-fa">شفافیت کامل</span><span class="lang-en">Full Transparency</span></p>
+            <p class="text-xs mt-1 leading-6" style="color:#6b6658"><span class="lang-fa">از مبدأ محصول تا قیمت، هیچ چیز پنهان نیست.</span><span class="lang-en">From origin to pricing, nothing is hidden.</span></p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="spice-stamp" style="width:42px;height:42px;background:#f6e3de;color:var(--paprika)"><i data-lucide="heart-handshake" width="20" height="20" aria-hidden="true"></i></span>
+          <div>
+            <p class="font-bold text-sm"><span class="lang-fa">احترام به سفره شما</span><span class="lang-en">Respect for Your Table</span></p>
+            <p class="text-xs mt-1 leading-6" style="color:#6b6658"><span class="lang-fa">بسته‌بندی بهداشتی و کنترل کیفیت در هر مرحله.</span><span class="lang-en">Hygienic packaging and quality control at every step.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAYMENT ============ -->
+<section id="payment" class="w-full" style="background:#f5ede0">
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-[.9fr_1.1fr] gap-8 items-center">
+    <div>
+      <p class="text-sm font-bold tracking-wider" style="color:var(--saffron)">
+        <span class="lang-fa">روش پرداخت</span><span class="lang-en">Payment Method</span></p>
+      <h2 class="lang-fa block-text mt-2 font-extrabold" style="font-size:clamp(1.4rem,3vw,2rem)">پرداخت آسان</h2>
+      <h2 class="lang-en block-text brand-serif mt-2 font-bold" style="font-size:clamp(1.4rem,3vw,2rem)">Easy Payment</h2>
+      <p class="lang-fa block-text mt-4 leading-8">پس از ثبت سفارش از طریق پیام‌رسان، مبلغ را به شماره کارت زیر واریز کنید و رسید را ارسال نمایید.</p>
+      <p class="lang-en block-text mt-4 leading-8">After placing your order via messenger, transfer the amount to the card below and send us the receipt.</p>
+    </div>
+    <aside class="card-bg rounded-3xl p-6 sm:p-8 border border-[#b48b35]/30">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="spice-stamp"><i data-lucide="credit-card" width="24" height="24" aria-hidden="true"></i></span>
+        <div>
+          <h3 class="font-bold"><span class="lang-fa">شماره کارت</span><span class="lang-en">Card Number</span></h3>
+          <p class="text-sm mt-1" style="color:#706a5c">
+            <span class="lang-fa">به نام صاحب برند چیوچی</span><span class="lang-en">Chiochi Brand Owner</span></p>
+        </div>
+      </div>
+      <button id="card-number-display" type="button"
+              class="focus-ring w-full rounded-xl px-4 py-4 text-center font-bold cursor-pointer border-none"
+              style="background:#f5dd9b;color:#8c4b0e;font-size:1.1rem;letter-spacing:.15em;font-family:inherit"
+              title="Copy"></button>
+      <p class="text-xs text-center mt-2" style="color:#8a8272">
+        <span class="lang-fa">برای کپی کلیک کنید</span><span class="lang-en">Click to copy</span></p>
+      <div class="grid sm:grid-cols-3 gap-3 mt-5 text-sm">
+        <a id="wa-contact-link" target="_blank" rel="noopener noreferrer"
+           class="focus-ring rounded-xl flex items-center justify-center gap-2 p-3 font-bold no-underline"
+           style="background:#25d366;color:#fff">
+          <i data-lucide="message-circle" width="18" height="18" aria-hidden="true"></i>
+          <span class="lang-fa">واتس‌اپ</span><span class="lang-en">WhatsApp</span></a>
+        <a id="telegram-contact-link" target="_blank" rel="noopener noreferrer"
+           class="focus-ring rounded-xl flex items-center justify-center gap-2 p-3 font-bold no-underline"
+           style="background:#26a5e4;color:#fff">
+          <i data-lucide="send" width="18" height="18" aria-hidden="true"></i>
+          <span class="lang-fa">تلگرام</span><span class="lang-en">Telegram</span></a>
+        <a id="eitaa-contact-link" target="_blank" rel="noopener noreferrer"
+           class="focus-ring rounded-xl flex items-center justify-center gap-2 p-3 font-bold no-underline"
+           style="background:#8b5cf6;color:#fff">
+          <i data-lucide="send" width="18" height="18" aria-hidden="true"></i>
+          <span class="lang-fa">ایتا</span><span class="lang-en">Eitaa</span></a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+  <div class="text-center mb-10">
+    <p class="text-sm font-bold tracking-wider" style="color:var(--saffron)">
+      <span class="lang-fa">در دسترس شما</span><span class="lang-en">We're Here For You</span></p>
+    <h2 class="lang-fa block-text mt-2 font-extrabold" style="font-size:clamp(1.4rem,3vw,2rem)">ارتباط با ما</h2>
+    <h2 class="lang-en block-text brand-serif mt-2 font-bold" style="font-size:clamp(1.4rem,3vw,2rem)">Contact Us</h2>
+    <p class="lang-fa block-text mt-3 max-w-md mx-auto" style="color:#6b6658">برای سفارش یا هر سوالی، از یکی از راه‌های زیر با ما در تماس باشید.</p>
+    <p class="lang-en block-text mt-3 max-w-md mx-auto" style="color:#6b6658">For orders or any question, reach us through one of the channels below.</p>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <a id="contact-wa" target="_blank" rel="noopener noreferrer"
+       class="contact-card focus-ring rounded-3xl p-6 flex flex-col items-center text-center gap-3 no-underline">
+      <span class="spice-stamp" style="background:#25d366;color:#fff"><i data-lucide="message-circle" width="24" height="24" aria-hidden="true"></i></span>
+      <h3 class="font-bold"><span class="lang-fa">واتس‌اپ</span><span class="lang-en">WhatsApp</span></h3>
+      <p class="text-sm" style="color:#6b6658"><span class="lang-fa">پاسخگویی سریع سفارشات</span><span class="lang-en">Fast order support</span></p>
+    </a>
+    <a id="contact-telegram" target="_blank" rel="noopener noreferrer"
+       class="contact-card focus-ring rounded-3xl p-6 flex flex-col items-center text-center gap-3 no-underline">
+      <span class="spice-stamp" style="background:#26a5e4;color:#fff"><i data-lucide="send" width="24" height="24" aria-hidden="true"></i></span>
+      <h3 class="font-bold"><span class="lang-fa">تلگرام</span><span class="lang-en">Telegram</span></h3>
+      <p class="text-sm" style="color:#6b6658"><span class="lang-fa">کانال و پشتیبانی</span><span class="lang-en">Channel & support</span></p>
+    </a>
+    <a id="contact-eitaa" target="_blank" rel="noopener noreferrer"
+       class="contact-card focus-ring rounded-3xl p-6 flex flex-col items-center text-center gap-3 no-underline">
+      <span class="spice-stamp" style="background:#8b5cf6;color:#fff"><i data-lucide="send" width="24" height="24" aria-hidden="true"></i></span>
+      <h3 class="font-bold"><span class="lang-fa">ایتا</span><span class="lang-en">Eitaa</span></h3>
+      <p class="text-sm" style="color:#6b6658"><span class="lang-fa">پیام‌رسان داخلی</span><span class="lang-en">Local messenger</span></p>
+    </a>
+    <a id="contact-instagram" target="_blank" rel="noopener noreferrer"
+       class="contact-card focus-ring rounded-3xl p-6 flex flex-col items-center text-center gap-3 no-underline">
+      <span class="spice-stamp instagram-badge" style="color:#fff"><i data-lucide="instagram" width="24" height="24" aria-hidden="true"></i></span>
+      <h3 class="font-bold"><span class="lang-fa">اینستاگرام</span><span class="lang-en">Instagram</span></h3>
+      <p class="text-sm" style="color:#6b6658"><span class="lang-fa">تصاویر و پشت‌صحنه</span><span class="lang-en">Photos & behind the scenes</span></p>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="w-full py-6 text-center" style="background:#1a1208;color:#c9a84c">
+  <p class="text-sm">Chiochi © <span id="yr"></span> —
+    <span class="lang-fa">تمامی حقوق محفوظ است</span><span class="lang-en">All rights reserved</span></p>
+</footer>
+
+<!-- ============ PASSWORD MODAL ============ -->
+<div id="password-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+  <div class="card-bg rounded-3xl p-6 sm:p-8 w-full max-w-sm mx-4 panel-shadow">
+    <h3 id="pw-title" class="font-bold mb-2 text-center text-xl">
+      <span class="lang-fa">ورود به پنل مدیریت</span><span class="lang-en">Admin Login</span></h3>
+    <p class="text-sm text-center mb-5" style="color:#706a5c">
+      <span class="lang-fa">رمز عبور را وارد کنید</span><span class="lang-en">Enter your password</span></p>
+    <form id="password-form" novalidate>
+      <label class="block text-sm font-bold mb-2" for="admin-password">
+        <span class="lang-fa">رمز عبور</span><span class="lang-en">Password</span></label>
+      <input id="admin-password" type="password" class="field focus-ring" required dir="ltr" autocomplete="current-password">
+      <p id="password-error" class="text-xs font-bold mt-2 is-hidden" style="color:var(--paprika)">
+        <span class="lang-fa">رمز عبور نادرست است.</span><span class="lang-en">Incorrect password.</span></p>
+      <div class="flex gap-3 mt-5">
+        <button type="submit" class="btn-gold focus-ring rounded-full px-5 py-2.5 flex-1">
+          <span class="lang-fa">ورود</span><span class="lang-en">Login</span></button>
+        <button type="button" id="password-cancel" class="btn-outline focus-ring rounded-full px-5 py-2.5">
+          <span class="lang-fa">انصراف</span><span class="lang-en">Cancel</span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ AUTH MODAL (login / register) ============ -->
+<div id="auth-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+  <div class="card-bg rounded-3xl p-6 sm:p-8 w-full max-w-sm mx-4 panel-shadow">
+    <h3 id="auth-title" class="font-bold mb-4 text-center text-xl">
+      <span class="lang-fa">حساب کاربری</span><span class="lang-en">Your Account</span></h3>
+    <div class="auth-tabs">
+      <button type="button" id="auth-tab-login" class="auth-tab active-tab">
+        <span class="lang-fa">ورود</span><span class="lang-en">Sign In</span></button>
+      <button type="button" id="auth-tab-register" class="auth-tab">
+        <span class="lang-fa">عضویت</span><span class="lang-en">Register</span></button>
+    </div>
+
+    <form id="login-form" novalidate>
+      <label class="block text-sm font-bold mb-1" for="login-phone">
+        <span class="lang-fa">شماره تلفن</span><span class="lang-en">Phone Number</span></label>
+      <input id="login-phone" type="tel" class="field focus-ring mb-3" required dir="ltr" autocomplete="tel">
+      <label class="block text-sm font-bold mb-1" for="login-password">
+        <span class="lang-fa">رمز عبور</span><span class="lang-en">Password</span></label>
+      <input id="login-password" type="password" class="field focus-ring" required dir="ltr" autocomplete="current-password">
+      <p id="login-error" class="text-xs font-bold mt-2 is-hidden" style="color:var(--paprika)">
+        <span class="lang-fa">شماره تلفن یا رمز عبور اشتباه است.</span><span class="lang-en">Incorrect phone number or password.</span></p>
+      <button type="submit" class="btn-gold focus-ring rounded-full px-5 py-2.5 w-full mt-5">
+        <span class="lang-fa">ورود</span><span class="lang-en">Sign In</span></button>
+      <button type="button" id="forgot-password-link" class="text-xs font-bold w-full text-center mt-3" style="color:var(--saffron);text-decoration:underline;background:none;border:none;cursor:pointer">
+        <span class="lang-fa">رمز عبور را فراموش کرده‌اید؟</span><span class="lang-en">Forgot your password?</span></button>
+    </form>
+
+    <form id="register-form" class="is-hidden" novalidate>
+      <label class="block text-sm font-bold mb-1" for="reg-name">
+        <span class="lang-fa">نام و نام خانوادگی</span><span class="lang-en">Full Name</span></label>
+      <input id="reg-name" type="text" class="field focus-ring mb-3" required autocomplete="name">
+      <label class="block text-sm font-bold mb-1" for="reg-phone">
+        <span class="lang-fa">شماره تلفن</span><span class="lang-en">Phone Number</span></label>
+      <input id="reg-phone" type="tel" class="field focus-ring mb-3" required dir="ltr" autocomplete="tel">
+      <label class="block text-sm font-bold mb-1" for="reg-address">
+        <span class="lang-fa">آدرس</span><span class="lang-en">Address</span></label>
+      <textarea id="reg-address" rows="2" class="field focus-ring mb-1" autocomplete="street-address" required></textarea>
+      <p class="text-xs mb-3" style="color:#8a8168">
+        <span class="lang-fa">این آدرس در بازیابی رمز عبور هم استفاده می‌شود، لطفاً دقیق وارد کنید.</span>
+        <span class="lang-en">This address is also used to verify your identity if you forget your password.</span></p>
+      <label class="block text-sm font-bold mb-1" for="reg-password">
+        <span class="lang-fa">رمز عبور</span><span class="lang-en">Password</span></label>
+      <input id="reg-password" type="password" class="field focus-ring" required dir="ltr" autocomplete="new-password" minlength="4">
+      <p id="register-error" class="text-xs font-bold mt-2 is-hidden" style="color:var(--paprika)"></p>
+      <button type="submit" class="btn-gold focus-ring rounded-full px-5 py-2.5 w-full mt-5">
+        <span class="lang-fa">ساخت حساب</span><span class="lang-en">Create Account</span></button>
+    </form>
+
+    <!-- forgot password: step 1 (find account), step 2 (verify + set new password) -->
+    <form id="forgot-step1-form" class="is-hidden" novalidate>
+      <p class="text-sm mb-4" style="color:#706a5c">
+        <span class="lang-fa">شماره تلفن حساب خود را وارد کنید.</span>
+        <span class="lang-en">Enter the phone number linked to your account.</span></p>
+      <label class="block text-sm font-bold mb-1" for="forgot-phone">
+        <span class="lang-fa">شماره تلفن</span><span class="lang-en">Phone Number</span></label>
+      <input id="forgot-phone" type="tel" class="field focus-ring" required dir="ltr" autocomplete="tel">
+      <p id="forgot-step1-error" class="text-xs font-bold mt-2 is-hidden" style="color:var(--paprika)">
+        <span class="lang-fa">حسابی با این شماره پیدا نشد.</span><span class="lang-en">No account found with this phone number.</span></p>
+      <button type="submit" class="btn-gold focus-ring rounded-full px-5 py-2.5 w-full mt-5">
+        <span class="lang-fa">ادامه</span><span class="lang-en">Continue</span></button>
+      <button type="button" id="forgot-back-to-login-1" class="btn-outline focus-ring rounded-full px-5 py-2.5 w-full mt-2.5">
+        <span class="lang-fa">بازگشت به ورود</span><span class="lang-en">Back to Sign In</span></button>
+    </form>
+
+    <form id="forgot-step2-form" class="is-hidden" novalidate>
+      <p class="text-sm mb-4" style="color:#706a5c">
+        <span class="lang-fa">برای تایید هویت، آدرسی که هنگام عضویت ثبت کرده‌اید را وارد کنید، سپس رمز جدید را انتخاب کنید.</span>
+        <span class="lang-en">To verify it's you, enter the address you registered with, then choose a new password.</span></p>
+      <label class="block text-sm font-bold mb-1" for="forgot-address">
+        <span class="lang-fa">آدرس ثبت‌شده</span><span class="lang-en">Registered Address</span></label>
+      <textarea id="forgot-address" rows="2" class="field focus-ring mb-3" required></textarea>
+      <label class="block text-sm font-bold mb-1" for="forgot-new-password">
+        <span class="lang-fa">رمز عبور جدید</span><span class="lang-en">New Password</span></label>
+      <input id="forgot-new-password" type="password" class="field focus-ring mb-3" required dir="ltr" autocomplete="new-password" minlength="4">
+      <label class="block text-sm font-bold mb-1" for="forgot-new-password-confirm">
+        <span class="lang-fa">تکرار رمز عبور جدید</span><span class="lang-en">Confirm New Password</span></label>
+      <input id="forgot-new-password-confirm" type="password" class="field focus-ring" required dir="ltr" autocomplete="new-password" minlength="4">
+      <p id="forgot-step2-error" class="text-xs font-bold mt-2 is-hidden" style="color:var(--paprika)"></p>
+      <button type="submit" class="btn-gold focus-ring rounded-full px-5 py-2.5 w-full mt-5">
+        <span class="lang-fa">بازیابی رمز عبور</span><span class="lang-en">Reset Password</span></button>
+      <button type="button" id="forgot-back-to-login-2" class="btn-outline focus-ring rounded-full px-5 py-2.5 w-full mt-2.5">
+        <span class="lang-fa">بازگشت به ورود</span><span class="lang-en">Back to Sign In</span></button>
+    </form>
+
+    <button type="button" id="auth-modal-cancel" class="btn-outline focus-ring rounded-full px-5 py-2.5 w-full mt-3">
+      <span class="lang-fa">انصراف</span><span class="lang-en">Cancel</span></button>
+  </div>
+</div>
+
+<!-- ============ ACCOUNT MODAL (profile + order history) ============ -->
+<div id="account-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="account-title">
+  <div class="card-bg rounded-3xl p-6 sm:p-8 w-full max-w-lg mx-4 panel-shadow" style="max-height:88vh;overflow-y:auto">
+    <div class="flex items-center justify-between gap-3 mb-4">
+      <h3 id="account-title" class="font-bold text-xl">
+        <span class="lang-fa">حساب من</span><span class="lang-en">My Account</span></h3>
+      <button type="button" id="logout-btn" class="btn-outline focus-ring rounded-full px-4 py-2 text-xs">
+        <span class="lang-fa">خروج</span><span class="lang-en">Log Out</span></button>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-3 mb-3">
+      <div>
+        <label class="block text-sm font-bold mb-1" for="account-name">
+          <span class="lang-fa">نام و نام خانوادگی</span><span class="lang-en">Full Name</span></label>
+        <input id="account-name" type="text" class="field focus-ring">
+      </div>
+      <div>
+        <label class="block text-sm font-bold mb-1" for="account-phone">
+          <span class="lang-fa">شماره تلفن</span><span class="lang-en">Phone Number</span></label>
+        <input id="account-phone" type="tel" class="field focus-ring" dir="ltr">
+      </div>
+    </div>
+    <label class="block text-sm font-bold mb-1" for="account-address">
+      <span class="lang-fa">آدرس</span><span class="lang-en">Address</span></label>
+    <textarea id="account-address" rows="2" class="field focus-ring mb-3"></textarea>
+    <button type="button" id="account-save-btn" class="btn-gold focus-ring rounded-full px-5 py-2.5 mb-6">
+      <span class="lang-fa">ذخیره اطلاعات</span><span class="lang-en">Save Info</span></button>
+
+    <h4 class="font-bold mb-3">
+      <span class="lang-fa">سفارش‌های من</span><span class="lang-en">My Orders</span></h4>
+    <div id="account-orders-list" class="space-y-3"></div>
+    <p id="account-orders-empty" class="text-sm is-hidden" style="color:#706a5c">
+      <span class="lang-fa">هنوز سفارشی ثبت نشده.</span><span class="lang-en">No orders yet.</span></p>
+    <button type="button" id="account-modal-close" class="btn-outline focus-ring rounded-full px-5 py-2.5 w-full mt-6">
+      <span class="lang-fa">بستن</span><span class="lang-en">Close</span></button>
+  </div>
+</div>
+
+<!-- ============ CART MODAL ============ -->
+<div id="cart-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+  <div class="card-bg rounded-3xl p-6 sm:p-8 mx-4 panel-shadow cart-modal-panel">
+    <h3 id="cart-title" class="font-bold mb-4 text-xl">
+      <span class="lang-fa">سبد خرید</span><span class="lang-en">Your Cart</span></h3>
+    <div id="cart-items-scroll" class="cart-items-scroll">
+      <div id="cart-items-list"></div>
+      <p id="cart-empty" class="text-sm text-center py-8 is-hidden" style="color:#706a5c">
+        <span class="lang-fa">سبد خرید شما خالی است.</span><span class="lang-en">Your cart is empty.</span></p>
+    </div>
+    <div class="pt-4 mt-2" style="border-top:1px solid rgba(113,95,58,.15)">
+      <div class="flex items-center justify-between font-extrabold mb-4">
+        <span><span class="lang-fa">جمع کل</span><span class="lang-en">Total</span></span>
+        <span id="cart-total" style="color:var(--paprika)"></span>
+      </div>
+      <button type="button" id="cart-checkout-btn" class="btn-gold focus-ring rounded-full px-5 py-3 w-full">
+        <span class="lang-fa">تکمیل خرید</span><span class="lang-en">Checkout</span></button>
+      <button type="button" id="cart-modal-close" class="btn-outline focus-ring rounded-full px-5 py-2.5 w-full mt-2.5">
+        <span class="lang-fa">بستن</span><span class="lang-en">Close</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHECKOUT MODAL ============ -->
+<div id="checkout-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+  <div class="card-bg rounded-3xl p-6 sm:p-8 w-full max-w-md mx-4 panel-shadow" style="max-height:88vh;overflow-y:auto">
+    <h3 id="checkout-title" class="font-bold mb-2 text-xl">
+      <span class="lang-fa">تکمیل خرید</span><span class="lang-en">Checkout</span></h3>
+    <p id="checkout-guest-note" class="text-sm mb-4" style="color:#706a5c">
+      <span class="lang-fa">می‌توانید به‌صورت مهمان خرید کنید یا وارد حساب کاربری خود شوید.</span>
+      <span class="lang-en">You can check out as a guest or sign in to your account.</span></p>
+    <form id="checkout-form" novalidate>
+      <label class="block text-sm font-bold mb-1" for="checkout-name">
+        <span class="lang-fa">نام و نام خانوادگی</span><span class="lang-en">Full Name</span></label>
+      <input id="checkout-name" type="text" class="field focus-ring mb-3" required>
+      <label class="block text-sm font-bold mb-1" for="checkout-phone">
+        <span class="lang-fa">شماره تلفن</span><span class="lang-en">Phone Number</span></label>
+      <input id="checkout-phone" type="tel" class="field focus-ring mb-3" required dir="ltr">
+      <label class="block text-sm font-bold mb-1" for="checkout-address">
+        <span class="lang-fa">آدرس دقیق</span><span class="lang-en">Full Address</span></label>
+      <textarea id="checkout-address" rows="3" class="field focus-ring mb-3" required></textarea>
+      <div class="rounded-2xl p-4 mb-4" style="background:#fdf6e3">
+        <div class="flex items-center justify-between font-extrabold">
+          <span><span class="lang-fa">جمع کل</span><span class="lang-en">Total</span></span>
+          <span id="checkout-total" style="color:var(--paprika)"></span>
+        </div>
+      </div>
+      <button type="submit" class="btn-gold focus-ring rounded-full px-5 py-3 w-full">
+        <span class="lang-fa">ثبت سفارش</span><span class="lang-en">Place Order</span></button>
+      <button type="button" id="checkout-cancel" class="btn-outline focus-ring rounded-full px-5 py-2.5 w-full mt-2.5">
+        <span class="lang-fa">انصراف</span><span class="lang-en">Cancel</span></button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ INVOICE MODAL ============ -->
+<div id="invoice-modal" class="modal-backdrop is-hidden" role="dialog" aria-modal="true" aria-labelledby="invoice-title">
+  <div class="card-bg rounded-3xl p-6 sm:p-8 w-full max-w-lg mx-4 panel-shadow" style="max-height:88vh;overflow-y:auto">
+    <div id="invoice-intro" class="text-center mb-4">
+      <i data-lucide="check-circle-2" style="color:var(--olive)" width="40" height="40" aria-hidden="true"></i>
+      <h3 id="invoice-title" class="font-bold text-xl mt-2">
+        <span class="lang-fa">سفارش شما ثبت شد</span><span class="lang-en">Your Order Is Placed</span></h3>
+    </div>
+
+    <div id="invoice-view" class="invoice-paper rounded-2xl overflow-hidden">
+      <div id="invoice-seal" class="invoice-seal">
+        <div class="invoice-seal-ring"></div>
+        <div class="invoice-seal-text">
+          <svg viewBox="0 0 100 100">
+            <path id="invoice-seal-arc" d="M 12,50 A 38,38 0 1 1 88,50" fill="none"></path>
+            <text><textPath href="#invoice-seal-arc" startOffset="50%" text-anchor="middle">تایید شده ✓ چیوچی</textPath></text>
+          </svg>
+        </div>
+        <div id="invoice-seal-logo" class="invoice-seal-logo"><i data-lucide="sprout" width="24" height="24" aria-hidden="true"></i></div>
+      </div>
+      <div class="invoice-paper-head">
+        <div id="invoice-brand-mark" class="invoice-brand-mark"><i data-lucide="sprout" width="22" height="22" aria-hidden="true"></i></div>
+        <div class="invoice-brand-name">
+          <span class="lang-fa">فروشگاه ادویه چیوچی</span><span class="lang-en">Chiochi Spice Shop</span>
+        </div>
+        <span id="invoice-status-badge" class="invoice-status-badge"></span>
+      </div>
+      <div class="invoice-paper-body">
+        <div class="flex justify-between text-sm mb-1"><span class="lang-fa">شماره فاکتور</span><span class="lang-en">Invoice No.</span><span id="invoice-id" class="font-bold" dir="ltr"></span></div>
+        <div class="flex justify-between text-sm mb-1"><span class="lang-fa">تاریخ</span><span class="lang-en">Date</span><span id="invoice-date" class="font-bold"></span></div>
+        <div class="flex justify-between text-sm mb-1"><span class="lang-fa">نام</span><span class="lang-en">Name</span><span id="invoice-name" class="font-bold"></span></div>
+        <div class="flex justify-between text-sm mb-1"><span class="lang-fa">تلفن</span><span class="lang-en">Phone</span><span id="invoice-phone" class="font-bold" dir="ltr"></span></div>
+        <div class="text-sm mt-2"><span class="lang-fa">آدرس: </span><span class="lang-en">Address: </span><span id="invoice-address" class="font-semibold"></span></div>
+        <table class="invoice-table">
+          <thead><tr>
+            <th><span class="lang-fa">محصول</span><span class="lang-en">Item</span></th>
+            <th><span class="lang-fa">تعداد</span><span class="lang-en">Qty</span></th>
+            <th><span class="lang-fa">جمع</span><span class="lang-en">Subtotal</span></th>
+          </tr></thead>
+          <tbody id="invoice-items-body"></tbody>
+        </table>
+        <div class="flex justify-between font-extrabold mt-3 pt-3" style="border-top:1px solid rgba(113,95,58,.25)">
+          <span><span class="lang-fa">جمع کل</span><span class="lang-en">Total</span></span>
+          <span id="invoice-total" style="color:var(--paprika)"></span>
+        </div>
+      </div>
+      <div class="invoice-paper-foot">
+        <span class="lang-fa">با تشکر از خرید شما از چیوچی 🌿</span>
+        <span class="lang-en">Thank you for shopping with Chiochi 🌿</span>
+      </div>
+    </div>
+
+    <!-- admin-only: approve / reject pending orders -->
+    <div id="invoice-admin-actions" class="grid grid-cols-2 gap-2.5 mt-5 is-hidden">
+      <button type="button" id="invoice-approve-btn" class="focus-ring rounded-xl px-4 py-3 text-sm font-bold flex items-center justify-center gap-2" style="background:var(--olive);color:#fff">
+        <i data-lucide="check" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">تایید سفارش</span><span class="lang-en">Approve Order</span></button>
+      <button type="button" id="invoice-reject-btn" class="focus-ring rounded-xl px-4 py-3 text-sm font-bold flex items-center justify-center gap-2" style="background:var(--paprika);color:#fff">
+        <i data-lucide="x" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">رد سفارش</span><span class="lang-en">Reject Order</span></button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2.5 mt-5">
+      <button type="button" id="invoice-print-btn" class="btn-outline focus-ring rounded-xl px-2 py-3 text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5">
+        <i data-lucide="printer" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">چاپ</span><span class="lang-en">Print</span></button>
+      <button type="button" id="invoice-download-btn" class="btn-outline focus-ring rounded-xl px-2 py-3 text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5">
+        <i data-lucide="download" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">دانلود</span><span class="lang-en">Download</span></button>
+      <button type="button" id="invoice-share-btn" class="btn-gold focus-ring rounded-xl px-2 py-3 text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 is-hidden">
+        <i data-lucide="share-2" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">ارسال</span><span class="lang-en">Send</span></button>
+    </div>
+    <div id="invoice-send-section">
+      <p class="text-sm text-center mt-4 mb-2.5" style="color:#706a5c">
+        <span class="lang-fa">یا فاکتور را از طریق یکی از شبکه‌های زیر برای ادمین ارسال کنید تا سفارش نهایی شود:</span>
+        <span class="lang-en">Or send the invoice to the admin via one of the channels below to finalize your order:</span></p>
+      <div id="invoice-modal-channels" class="flex flex-col gap-2.5"></div>
+    </div>
+    <button type="button" id="invoice-modal-close" class="btn-outline focus-ring rounded-full px-5 py-2.5 w-full mt-4">
+      <span class="lang-fa">بستن</span><span class="lang-en">Close</span></button>
+  </div>
+</div>
+
+<!-- printable invoice (used only by window.print via #invoice-print CSS) -->
+<div id="invoice-print">
+  <h2 id="invoice-print-brand">Chiochi</h2>
+  <div id="invoice-print-body"></div>
+</div>
+
+<!-- ============ ADMIN PANEL ============ -->
+<section id="admin-panel" class="is-hidden w-full max-w-7xl mx-auto px-4 sm:px-6 pb-16 pt-8">
+  <div class="card-bg panel-shadow rounded-3xl overflow-hidden">
+    <div class="p-6 sm:p-8 border-b flex flex-wrap justify-between items-center gap-4" style="border-color:rgba(93,85,60,.15)">
+      <div>
+        <p class="text-sm font-bold tracking-wider" style="color:var(--saffron)">
+          <span class="lang-fa">پنل مدیریت</span><span class="lang-en">Admin Panel</span></p>
+        <h2 class="mt-2 font-extrabold text-2xl">
+          <span class="lang-fa">مدیریت محصولات</span><span class="lang-en">Manage Products</span></h2>
+      </div>
+      <div class="flex gap-2">
+        <button id="export-btn" type="button" class="btn-outline focus-ring rounded-full px-4 py-2 text-sm">
+          <span class="lang-fa">پشتیبان‌گیری</span><span class="lang-en">Export</span></button>
+        <button id="import-btn" type="button" class="btn-outline focus-ring rounded-full px-4 py-2 text-sm">
+          <span class="lang-fa">بازیابی</span><span class="lang-en">Import</span></button>
+        <input id="import-file" type="file" accept="application/json" class="is-hidden">
+        <button id="admin-close" type="button" class="btn-outline focus-ring rounded-full px-4 py-2 text-sm">
+          <span class="lang-fa">بستن</span><span class="lang-en">Close</span></button>
+      </div>
+    </div>
+
+    <!-- settings -->
+    <div class="p-6 sm:px-8 border-b" style="border-color:rgba(93,85,60,.1);background:#fffbf0">
+      <details>
+        <summary class="cursor-pointer font-bold text-sm" style="color:var(--olive)">
+          <span class="lang-fa">⚙️ تنظیمات (واتس‌اپ، ایتا، شماره کارت، رمز)</span>
+          <span class="lang-en">⚙️ Settings (WhatsApp, Eitaa, Card, Password)</span></summary>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-wa">
+              <span class="lang-fa">شماره واتس‌اپ (با کد کشور)</span><span class="lang-en">WhatsApp (country code)</span></label>
+            <input id="s-wa" type="text" placeholder="989123456789" class="field focus-ring" dir="ltr" inputmode="numeric">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-telegram">
+              <span class="lang-fa">یوزرنیم تلگرام</span><span class="lang-en">Telegram Username</span></label>
+            <input id="s-telegram" type="text" placeholder="chiochi" class="field focus-ring" dir="ltr">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-instagram">
+              <span class="lang-fa">یوزرنیم اینستاگرام</span><span class="lang-en">Instagram Username</span></label>
+            <input id="s-instagram" type="text" placeholder="chiochi" class="field focus-ring" dir="ltr">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-eitaa">
+              <span class="lang-fa">یوزرنیم ایتا</span><span class="lang-en">Eitaa Username</span></label>
+            <input id="s-eitaa" type="text" placeholder="chiochi" class="field focus-ring" dir="ltr">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-card">
+              <span class="lang-fa">شماره کارت</span><span class="lang-en">Card Number</span></label>
+            <input id="s-card" type="text" placeholder="6219861012345678" class="field focus-ring" dir="ltr" inputmode="numeric">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-pass">
+              <span class="lang-fa">تغییر رمز عبور (خالی = بدون تغییر)</span>
+              <span class="lang-en">Change password (blank = keep)</span></label>
+            <input id="s-pass" type="password" class="field focus-ring" autocomplete="new-password">
+          </div>
+        </div>
+        <div class="flex items-center gap-3 mt-4">
+          <button id="save-settings" type="button" class="btn-gold focus-ring rounded-full px-5 py-2 text-sm">
+            <span class="lang-fa">ذخیره تنظیمات</span><span class="lang-en">Save Settings</span></button>
+          <span id="settings-status" class="text-sm font-semibold" style="color:var(--olive)" aria-live="polite"></span>
+        </div>
+        <p class="text-xs mt-3" style="color:#8a8272">
+          <span class="lang-fa">توجه: این پنل کاملاً سمت مرورگر است و برای محافظت جدی از داده حساس مناسب نیست؛ برای امنیت واقعی به بک‌اند نیاز دارید.</span>
+          <span class="lang-en">Note: this panel runs entirely in the browser and isn't a substitute for real server-side security.</span>
+        </p>
+      </details>
+    </div>
+
+    <!-- logo & storefront settings -->
+    <div class="p-6 sm:px-8 border-b" style="border-color:rgba(93,85,60,.1);background:#fffbf0">
+      <details>
+        <summary class="cursor-pointer font-bold text-sm" style="color:var(--olive)">
+          <span class="lang-fa">🖼️ لوگو و ویترین فروشگاه</span>
+          <span class="lang-en">🖼️ Logo &amp; Storefront</span></summary>
+        <div class="grid sm:grid-cols-2 gap-6 mt-4">
+          <div>
+            <label class="block text-sm font-bold mb-2">
+              <span class="lang-fa">لوگوی سایت</span><span class="lang-en">Site Logo</span></label>
+            <div class="flex items-center gap-3">
+              <img id="logo-preview" class="logo-preview is-hidden" alt="">
+              <label for="logo-file" class="upload-tile focus-ring flex-1 flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
+                <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+                <span class="lang-fa">بارگذاری تصویر لوگو</span><span class="lang-en">Upload logo image</span>
+              </label>
+            </div>
+            <input id="logo-file" type="file" accept="image/*" class="is-hidden">
+            <button id="logo-remove" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
+              <span class="lang-fa">حذف لوگو</span><span class="lang-en">Remove logo</span></button>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2">
+              <span class="lang-fa">تصویر بنر ویترین (هدر اصلی)</span><span class="lang-en">Showcase Banner Image</span></label>
+            <img id="hero-preview" class="hero-preview is-hidden mb-2" alt="">
+            <label for="hero-file" class="upload-tile focus-ring flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
+              <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+              <span class="lang-fa">بارگذاری تصویر بنر</span><span class="lang-en">Upload banner image</span>
+            </label>
+            <input id="hero-file" type="file" accept="image/*" class="is-hidden">
+            <button id="hero-remove" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
+              <span class="lang-fa">بازگشت به تصویر پیش‌فرض</span><span class="lang-en">Reset to default</span></button>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-tagline-fa">
+              <span class="lang-fa">شعار ویترین (فارسی)</span><span class="lang-en">Showcase Tagline (FA)</span></label>
+            <input id="s-tagline-fa" type="text" class="field focus-ring">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-tagline-en">
+              <span class="lang-fa">شعار ویترین (انگلیسی)</span><span class="lang-en">Showcase Tagline (EN)</span></label>
+            <input id="s-tagline-en" type="text" class="field focus-ring" dir="ltr">
+          </div>
+        </div>
+        <div class="flex items-center gap-3 mt-4">
+          <button id="save-storefront" type="button" class="btn-gold focus-ring rounded-full px-5 py-2 text-sm">
+            <span class="lang-fa">ذخیره ویترین</span><span class="lang-en">Save Storefront</span></button>
+          <span id="storefront-status" class="text-sm font-semibold" style="color:var(--olive)" aria-live="polite"></span>
+        </div>
+        <p class="text-xs mt-3" style="color:#8a8272">
+          <span class="lang-fa">لوگو و تصویر بنر به‌صورت محلی در همین مرورگر ذخیره می‌شوند.</span>
+          <span class="lang-en">Logo and banner image are saved locally in this browser.</span>
+        </p>
+      </details>
+    </div>
+
+    <!-- watermark settings (independent of the site logo) -->
+    <div class="p-6 sm:px-8 border-b" style="border-color:rgba(93,85,60,.1);background:#fffbf0">
+      <details>
+        <summary class="cursor-pointer font-bold text-sm" style="color:var(--olive)">
+          <span class="lang-fa">💧 تنظیمات واترمارک عکس محصولات</span>
+          <span class="lang-en">💧 Product Photo Watermark</span></summary>
+
+        <div class="mt-4">
+          <label class="block text-sm font-bold mb-2">
+            <span class="lang-fa">نوع واترمارک</span><span class="lang-en">Watermark Type</span></label>
+          <select id="wm-type" class="field focus-ring" style="max-width:280px">
+            <option value="none" data-fa="بدون واترمارک" data-en="No watermark"></option>
+            <option value="text" data-fa="متنی" data-en="Text"></option>
+            <option value="image" data-fa="تصویر / لوگوی جداگانه" data-en="Image / separate logo"></option>
+          </select>
+        </div>
+
+        <!-- text watermark fields -->
+        <div id="wm-text-fields" class="grid sm:grid-cols-2 gap-4 mt-4 is-hidden">
+          <div>
+            <label class="block text-sm font-bold mb-1" for="wm-text">
+              <span class="lang-fa">متن واترمارک</span><span class="lang-en">Watermark Text</span></label>
+            <input id="wm-text" type="text" class="field focus-ring" placeholder="Chiochi">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="wm-color">
+              <span class="lang-fa">رنگ متن</span><span class="lang-en">Text Color</span></label>
+            <input id="wm-color" type="color" value="#ffffff" class="field focus-ring" style="height:44px;padding:.25rem">
+          </div>
+        </div>
+
+        <!-- image watermark fields (separate from site logo) -->
+        <div id="wm-image-fields" class="mt-4 is-hidden">
+          <label class="block text-sm font-bold mb-2">
+            <span class="lang-fa">تصویر واترمارک (مستقل از لوگوی سایت)</span><span class="lang-en">Watermark Image (separate from site logo)</span></label>
+          <div class="flex items-center gap-3">
+            <img id="wm-image-preview" class="logo-preview is-hidden" alt="">
+            <label for="wm-image-file" class="upload-tile focus-ring flex-1 flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
+              <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+              <span class="lang-fa">بارگذاری تصویر واترمارک</span><span class="lang-en">Upload watermark image</span>
+            </label>
+          </div>
+          <input id="wm-image-file" type="file" accept="image/*" class="is-hidden">
+          <button id="wm-image-remove" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
+            <span class="lang-fa">حذف تصویر واترمارک</span><span class="lang-en">Remove watermark image</span></button>
+        </div>
+
+        <!-- shared position / opacity / size controls -->
+        <div id="wm-shared-fields" class="grid sm:grid-cols-3 gap-4 mt-4 is-hidden">
+          <div>
+            <label class="block text-sm font-bold mb-1" for="wm-position">
+              <span class="lang-fa">موقعیت</span><span class="lang-en">Position</span></label>
+            <select id="wm-position" class="field focus-ring">
+              <option value="bottom-right" data-fa="پایین راست" data-en="Bottom right"></option>
+              <option value="bottom-left" data-fa="پایین چپ" data-en="Bottom left"></option>
+              <option value="top-right" data-fa="بالا راست" data-en="Top right"></option>
+              <option value="top-left" data-fa="بالا چپ" data-en="Top left"></option>
+              <option value="center" data-fa="مرکز" data-en="Center"></option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="wm-opacity">
+              <span class="lang-fa">شفافیت</span><span class="lang-en">Opacity</span>: <span id="wm-opacity-value">70%</span></label>
+            <input id="wm-opacity" type="range" min="10" max="100" step="5" value="70" class="w-full" style="accent-color:var(--saffron)">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="wm-size">
+              <span class="lang-fa">اندازه</span><span class="lang-en">Size</span>: <span id="wm-size-value">18%</span></label>
+            <input id="wm-size" type="range" min="6" max="40" step="1" value="18" class="w-full" style="accent-color:var(--saffron)">
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 mt-4">
+          <button id="save-watermark" type="button" class="btn-gold focus-ring rounded-full px-5 py-2 text-sm">
+            <span class="lang-fa">ذخیره تنظیمات واترمارک</span><span class="lang-en">Save Watermark Settings</span></button>
+          <span id="watermark-settings-status" class="text-sm font-semibold" style="color:var(--olive)" aria-live="polite"></span>
+        </div>
+        <p class="text-xs mt-3" style="color:#8a8272">
+          <span class="lang-fa">این واترمارک از لوگوی سایت جداست و فقط روی عکس محصولاتی که از این پس آپلود می‌کنی اعمال می‌شود.</span>
+          <span class="lang-en">This watermark is independent of the site logo and only applies to product photos uploaded from now on.</span>
+        </p>
+      </details>
+    </div>
+
+    <div class="p-6 sm:p-8 grid lg:grid-cols-[1fr_.85fr] gap-10">
+      <!-- product form -->
+      <form id="product-form" novalidate>
+        <input type="hidden" id="edit-id">
+        <h3 class="font-bold mb-5 text-lg">
+          <span id="form-title-add"><span class="lang-fa">افزودن محصول جدید</span><span class="lang-en">Add New Product</span></span>
+          <span id="form-title-edit" class="is-hidden"><span class="lang-fa">ویرایش محصول</span><span class="lang-en">Edit Product</span></span>
+        </h3>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-bold mb-2" for="name-fa">
+              <span class="lang-fa">نام (فارسی)</span><span class="lang-en">Name (FA)</span></label>
+            <input id="name-fa" name="name_fa" required class="field focus-ring" type="text">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2" for="name-en">Name (EN)</label>
+            <input id="name-en" name="name_en" required class="field focus-ring" type="text" dir="ltr">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2" for="price">
+              <span class="lang-fa">قیمت (تومان)</span><span class="lang-en">Price (Toman)</span></label>
+            <input id="price" name="price" required class="field focus-ring" type="text" inputmode="numeric" dir="ltr">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2" for="weight">
+              <span class="lang-fa">وزن</span><span class="lang-en">Weight</span></label>
+            <input id="weight" name="weight" required class="field focus-ring" type="text">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2" for="category">
+              <span class="lang-fa">دسته‌بندی</span><span class="lang-en">Category</span></label>
+            <input id="category" name="category" required class="field focus-ring" type="text" list="category-list">
+            <datalist id="category-list"></datalist>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2" for="discount-percent">
+              <span class="lang-fa">درصد تخفیف (۰ = بدون تخفیف)</span><span class="lang-en">Discount % (0 = none)</span></label>
+            <input id="discount-percent" name="discount_percent" class="field focus-ring" type="number" min="0" max="90" step="1" inputmode="numeric" dir="ltr" placeholder="0">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-bold mb-2">
+              <span class="lang-fa">تصاویر محصول (حداکثر ۳ عکس)</span><span class="lang-en">Product Images (up to 3)</span></label>
+            <label class="flex items-center gap-2 text-xs font-bold mb-2 cursor-pointer" style="color:var(--olive)">
+              <input id="watermark-toggle" type="checkbox" class="w-4 h-4" checked style="accent-color:var(--paprika)">
+              <span class="lang-fa">افزودن واترمارک روی عکس‌ها</span>
+              <span class="lang-en">Stamp watermark on photos</span>
+            </label>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <img id="image-preview-1" class="upload-preview is-hidden" alt="">
+                <label for="image-file-1" class="upload-tile focus-ring flex flex-col items-center justify-center gap-1 px-2 py-4 text-xs font-bold text-center" style="color:var(--olive)">
+                  <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+                  <span class="lang-fa">عکس ۱</span><span class="lang-en">Photo 1</span>
+                </label>
+                <input id="image-file-1" type="file" accept="image/*" class="is-hidden">
+                <input id="image-url-1" name="image_url" class="field focus-ring mt-2 text-xs" type="url" dir="ltr" placeholder="یا لینک URL">
+              </div>
+              <div>
+                <img id="image-preview-2" class="upload-preview is-hidden" alt="">
+                <label for="image-file-2" class="upload-tile focus-ring flex flex-col items-center justify-center gap-1 px-2 py-4 text-xs font-bold text-center" style="color:var(--olive)">
+                  <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+                  <span class="lang-fa">عکس ۲</span><span class="lang-en">Photo 2</span>
+                </label>
+                <input id="image-file-2" type="file" accept="image/*" class="is-hidden">
+                <input id="image-url-2" name="image_url_2" class="field focus-ring mt-2 text-xs" type="url" dir="ltr" placeholder="یا لینک URL">
+              </div>
+              <div>
+                <img id="image-preview-3" class="upload-preview is-hidden" alt="">
+                <label for="image-file-3" class="upload-tile focus-ring flex flex-col items-center justify-center gap-1 px-2 py-4 text-xs font-bold text-center" style="color:var(--olive)">
+                  <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+                  <span class="lang-fa">عکس ۳</span><span class="lang-en">Photo 3</span>
+                </label>
+                <input id="image-file-3" type="file" accept="image/*" class="is-hidden">
+                <input id="image-url-3" name="image_url_3" class="field focus-ring mt-2 text-xs" type="url" dir="ltr" placeholder="یا لینک URL">
+              </div>
+            </div>
+            <p id="watermark-hint" class="text-xs mt-2 is-hidden" style="color:var(--paprika)">
+              <span class="lang-fa">واترمارک غیرفعال است؛ از بخش «تنظیمات واترمارک عکس محصولات» آن را روشن کن.</span>
+              <span class="lang-en">Watermark is off — enable it under "Product Photo Watermark" settings.</span>
+            </p>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-bold mb-2" for="description-fa">
+              <span class="lang-fa">توضیحات (فارسی)</span><span class="lang-en">Description (FA)</span></label>
+            <textarea id="description-fa" name="description_fa" required rows="3" class="field focus-ring"></textarea>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-bold mb-2" for="description-en">Description (EN)</label>
+            <textarea id="description-en" name="description_en" required rows="3" class="field focus-ring" dir="ltr"></textarea>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-6 mt-5">
+          <div class="flex items-center gap-3">
+            <input id="in-stock" name="in_stock" class="w-4 h-4" type="checkbox" checked style="accent-color:var(--paprika)">
+            <label class="text-sm font-bold" for="in-stock">
+              <span class="lang-fa">موجود در انبار</span><span class="lang-en">In Stock</span></label>
+          </div>
+          <div class="flex items-center gap-3">
+            <input id="coming-soon" name="coming_soon" class="w-4 h-4" type="checkbox" style="accent-color:var(--saffron)">
+            <label class="text-sm font-bold" for="coming-soon">
+              <span class="lang-fa">به‌زودی (هنوز قابل سفارش نیست)</span><span class="lang-en">Coming Soon (not orderable yet)</span></label>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-3 mt-6">
+          <button type="submit" class="btn-gold focus-ring rounded-full px-5 py-3">
+            <span class="lang-fa">ذخیره محصول</span><span class="lang-en">Save Product</span></button>
+          <button id="cancel-edit" type="button" class="btn-outline focus-ring rounded-full px-5 py-3 is-hidden">
+            <span class="lang-fa">انصراف از ویرایش</span><span class="lang-en">Cancel Edit</span></button>
+          <p id="form-status" class="text-sm font-semibold" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <!-- product list -->
+      <aside>
+        <h3 class="font-bold mb-5 text-lg">
+          <span class="lang-fa">محصولات ثبت‌شده</span><span class="lang-en">Saved Products</span></h3>
+        <div id="admin-product-list" class="space-y-3"></div>
+        <p id="admin-empty" class="text-sm py-5 is-hidden" style="color:#706a5c">
+          <span class="lang-fa">هنوز محصولی ثبت نشده.</span><span class="lang-en">No products yet.</span></p>
+      </aside>
+    </div>
+
+    <!-- registered users -->
+    <div class="p-6 sm:px-8 border-t" style="border-color:rgba(93,85,60,.1)">
+      <h3 class="font-bold mb-1 text-lg">
+        <span class="lang-fa">کاربران ثبت‌نام‌شده</span><span class="lang-en">Registered Users</span></h3>
+      <p class="text-sm mb-5" style="color:#706a5c">
+        <span class="lang-fa">اطلاعات کاربرانی که در فروشگاه عضو شده‌اند (رمز عبور نمایش داده نمی‌شود).</span>
+        <span class="lang-en">Info for customers who created an account (passwords are never shown).</span></p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm" style="border-collapse:collapse">
+          <thead>
+            <tr style="border-bottom:2px solid rgba(93,85,60,.15)">
+              <th class="text-start py-2 pe-3"><span class="lang-fa">نام</span><span class="lang-en">Name</span></th>
+              <th class="text-start py-2 pe-3"><span class="lang-fa">تلفن</span><span class="lang-en">Phone</span></th>
+              <th class="text-start py-2 pe-3"><span class="lang-fa">آدرس</span><span class="lang-en">Address</span></th>
+              <th class="text-start py-2 pe-3"><span class="lang-fa">تاریخ عضویت</span><span class="lang-en">Joined</span></th>
+              <th class="text-start py-2 pe-3"><span class="lang-fa">تعداد سفارش</span><span class="lang-en">Orders</span></th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-list"></tbody>
+        </table>
+      </div>
+      <p id="admin-users-empty" class="text-sm py-5 is-hidden" style="color:#706a5c">
+        <span class="lang-fa">هنوز هیچ کاربری ثبت‌نام نکرده.</span><span class="lang-en">No users have registered yet.</span></p>
+    </div>
+
+    <!-- orders / invoices -->
+    <div class="p-6 sm:px-8 border-t" style="border-color:rgba(93,85,60,.1)">
+      <h3 class="font-bold mb-1 text-lg">
+        <span class="lang-fa">سفارش‌ها و فاکتورها</span><span class="lang-en">Orders &amp; Invoices</span></h3>
+      <p class="text-sm mb-5" style="color:#706a5c">
+        <span class="lang-fa">محتویات هر سفارش را بررسی کنید؛ با تایید، فاکتور نهایی برای کاربر قابل چاپ و دانلود می‌شود.</span>
+        <span class="lang-en">Review each order's contents — once approved, the final invoice becomes printable and downloadable for the customer.</span></p>
+      <div id="admin-orders-list" class="space-y-3"></div>
+      <p id="admin-orders-empty" class="text-sm py-5 is-hidden" style="color:#706a5c">
+        <span class="lang-fa">هنوز سفارشی ثبت نشده.</span><span class="lang-en">No orders yet.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEMPLATES ============ -->
+<template id="product-template">
+  <article class="product-card rounded-3xl p-5 flex flex-col" style="background:#fffdf7">
+    <div class="img-gallery">
+      <img class="gallery-img active-img" loading="lazy" decoding="async" alt="">
+      <img class="gallery-img" loading="lazy" decoding="async" alt="">
+      <img class="gallery-img" loading="lazy" decoding="async" alt="">
+      <span class="discount-ribbon is-hidden"></span>
+      <div class="coming-soon-overlay is-hidden">
+        <span class="lang-fa">به‌زودی</span><span class="lang-en">Coming Soon</span>
+      </div>
+    </div>
+    <div class="gallery-dots"></div>
+    <div class="flex items-start justify-between gap-3 mt-4">
+      <span class="spice-stamp"><i data-lucide="sprout" width="25" height="25" aria-hidden="true"></i></span>
+      <span class="product-category rounded-full px-3 py-1 text-xs font-bold" style="background:#e9eedc;color:var(--olive)"></span>
+    </div>
+    <h3 class="product-name dynamic-fa font-bold mt-4"></h3>
+    <h3 class="product-name dynamic-en brand-serif font-bold mt-4"></h3>
+    <p class="product-description dynamic-fa text-sm leading-7 mt-2" style="color:#5e594d"></p>
+    <p class="product-description dynamic-en text-sm leading-7 mt-2" style="color:#5e594d"></p>
+    <div class="flex items-center justify-between gap-3 mt-auto pt-4" style="border-top:1px solid rgba(113,95,58,.15);margin-top:1.25rem">
+      <div>
+        <p class="product-price-original price-original text-xs is-hidden"></p>
+        <p class="product-price font-extrabold" style="color:var(--paprika)"></p>
+        <p class="product-weight text-xs mt-1" style="color:#6b6658"></p>
+      </div>
+      <span class="product-stock rounded-full px-3 py-1 text-xs font-bold"></span>
+    </div>
+    <div class="order-actions mt-5">
+      <button type="button" class="add-to-cart order-btn btn-gold focus-ring rounded-xl px-2 py-2.5 text-sm font-bold flex items-center justify-center gap-1 w-full">
+        <i data-lucide="shopping-cart" width="16" height="16" aria-hidden="true"></i>
+        <span class="lang-fa">افزودن به سبد خرید</span><span class="lang-en">Add to Cart</span></button>
+    </div>
+    <button type="button" disabled class="coming-soon-btn is-hidden btn-outline rounded-xl px-2 py-2.5 text-sm font-bold w-full mt-5" style="opacity:.75;cursor:default">
+      <span class="lang-fa">به‌زودی در دسترس خواهد بود</span><span class="lang-en">Available soon</span>
+    </button>
+  </article>
+</template>
+
+<template id="admin-product-template">
+  <div class="rounded-2xl p-4 flex items-center justify-between gap-3 card-bg">
+    <div class="min-w-0">
+      <p class="admin-product-name dynamic-fa truncate font-bold"></p>
+      <p class="admin-product-name dynamic-en truncate font-bold"></p>
+      <p class="admin-product-meta text-xs mt-1" style="color:#706a5c"></p>
+    </div>
+    <div class="flex shrink-0 gap-2">
+      <button type="button" class="edit-product btn-outline focus-ring rounded-lg px-3 py-2 text-xs">
+        <span class="lang-fa">ویرایش</span><span class="lang-en">Edit</span></button>
+      <button type="button" class="delete-product btn-outline focus-ring rounded-lg px-3 py-2 text-xs">
+        <span class="lang-fa">حذف</span><span class="lang-en">Delete</span></button>
+      <button type="button" class="confirm-delete is-hidden btn-danger focus-ring rounded-lg px-3 py-2 text-xs">
+        <span class="lang-fa">تأیید</span><span class="lang-en">Confirm</span></button>
+      <button type="button" class="cancel-delete is-hidden btn-outline focus-ring rounded-lg px-3 py-2 text-xs">
+        <span class="lang-fa">لغو</span><span class="lang-en">Cancel</span></button>
+    </div>
+  </div>
+</template>
+
+<div id="lightbox" class="lightbox-backdrop is-hidden" role="dialog" aria-modal="true" aria-label="Product image viewer">
+  <div class="lightbox-stage">
+    <button type="button" id="lightbox-close" class="lightbox-close focus-ring" aria-label="Close">
+      <i data-lucide="x" width="18" height="18" aria-hidden="true"></i>
+    </button>
+    <div class="lightbox-img-wrap" id="lightbox-img-wrap">
+      <button type="button" id="lightbox-prev" class="lightbox-nav focus-ring" style="inset-inline-start:12px" aria-label="Previous image">
+        <i data-lucide="chevron-right" width="22" height="22" aria-hidden="true"></i>
+      </button>
+      <button type="button" id="lightbox-next" class="lightbox-nav focus-ring" style="inset-inline-end:12px" aria-label="Next image">
+        <i data-lucide="chevron-left" width="22" height="22" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="gallery-dots" id="lightbox-dots"></div>
+    <p id="lightbox-caption" class="lightbox-caption"></p>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const KEY_PRODUCTS = 'chiochi_products';
+  const KEY_SETTINGS = 'chiochi_settings';
+  const KEY_LANG     = 'chiochi_lang';
+  const KEY_USERS    = 'chiochi_users';
+  const KEY_SESSION  = 'chiochi_session';
+  const KEY_CART     = 'chiochi_cart';
+  const KEY_ORDERS   = 'chiochi_orders';
+
+  const defaultSettings = {
+    pass: 'chiochi2024',   // plaintext fallback, used only until a hashed password is saved
+    passHash: '',
+    wa: '989000000000',
+    telegram: 'chiochi',
+    instagram: 'chiochi',
+    eitaa: 'spicehouse',
+    card: '6219861000000000',
+    logo: '',
+    heroImage: '',
+    taglineFa: 'بهترین ادویه‌جات ایرانی، مستقیم از مزرعه تا سفره شما',
+    taglineEn: 'Finest Iranian spices, from farm to your table',
+    watermarkType: 'none',       // 'none' | 'text' | 'image'
+    watermarkText: 'Chiochi',
+    watermarkColor: '#ffffff',
+    watermarkImage: '',          // independent of the site logo
+    watermarkPosition: 'bottom-right',
+    watermarkOpacity: 70,
+    watermarkSize: 18
+  };
+  const DEFAULT_HERO_IMG = 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1400&q=80';
+  // Default showcase rotation — at least 5 spice-themed photos, crossfading every 5s.
+  const HERO_SLIDES = [
+    { src: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1600&q=80', alt: 'زعفران ایرانی دست‌چین' },
+    { src: 'https://images.unsplash.com/photo-1775433205046-86e060feff06?w=1600&q=80', alt: 'ادویه‌جات رنگارنگ در بازار' },
+    { src: 'https://images.unsplash.com/photo-1761255240953-c571ba0b98d7?w=1600&q=80', alt: 'نمایش ادویه‌جات در دکه بازار' },
+    { src: 'https://images.unsplash.com/photo-1777732786164-1f6e359e69ca?w=1600&q=80', alt: 'گونی‌های ادویه در بازار' },
+    { src: 'https://images.unsplash.com/photo-1615477550927-6ec8445fcfe6?w=1600&q=80', alt: 'پودر ادویه خشک‌شده' }
+  ];
+
+  const seedProducts = [
+    { id:'seed-1', name_fa:'زعفران سرگل ممتاز', name_en:'Premium Sargol Saffron',
+      price:'450000', weight:'۱ گرم / 1 g', category:'زعفران',
+      description_fa:'زعفران سرگل درجه یک با رنگ و عطر ماندگار، بسته‌بندی بهداشتی.',
+      description_en:'Grade-one Sargol saffron with lasting color and aroma, hygienically packed.',
+      images:['https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=800&q=80'], in_stock:true },
+    { id:'seed-2', name_fa:'پودر پاپریکا دودی', name_en:'Smoked Paprika Powder',
+      price:'120000', weight:'۲۰۰ گرم / 200 g', category:'پاپریکا',
+      description_fa:'پاپریکا خشک‌شده با خشک‌کن صنعتی، آسیاب یکنواخت و رنگ سرخ درخشان.',
+      description_en:'Industrially dried paprika, evenly ground with a bright red hue.',
+      images:['https://images.unsplash.com/photo-1509358271058-acd22cc93898?w=800&q=80'], in_stock:true },
+    { id:'seed-3', name_fa:'پودر سیر خشک', name_en:'Dried Garlic Powder',
+      price:'95000', weight:'۲۵۰ گرم / 250 g', category:'سیر',
+      description_fa:'سیر ایرانی خشک‌شده در دمای کنترل‌شده برای حفظ طعم و خاصیت.',
+      description_en:'Iranian garlic dried at controlled temperature to preserve flavor.',
+      images:['https://images.unsplash.com/photo-1615477550927-6ec8445fcfe6?w=800&q=80'], in_stock:false }
+  ];
+
+  const state = {
+    products: [],
+    settings: { ...defaultSettings },
+    lang: 'fa',
+    authenticated: false,
+    deleteConfirmId: null,
+    lightbox: { images: [], index: 0, name: '' },
+    users: [],
+    currentUserId: null,
+    cart: [],       // [{ productId, qty }]
+    orders: [],
+    authTab: 'login'
+  };
+
+  /* ---------- generic helpers ---------- */
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const faDigits = v => String(v).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'p-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8));
+  const t = (fa, en) => (state.lang === 'fa' ? fa : en);
+
+  function debounce(fn, ms) {
+    let timer;
+    return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), ms); };
+  }
+
+  function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Downscales + re-encodes an uploaded image so it stays small enough for
+  // browser storage. Large camera/phone photos (3-8 MB) can blow past the
+  // ~5 MB localStorage quota after base64 encoding, which was silently
+  // failing the save. Capping the longest side and using JPEG compression
+  // keeps each photo to roughly 100-300 KB.
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
+  function watermarkAnchor(position, width, height, w, h, pad) {
+    switch (position) {
+      case 'top-left': return [pad, pad];
+      case 'top-right': return [width - w - pad, pad];
+      case 'center': return [(width - w) / 2, (height - h) / 2];
+      case 'bottom-left': return [pad, height - h - pad];
+      case 'bottom-right':
+      default: return [width - w - pad, height - h - pad];
+    }
+  }
+
+  async function applyWatermark(ctx, width, height, wm) {
+    if (!wm || wm.type === 'none') return;
+    const shortSide = Math.min(width, height);
+    const pad = Math.max(8, shortSide * 0.035);
+    const opacity = Math.min(1, Math.max(0.05, (Number(wm.opacity) || 70) / 100));
+    const sizePct = Math.min(50, Math.max(4, Number(wm.size) || 18));
+    const position = wm.position || 'bottom-right';
+
+    if (wm.type === 'image' && wm.image) {
+      try {
+        const logo = await loadImage(wm.image);
+        const target = shortSide * (sizePct / 100);
+        const scale = target / Math.max(logo.width, logo.height);
+        const lw = logo.width * scale, lh = logo.height * scale;
+        const [x, y] = watermarkAnchor(position, width, height, lw, lh, pad);
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        ctx.shadowColor = 'rgba(0,0,0,.45)';
+        ctx.shadowBlur = 6;
+        ctx.drawImage(logo, x, y, lw, lh);
+        ctx.restore();
+      } catch { /* watermark is best-effort; ignore failures */ }
+    } else if (wm.type === 'text' && wm.text) {
+      const fontSize = Math.max(12, Math.round(shortSide * (sizePct / 100) * 0.5));
+      ctx.save();
+      ctx.font = `700 ${fontSize}px Vazirmatn, Arial, sans-serif`;
+      ctx.textBaseline = 'alphabetic';
+      const tw = ctx.measureText(wm.text).width;
+      const [x, y] = watermarkAnchor(position, width, height, tw, fontSize, pad);
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = wm.color || '#ffffff';
+      ctx.shadowColor = 'rgba(0,0,0,.55)';
+      ctx.shadowBlur = 5;
+      ctx.fillText(wm.text, x, y + fontSize * 0.82);
+      ctx.restore();
+    }
+  }
+
+  function readImageAsCompressedDataURL(file, { maxDim = 1100, quality = 0.82, keepTransparency = false, watermark = null } = {}) {
+    return new Promise((resolve, reject) => {
+      readFileAsDataURL(file).then(rawDataUrl => {
+        const img = new Image();
+        img.onload = async () => {
+          let { width, height } = img;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) { height = Math.round(height * maxDim / width); width = maxDim; }
+            else { width = Math.round(width * maxDim / height); height = maxDim; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          await applyWatermark(ctx, width, height, watermark);
+
+          try {
+            resolve(canvas.toDataURL(keepTransparency ? 'image/png' : 'image/jpeg', quality));
+          } catch { resolve(rawDataUrl); } // canvas tainted or unsupported: fall back to the raw file
+        };
+        img.onerror = () => resolve(rawDataUrl); // not a decodable image type: fall back to raw
+        img.src = rawDataUrl;
+      }).catch(reject);
+    });
+  }
+
+  let toastTimer;
+  function toast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+  }
+
+  async function sha256(text) {
+    if (!crypto?.subtle) return null; // needs https / localhost
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  /* ---------- user accounts ---------- */
+  function normalizePhone(phone) { return String(phone || '').replace(/\s+/g, ''); }
+
+  function findUserByPhone(phone) {
+    const norm = normalizePhone(phone);
+    return state.users.find(u => normalizePhone(u.phone) === norm) || null;
+  }
+
+  async function registerUser({ name, phone, address, password }) {
+    if (findUserByPhone(phone)) {
+      return { ok: false, error: t('این شماره تلفن قبلاً ثبت شده است.', 'This phone number is already registered.') };
+    }
+    const passHash = await sha256(password);
+    const user = {
+      id: uid(),
+      name: name.trim(),
+      phone: normalizePhone(phone),
+      address: (address || '').trim(),
+      passHash: passHash || password, // plaintext fallback only if subtle-crypto is unavailable
+      createdAt: new Date().toISOString()
+    };
+    state.users.push(user);
+    saveUsers();
+    state.currentUserId = user.id;
+    saveSession();
+    return { ok: true, user };
+  }
+
+  async function loginUser(phone, password) {
+    const user = findUserByPhone(phone);
+    if (!user) return { ok: false };
+    const hash = await sha256(password);
+    const match = user.passHash === hash || user.passHash === password;
+    if (!match) return { ok: false };
+    state.currentUserId = user.id;
+    saveSession();
+    return { ok: true, user };
+  }
+
+  function logoutUser() {
+    state.currentUserId = null;
+    saveSession();
+  }
+
+  function refreshAccountUI() {
+    const user = currentUser();
+    const label = $('#account-toggle-label');
+    if (user) {
+      $('#account-toggle').querySelector('.lang-fa').textContent = user.name.split(' ')[0] || 'حساب';
+      $('#account-toggle').querySelector('.lang-en').textContent = (user.name.split(' ')[0]) || 'Account';
+    } else {
+      $('#account-toggle').querySelector('.lang-fa').textContent = 'ورود / عضویت';
+      $('#account-toggle').querySelector('.lang-en').textContent = 'Sign in';
+    }
+  }
+
+  function formatPrice(raw) {
+    const n = Number(String(raw).replace(/[^\d.]/g, ''));
+    if (!isFinite(n) || n <= 0) return String(raw);
+    return state.lang === 'fa'
+      ? n.toLocaleString('fa-IR') + ' تومان'
+      : n.toLocaleString('en-US') + ' Toman';
+  }
+
+  function cardDigits(raw) { return String(raw || '').replace(/\D/g, ''); }
+  function formatCard(raw) {
+    const digits = cardDigits(raw);
+    return (digits.match(/.{1,4}/g) || [digits]).join(' - ');
+  }
+
+  /* ---------- persistence ---------- */
+  /* =====================================================================
+     Cross-device sync (Netlify Function + Netlify Blobs)
+     Local admin edits are always written to localStorage immediately (fast,
+     always works). They're also pushed to a small serverless function so
+     that other devices/browsers — and the live Netlify site itself — see
+     the same catalog, settings, accounts and orders instead of each device
+     having its own private copy. If the function isn't reachable (e.g. the
+     file is opened locally, or the site was deployed without functions),
+     everything still works purely from localStorage as before.
+     ===================================================================== */
+  const SYNC_ENDPOINT = '/.netlify/functions/store';
+  let syncPushTimer = null;
+  let syncAvailable = true; // flips to false after a failed call so we stop retrying every keystroke
+
+  function pushSync() {
+    if (!syncAvailable) return;
+    clearTimeout(syncPushTimer);
+    syncPushTimer = setTimeout(async () => {
+      try {
+        const payload = {
+          products: state.products,
+          settings: state.settings,
+          users: state.users,
+          orders: state.orders,
+          updatedAt: new Date().toISOString()
+        };
+        const res = await fetch(SYNC_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('sync failed: ' + res.status);
+      } catch (err) {
+        // Most likely running locally (file://) or functions aren't deployed yet.
+        // Don't keep retrying on every edit — localStorage still has everything.
+        syncAvailable = false;
+        console.warn('Chiochi: cloud sync unavailable, continuing with local storage only.', err);
+      }
+    }, 700);
+  }
+
+  async function pullRemoteState() {
+    try {
+      const res = await fetch(SYNC_ENDPOINT, { method: 'GET' });
+      if (!res.ok) throw new Error('pull failed: ' + res.status);
+      const data = await res.json();
+      if (!data || typeof data !== 'object') return;
+      if (Array.isArray(data.products) && data.products.length) {
+        state.products = data.products;
+        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(state.products));
+      }
+      if (data.settings && typeof data.settings === 'object') {
+        state.settings = { ...defaultSettings, ...data.settings };
+        localStorage.setItem(KEY_SETTINGS, JSON.stringify(state.settings));
+      }
+      if (Array.isArray(data.users)) {
+        state.users = data.users;
+        localStorage.setItem(KEY_USERS, JSON.stringify(state.users));
+      }
+      if (Array.isArray(data.orders)) {
+        state.orders = data.orders;
+        localStorage.setItem(KEY_ORDERS, JSON.stringify(state.orders));
+      }
+    } catch (err) {
+      console.warn('Chiochi: could not reach cloud sync, using local data only.', err);
+    }
+  }
+
+  function loadState() {
+    try {
+      const p = JSON.parse(localStorage.getItem(KEY_PRODUCTS) || 'null');
+      state.products = Array.isArray(p) && p.length ? p : seedProducts.map(x => ({ ...x }));
+    } catch { state.products = seedProducts.map(x => ({ ...x })); }
+
+    try {
+      const s = JSON.parse(localStorage.getItem(KEY_SETTINGS) || 'null');
+      state.settings = s ? { ...defaultSettings, ...s } : { ...defaultSettings };
+    } catch { state.settings = { ...defaultSettings }; }
+
+    const savedLang = localStorage.getItem(KEY_LANG);
+    state.lang = savedLang === 'en' ? 'en' : 'fa';
+
+    try {
+      const u = JSON.parse(localStorage.getItem(KEY_USERS) || 'null');
+      state.users = Array.isArray(u) ? u : [];
+    } catch { state.users = []; }
+
+    try {
+      const c = JSON.parse(localStorage.getItem(KEY_CART) || 'null');
+      state.cart = Array.isArray(c) ? c : [];
+    } catch { state.cart = []; }
+
+    try {
+      const o = JSON.parse(localStorage.getItem(KEY_ORDERS) || 'null');
+      state.orders = Array.isArray(o) ? o : [];
+    } catch { state.orders = []; }
+
+    const sessionId = localStorage.getItem(KEY_SESSION);
+    state.currentUserId = sessionId && state.users.some(u => u.id === sessionId) ? sessionId : null;
+  }
+
+  function saveUsers()   { try { localStorage.setItem(KEY_USERS, JSON.stringify(state.users)); pushSync(); return true; } catch (err) { reportStorageError(err); return false; } }
+  function saveCart()    { try { localStorage.setItem(KEY_CART, JSON.stringify(state.cart)); return true; } catch (err) { reportStorageError(err); return false; } }
+  function saveOrders()  { try { localStorage.setItem(KEY_ORDERS, JSON.stringify(state.orders)); pushSync(); return true; } catch (err) { reportStorageError(err); return false; } }
+  function saveSession() {
+    if (state.currentUserId) localStorage.setItem(KEY_SESSION, state.currentUserId);
+    else localStorage.removeItem(KEY_SESSION);
+  }
+
+  function currentUser() {
+    return state.users.find(u => u.id === state.currentUserId) || null;
+  }
+
+  function saveProducts() {
+    try { localStorage.setItem(KEY_PRODUCTS, JSON.stringify(state.products)); pushSync(); return true; }
+    catch (err) { reportStorageError(err); return false; }
+  }
+  function saveSettings() {
+    try { localStorage.setItem(KEY_SETTINGS, JSON.stringify(state.settings)); pushSync(); return true; }
+    catch (err) { reportStorageError(err); return false; }
+  }
+  function saveLang()     { localStorage.setItem(KEY_LANG, state.lang); }
+
+  function reportStorageError(err) {
+    const isQuota = err && (err.name === 'QuotaExceededError' || err.code === 22);
+    toast(isQuota
+      ? t('حجم ذخیره‌سازی مرورگر پر شده؛ عکس‌ها را کوچک‌تر یا کمتر انتخاب کنید.',
+          'Browser storage is full — use fewer or smaller photos.')
+      : t('ذخیره‌سازی با خطا مواجه شد.', 'Saving failed.'));
+  }
+
+  /* ---------- language ---------- */
+  function applyLang() {
+    const shell = $('#app-shell');
+    shell.dataset.lang = state.lang;
+    document.documentElement.lang = state.lang;
+    document.documentElement.dir = state.lang === 'fa' ? 'rtl' : 'ltr';
+    const search = $('#search-input');
+    search.placeholder = state.lang === 'fa' ? search.dataset.phFa : search.dataset.phEn;
+    saveLang();
+  }
+
+  /* ---------- contact links / card ---------- */
+  function refreshContactUI() {
+    const waHref = `https://wa.me/${cardDigits(state.settings.wa)}`;
+    const tgHref = `https://t.me/${encodeURIComponent(state.settings.telegram || '')}`;
+    const eitaaHref = `https://eitaa.com/${encodeURIComponent(state.settings.eitaa || '')}`;
+    const igHref = `https://instagram.com/${encodeURIComponent(state.settings.instagram || '')}`;
+
+    $('#wa-contact-link').href = waHref;
+    $('#telegram-contact-link').href = tgHref;
+    $('#eitaa-contact-link').href = eitaaHref;
+    $('#contact-wa').href = waHref;
+    $('#contact-telegram').href = tgHref;
+    $('#contact-eitaa').href = eitaaHref;
+    $('#contact-instagram').href = igHref;
+    $('#card-number-display').textContent = formatCard(state.settings.card);
+  }
+
+  /* ---------- storefront (logo, banner, tagline) ---------- */
+  function refreshStorefrontUI() {
+    const logoImg = $('#site-logo-img');
+    const fallback = $('#site-logo-fallback');
+    if (state.settings.logo) {
+      logoImg.src = state.settings.logo;
+      logoImg.classList.remove('is-hidden');
+      fallback.classList.add('is-hidden');
+    } else {
+      logoImg.classList.add('is-hidden');
+      fallback.classList.remove('is-hidden');
+    }
+
+    initHeroSlideshow();
+    $('#hero-tagline-fa').textContent = state.settings.taglineFa || defaultSettings.taglineFa;
+    $('#hero-tagline-en').textContent = state.settings.taglineEn || defaultSettings.taglineEn;
+  }
+
+  let heroSlideTimer = null;
+  function initHeroSlideshow() {
+    const wrap = $('#hero-slideshow');
+    // Build the rotation: the admin's custom banner (if set) plays first, then the default spice photos.
+    const slides = [];
+    if (state.settings.heroImage) slides.push({ src: state.settings.heroImage, alt: 'ادویه‌جات و زعفران ایرانی' });
+    HERO_SLIDES.forEach(s => slides.push(s));
+
+    wrap.innerHTML = '';
+    slides.forEach((s, i) => {
+      const img = document.createElement('img');
+      img.src = s.src;
+      img.alt = s.alt;
+      img.loading = i === 0 ? 'eager' : 'lazy';
+      img.decoding = 'async';
+      img.className = 'hero-slide' + (i === 0 ? ' is-active' : '');
+      // If a slide fails to load (e.g. offline or a broken link), skip it rather than leaving a blank frame.
+      img.addEventListener('error', () => { img.remove(); });
+      wrap.appendChild(img);
+    });
+
+    if (heroSlideTimer) clearInterval(heroSlideTimer);
+    if (slides.length > 1) {
+      heroSlideTimer = setInterval(() => {
+        const imgs = $$('.hero-slide', wrap);
+        if (imgs.length < 2) return;
+        const current = imgs.findIndex(im => im.classList.contains('is-active'));
+        const from = current === -1 ? 0 : current;
+        const next = (from + 1) % imgs.length;
+        imgs[from].classList.remove('is-active');
+        imgs[next].classList.add('is-active');
+      }, 5000);
+    }
+  }
+
+  /* ---------- category options ---------- */
+  function renderCategoryOptions() {
+    const select = $('#category-filter');
+    const datalist = $('#category-list');
+    const categories = Array.from(new Set(state.products.map(p => p.category).filter(Boolean)));
+    const prevValue = select.value;
+
+    select.innerHTML = '';
+    const allOpt = document.createElement('option');
+    allOpt.value = '';
+    allOpt.textContent = t('همه دسته‌ها', 'All categories');
+    select.appendChild(allOpt);
+    categories.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat; opt.textContent = cat;
+      select.appendChild(opt);
+    });
+    select.value = categories.includes(prevValue) ? prevValue : '';
+
+    datalist.innerHTML = '';
+    categories.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      datalist.appendChild(opt);
+    });
+  }
+
+  /* ---------- filtering ---------- */
+  function getFilteredProducts() {
+    const q = $('#search-input').value.trim().toLowerCase();
+    const cat = $('#category-filter').value;
+    const stockOnly = $('#stock-filter').checked;
+
+    return state.products.filter(p => {
+      if (stockOnly && !p.in_stock) return false;
+      if (cat && p.category !== cat) return false;
+      if (q) {
+        const hay = `${p.name_fa} ${p.name_en} ${p.category}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }
+
+  /* ---------- product grid ---------- */
+
+  /* ---------- social send channels (used by the invoice modal) ---------- */
+  const SEND_CHANNELS = [
+    {
+      key: 'wa', label: ['واتس‌اپ', 'WhatsApp'], icon: 'message-circle', bg: '#25d366',
+      configured: () => !!cardDigits(state.settings.wa),
+      send: (msg) => window.open(`https://wa.me/${cardDigits(state.settings.wa)}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener')
+    },
+    {
+      key: 'telegram', label: ['تلگرام', 'Telegram'], icon: 'send', bg: '#26a5e4',
+      configured: () => !!(state.settings.telegram || '').trim(),
+      send: (msg) => {
+        navigator.clipboard?.writeText(msg).then(() => {
+          toast(t('پیام فاکتور کپی شد؛ آن را در تلگرام بفرستید.', 'Invoice message copied — paste it in Telegram.'));
+        }).catch(() => {});
+        window.open(`https://t.me/${encodeURIComponent(state.settings.telegram || '')}`, '_blank', 'noopener');
+      }
+    },
+    {
+      key: 'eitaa', label: ['ایتا', 'Eitaa'], icon: 'send', bg: '#8b5cf6',
+      configured: () => !!(state.settings.eitaa || '').trim(),
+      send: (msg) => {
+        navigator.clipboard?.writeText(msg).then(() => {
+          toast(t('پیام فاکتور کپی شد؛ آن را در ایتا بفرستید.', 'Invoice message copied — paste it in Eitaa.'));
+        }).catch(() => {});
+        window.open(`https://eitaa.com/${encodeURIComponent(state.settings.eitaa || '')}`, '_blank', 'noopener');
+      }
+    },
+    {
+      key: 'instagram', label: ['اینستاگرام', 'Instagram'], icon: 'instagram', bg: '#d6249f',
+      configured: () => !!(state.settings.instagram || '').trim(),
+      send: (msg) => {
+        navigator.clipboard?.writeText(msg).then(() => {
+          toast(t('پیام فاکتور کپی شد؛ آن را در اینستاگرام بفرستید.', 'Invoice message copied — paste it in Instagram.'));
+        }).catch(() => {});
+        window.open(`https://instagram.com/${encodeURIComponent(state.settings.instagram || '')}`, '_blank', 'noopener');
+      }
+    }
+  ];
+
+  function renderProductGrid() {
+    const grid = $('#product-grid');
+    const list = getFilteredProducts();
+    grid.innerHTML = '';
+
+    $('#empty-state').classList.toggle('is-hidden', list.length !== 0);
+    $('#product-count').textContent = state.lang === 'fa'
+      ? `${faDigits(list.length)} محصول`
+      : `${list.length} product${list.length === 1 ? '' : 's'}`;
+
+    const tpl = $('#product-template');
+    const frag = document.createDocumentFragment();
+
+    list.forEach(p => {
+      const node = tpl.content.cloneNode(true);
+      const article = node.querySelector('.product-card');
+      article.dataset.id = p.id;
+
+      const imgs = node.querySelectorAll('.gallery-img');
+      const images = (p.images || []).filter(Boolean).slice(0, 3);
+      imgs.forEach((img, i) => {
+        if (images[i]) {
+          img.src = images[i];
+          img.alt = state.lang === 'fa' ? p.name_fa : p.name_en;
+          img.style.display = '';
+          img.classList.toggle('active-img', i === 0);
+        } else {
+          img.style.display = 'none';
+        }
+      });
+
+      const dotsWrap = node.querySelector('.gallery-dots');
+      if (images.length > 1) {
+        images.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'gallery-dot' + (i === 0 ? ' active-dot' : '');
+          dot.dataset.index = i;
+          dot.setAttribute('aria-label', t(`تصویر ${faDigits(i + 1)}`, `Image ${i + 1}`));
+          dotsWrap.appendChild(dot);
+        });
+      }
+
+      node.querySelector('.product-category').textContent = p.category || '';
+      node.querySelectorAll('.product-name').forEach(el => {
+        el.textContent = el.classList.contains('dynamic-fa') ? p.name_fa : p.name_en;
+      });
+      node.querySelectorAll('.product-description').forEach(el => {
+        el.textContent = el.classList.contains('dynamic-fa') ? p.description_fa : p.description_en;
+      });
+
+      const discount = Math.min(90, Math.max(0, Number(p.discount_percent) || 0));
+      const rawPrice = Number(String(p.price).replace(/[^\d.]/g, '')) || 0;
+      const priceOriginalEl = node.querySelector('.product-price-original');
+      const priceEl = node.querySelector('.product-price');
+      const ribbon = node.querySelector('.discount-ribbon');
+      if (discount > 0 && rawPrice > 0) {
+        const finalPrice = Math.round(rawPrice * (1 - discount / 100));
+        priceOriginalEl.textContent = formatPrice(rawPrice);
+        priceOriginalEl.classList.remove('is-hidden');
+        priceEl.textContent = formatPrice(finalPrice);
+        ribbon.textContent = state.lang === 'fa' ? `٪${faDigits(discount)} تخفیف` : `${discount}% OFF`;
+        ribbon.classList.remove('is-hidden');
+      } else {
+        priceOriginalEl.classList.add('is-hidden');
+        priceEl.textContent = formatPrice(p.price);
+        ribbon.classList.add('is-hidden');
+      }
+      node.querySelector('.product-weight').textContent = p.weight || '';
+
+      const stockEl = node.querySelector('.product-stock');
+      const orderActions = node.querySelector('.order-actions');
+      const comingSoonBtn = node.querySelector('.coming-soon-btn');
+      const comingSoonOverlay = node.querySelector('.coming-soon-overlay');
+      if (p.coming_soon) {
+        stockEl.textContent = t('به‌زودی', 'Coming Soon');
+        stockEl.classList.add('badge-soon');
+        comingSoonOverlay.classList.remove('is-hidden');
+        orderActions.classList.add('is-hidden');
+        comingSoonBtn.classList.remove('is-hidden');
+      } else {
+        stockEl.textContent = p.in_stock ? t('موجود', 'In stock') : t('ناموجود', 'Out of stock');
+        stockEl.classList.add(p.in_stock ? 'badge-on' : 'badge-off');
+        comingSoonOverlay.classList.add('is-hidden');
+        orderActions.classList.remove('is-hidden');
+        comingSoonBtn.classList.add('is-hidden');
+      }
+
+      frag.appendChild(node);
+    });
+
+    grid.appendChild(frag);
+    if (window.lucide) lucide.createIcons();
+  }
+
+  /* ---------- grid interactions (event delegation) ---------- */
+  $('#product-grid').addEventListener('click', (e) => {
+    const dot = e.target.closest('.gallery-dot');
+    if (dot) {
+      const card = dot.closest('.product-card');
+      const index = Number(dot.dataset.index);
+      const imgs = $$('.gallery-img', card);
+      const dots = $$('.gallery-dot', card);
+      imgs.forEach((img, i) => img.classList.toggle('active-img', i === index));
+      dots.forEach((d, i) => d.classList.toggle('active-dot', i === index));
+      return;
+    }
+
+    const orderBtn = e.target.closest('.add-to-cart');
+    if (orderBtn) {
+      const card = orderBtn.closest('.product-card');
+      const product = state.products.find(p => p.id === card.dataset.id);
+      if (!product) return;
+      addToCart(product.id, 1);
+      toast(t('به سبد خرید افزوده شد.', 'Added to cart.'));
+      return;
+    }
+
+    const galleryImg = e.target.closest('.gallery-img');
+    if (galleryImg) {
+      const card = galleryImg.closest('.product-card');
+      const product = state.products.find(p => p.id === card.dataset.id);
+      if (!product) return;
+      const images = (product.images || []).filter(Boolean).slice(0, 3);
+      if (!images.length) return;
+      const shownImgs = $$('.gallery-img', card).filter(img => img.style.display !== 'none');
+      const startIndex = Math.max(0, shownImgs.indexOf(galleryImg));
+      openLightbox(images, startIndex, state.lang === 'fa' ? product.name_fa : product.name_en);
+    }
+  });
+
+  /* ---------- cart ---------- */
+  function productPrice(p) {
+    const discount = Math.min(90, Math.max(0, Number(p.discount_percent) || 0));
+    const raw = Number(String(p.price).replace(/[^\d.]/g, '')) || 0;
+    return discount > 0 ? Math.round(raw * (1 - discount / 100)) : raw;
+  }
+
+  function addToCart(productId, qty) {
+    const line = state.cart.find(c => c.productId === productId);
+    if (line) line.qty += qty;
+    else state.cart.push({ productId, qty });
+    saveCart();
+    refreshCartBadge();
+  }
+
+  function setCartQty(productId, qty) {
+    const line = state.cart.find(c => c.productId === productId);
+    if (!line) return;
+    if (qty <= 0) {
+      state.cart = state.cart.filter(c => c.productId !== productId);
+    } else {
+      line.qty = qty;
+    }
+    saveCart();
+    refreshCartBadge();
+    renderCartModal();
+  }
+
+  function removeFromCart(productId) {
+    state.cart = state.cart.filter(c => c.productId !== productId);
+    saveCart();
+    refreshCartBadge();
+    renderCartModal();
+  }
+
+  function cartLines() {
+    return state.cart
+      .map(c => ({ product: state.products.find(p => p.id === c.productId), qty: c.qty }))
+      .filter(l => l.product);
+  }
+
+  function cartCount() {
+    return state.cart.reduce((sum, c) => sum + c.qty, 0);
+  }
+
+  function cartTotal() {
+    return cartLines().reduce((sum, l) => sum + productPrice(l.product) * l.qty, 0);
+  }
+
+  function refreshCartBadge() {
+    const badge = $('#cart-count-badge');
+    const count = cartCount();
+    badge.textContent = state.lang === 'fa' ? faDigits(count) : String(count);
+    badge.classList.toggle('is-hidden', count === 0);
+  }
+
+  function renderCartModal() {
+    const listEl = $('#cart-items-list');
+    const lines = cartLines();
+    listEl.innerHTML = '';
+    $('#cart-empty').classList.toggle('is-hidden', lines.length !== 0);
+    $('#cart-checkout-btn').disabled = lines.length === 0;
+    $('#cart-checkout-btn').style.opacity = lines.length === 0 ? '.6' : '1';
+
+    lines.forEach(l => {
+      const row = document.createElement('div');
+      row.className = 'cart-row';
+      const img = (l.product.images || []).filter(Boolean)[0] || '';
+      const name = state.lang === 'fa' ? l.product.name_fa : l.product.name_en;
+      const lineTotal = formatPrice(productPrice(l.product) * l.qty);
+      row.innerHTML = `
+        <img src="${img}" alt="">
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-sm truncate">${name}</p>
+          <p class="text-xs mt-0.5" style="color:var(--paprika)">${lineTotal}</p>
+        </div>
+        <div class="qty-stepper">
+          <button type="button" class="qty-minus" aria-label="-">−</button>
+          <span>${state.lang === 'fa' ? faDigits(l.qty) : l.qty}</span>
+          <button type="button" class="qty-plus" aria-label="+">+</button>
+        </div>
+        <button type="button" class="cart-remove-btn" aria-label="remove"><i data-lucide="trash-2" width="17" height="17" aria-hidden="true"></i></button>
+      `;
+      row.querySelector('.qty-minus').addEventListener('click', () => setCartQty(l.product.id, l.qty - 1));
+      row.querySelector('.qty-plus').addEventListener('click', () => setCartQty(l.product.id, l.qty + 1));
+      row.querySelector('.cart-remove-btn').addEventListener('click', () => removeFromCart(l.product.id));
+      listEl.appendChild(row);
+    });
+
+    $('#cart-total').textContent = formatPrice(cartTotal());
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function openCartModal() { renderCartModal(); $('#cart-modal').classList.remove('is-hidden'); }
+  function closeCartModal() { $('#cart-modal').classList.add('is-hidden'); }
+
+  $('#cart-toggle').addEventListener('click', openCartModal);
+  $('#cart-modal-close').addEventListener('click', closeCartModal);
+  $('#cart-modal').addEventListener('click', (e) => { if (e.target.id === 'cart-modal') closeCartModal(); });
+
+  /* ---------- checkout ---------- */
+  function openCheckoutModal() {
+    if (!cartLines().length) return;
+    const user = currentUser();
+    $('#checkout-name').value = user ? user.name : '';
+    $('#checkout-phone').value = user ? user.phone : '';
+    $('#checkout-address').value = user ? user.address : '';
+    $('#checkout-total').textContent = formatPrice(cartTotal());
+    closeCartModal();
+    $('#checkout-modal').classList.remove('is-hidden');
+  }
+  function closeCheckoutModal() { $('#checkout-modal').classList.add('is-hidden'); }
+
+  $('#cart-checkout-btn').addEventListener('click', openCheckoutModal);
+  $('#checkout-cancel').addEventListener('click', closeCheckoutModal);
+  $('#checkout-modal').addEventListener('click', (e) => { if (e.target.id === 'checkout-modal') closeCheckoutModal(); });
+
+  $('#checkout-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const lines = cartLines();
+    if (!lines.length) return;
+    const name = $('#checkout-name').value.trim();
+    const phone = $('#checkout-phone').value.trim();
+    const address = $('#checkout-address').value.trim();
+    if (!name || !phone || !address) return;
+
+    const order = {
+      id: 'ORD-' + Date.now().toString(36).toUpperCase(),
+      userId: state.currentUserId,
+      customerName: name,
+      phone,
+      address,
+      items: lines.map(l => ({
+        productId: l.product.id,
+        name_fa: l.product.name_fa,
+        name_en: l.product.name_en,
+        image: (l.product.images || []).filter(Boolean)[0] || '',
+        unitPrice: productPrice(l.product),
+        qty: l.qty
+      })),
+      total: cartTotal(),
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    };
+
+    state.orders.push(order);
+    saveOrders();
+
+    // Keep the account's saved contact info up to date for next time.
+    const user = currentUser();
+    if (user) {
+      user.name = name;
+      user.phone = normalizePhone(phone);
+      user.address = address;
+      saveUsers();
+    }
+
+    state.cart = [];
+    saveCart();
+    refreshCartBadge();
+
+    closeCheckoutModal();
+    openInvoiceModal(order);
+  });
+
+  /* ---------- invoice ---------- */
+  function orderInvoiceText(order) {
+    const lines = order.items.map((it, i) => {
+      const name = state.lang === 'fa' ? it.name_fa : it.name_en;
+      const qty = state.lang === 'fa' ? faDigits(it.qty) : it.qty;
+      return `${i + 1}) ${name} × ${qty} = ${formatPrice(it.unitPrice * it.qty)}`;
+    }).join('\n');
+    return t(
+      `فاکتور خرید ${order.id}\nنام: ${order.customerName}\nتلفن: ${order.phone}\nآدرس: ${order.address}\n\nاقلام:\n${lines}\n\nجمع کل: ${formatPrice(order.total)}\n\nاین فاکتور برای نهایی شدن سفارش ارسال می‌شود.`,
+      `Purchase Invoice ${order.id}\nName: ${order.customerName}\nPhone: ${order.phone}\nAddress: ${order.address}\n\nItems:\n${lines}\n\nTotal: ${formatPrice(order.total)}\n\nSending this invoice to finalize the order.`
+    );
+  }
+
+  function statusLabel(status) {
+    if (status === 'approved') return t('تایید شده', 'Approved');
+    if (status === 'rejected') return t('رد شده', 'Rejected');
+    return t('در انتظار تایید', 'Pending Approval');
+  }
+
+  function renderInvoiceView(order) {
+    $('#invoice-id').textContent = order.id;
+    $('#invoice-date').textContent = new Date(order.createdAt).toLocaleDateString(state.lang === 'fa' ? 'fa-IR' : 'en-US');
+    $('#invoice-name').textContent = order.customerName;
+    $('#invoice-phone').textContent = order.phone;
+    $('#invoice-address').textContent = order.address;
+    $('#invoice-total').textContent = formatPrice(order.total);
+
+    const status = order.status || 'pending';
+    const badge = $('#invoice-status-badge');
+    badge.textContent = statusLabel(status);
+    badge.className = 'invoice-status-badge status-' + status;
+
+    // Brand mark in the header: use the admin's uploaded logo if set, otherwise the leaf icon.
+    const brandMark = $('#invoice-brand-mark');
+    const logoSrc = state.settings.logo || '';
+    if (logoSrc) {
+      brandMark.innerHTML = `<img src="${logoSrc}" alt="Chiochi">`;
+    } else {
+      brandMark.innerHTML = `<i data-lucide="sprout" width="22" height="22" aria-hidden="true"></i>`;
+    }
+
+    // Approval seal: a decorative stamp bearing the store logo, shown only once
+    // the admin has approved the order — makes the finalized invoice feel official.
+    const seal = $('#invoice-seal');
+    seal.classList.toggle('is-visible', status === 'approved');
+    if (status === 'approved') {
+      const sealLogo = $('#invoice-seal-logo');
+      sealLogo.innerHTML = logoSrc
+        ? `<img src="${logoSrc}" alt="Chiochi">`
+        : `<i data-lucide="sprout" width="24" height="24" aria-hidden="true"></i>`;
+    }
+
+    const body = $('#invoice-items-body');
+    body.innerHTML = '';
+    order.items.forEach(it => {
+      const tr = document.createElement('tr');
+      const name = state.lang === 'fa' ? it.name_fa : it.name_en;
+      const qty = state.lang === 'fa' ? faDigits(it.qty) : it.qty;
+      tr.innerHTML = `<td>${name}</td><td>${qty}</td><td>${formatPrice(it.unitPrice * it.qty)}</td>`;
+      body.appendChild(tr);
+    });
+
+    // printable version
+    const brand = $('#invoice-print-brand');
+    brand.textContent = t('فروشگاه ادویه چیوچی', 'Chiochi Spice Shop');
+    const logoImgTag = logoSrc ? `<img src="${logoSrc}" alt="Chiochi" style="width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #d9a441">` : '';
+    const approvedStamp = status === 'approved'
+      ? `<div style="border:2.5px dashed #556b2f;color:#556b2f;border-radius:50%;width:78px;height:78px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.68rem;font-weight:800;transform:rotate(-12deg);flex-shrink:0">✓ تایید شده چیوچی</div>`
+      : '';
+    const rows = order.items.map(it => {
+      const name = state.lang === 'fa' ? it.name_fa : it.name_en;
+      const qty = state.lang === 'fa' ? faDigits(it.qty) : it.qty;
+      return `<tr><td style="padding:8px 6px;border-bottom:1px solid #ddd">${name}</td><td style="padding:8px 6px;border-bottom:1px solid #ddd">${qty}</td><td style="padding:8px 6px;border-bottom:1px solid #ddd">${formatPrice(it.unitPrice * it.qty)}</td></tr>`;
+    }).join('');
+    $('#invoice-print-body').innerHTML = `
+      <div style="border-bottom:3px solid #d9a441;padding-bottom:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          ${logoImgTag}
+          <div>
+            <div style="font-weight:800;font-size:1.3rem;color:#b3512f">${t('فروشگاه ادویه چیوچی', 'Chiochi Spice Shop')}</div>
+            <div style="font-size:.8rem;font-weight:700;color:#556b2f">${statusLabel(status)}</div>
+          </div>
+        </div>
+        ${approvedStamp}
+      </div>
+      <p>${t('شماره فاکتور', 'Invoice No.')}: ${order.id}</p>
+      <p>${t('تاریخ', 'Date')}: ${new Date(order.createdAt).toLocaleDateString(state.lang === 'fa' ? 'fa-IR' : 'en-US')}</p>
+      <p>${t('نام', 'Name')}: ${order.customerName}</p>
+      <p>${t('تلفن', 'Phone')}: ${order.phone}</p>
+      <p>${t('آدرس', 'Address')}: ${order.address}</p>
+      <table style="width:100%;border-collapse:collapse;margin-top:12px">
+        <thead><tr>
+          <th style="text-align:start;padding:8px 6px;border-bottom:2px solid #333">${t('محصول', 'Item')}</th>
+          <th style="text-align:start;padding:8px 6px;border-bottom:2px solid #333">${t('تعداد', 'Qty')}</th>
+          <th style="text-align:start;padding:8px 6px;border-bottom:2px solid #333">${t('جمع', 'Subtotal')}</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <p style="margin-top:12px;font-weight:bold">${t('جمع کل', 'Total')}: ${formatPrice(order.total)}</p>
+      <p style="margin-top:16px;text-align:center;color:#8a8168;font-size:.85rem">${t('با تشکر از خرید شما از چیوچی 🌿', 'Thank you for shopping with Chiochi 🌿')}</p>
+    `;
+  }
+
+  function openInvoiceModal(order, opts) {
+    opts = opts || {};
+    state.lastOrder = order;
+    renderInvoiceView(order);
+
+    // customer intro / admin intro
+    $('#invoice-intro').classList.toggle('is-hidden', !!opts.adminView);
+    $('#invoice-send-section').classList.toggle('is-hidden', !!opts.adminView);
+    $('#invoice-share-btn').classList.toggle('is-hidden', true);
+
+    const adminActions = $('#invoice-admin-actions');
+    if (opts.adminView && (order.status || 'pending') === 'pending') {
+      adminActions.classList.remove('is-hidden');
+      $('#invoice-approve-btn').onclick = () => { approveOrder(order.id); closeInvoiceModal(); };
+      $('#invoice-reject-btn').onclick = () => { rejectOrder(order.id); closeInvoiceModal(); };
+    } else {
+      adminActions.classList.add('is-hidden');
+    }
+
+    if (!opts.adminView) {
+      const msg = orderInvoiceText(order);
+      const mainImage = order.items[0] && order.items[0].image;
+      const shareBtn = $('#invoice-share-btn');
+      shareBtn.classList.add('is-hidden');
+      shareBtn.onclick = null;
+      if (navigator.share) {
+        const shareData = { text: msg, title: order.id };
+        const tryShareWithImage = mainImage
+          ? fetch(mainImage).then(r => r.blob()).then(blob => {
+              const ext = (blob.type.split('/')[1] || 'jpg').replace('jpeg', 'jpg');
+              shareData.files = [new File([blob], `invoice-${order.id}.${ext}`, { type: blob.type })];
+            }).catch(() => {})
+          : Promise.resolve();
+        tryShareWithImage.then(() => {
+          const canShareThis = !navigator.canShare || navigator.canShare(shareData);
+          if (canShareThis) {
+            shareBtn.classList.remove('is-hidden');
+            shareBtn.onclick = () => navigator.share(shareData).catch(() => {});
+            if (window.lucide) lucide.createIcons();
+          }
+        });
+      }
+
+      const wrap = $('#invoice-modal-channels');
+      wrap.innerHTML = '';
+      SEND_CHANNELS.filter(ch => ch.configured()).forEach(ch => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'order-btn focus-ring rounded-xl px-4 py-3 text-sm font-bold flex items-center justify-center gap-2';
+        btn.style.background = ch.bg;
+        btn.style.color = '#fff';
+        btn.innerHTML = `<i data-lucide="${ch.icon}" width="17" height="17" aria-hidden="true"></i><span>${t(ch.label[0], ch.label[1])}</span>`;
+        btn.addEventListener('click', () => ch.send(msg));
+        wrap.appendChild(btn);
+      });
+      if (!wrap.children.length) {
+        const p = document.createElement('p');
+        p.className = 'text-sm text-center';
+        p.style.color = '#706a5c';
+        p.textContent = t('در حال حاضر کانالی برای ارسال فاکتور تنظیم نشده.', 'No channel is configured to send the invoice yet.');
+        wrap.appendChild(p);
+      }
+    }
+
+    if (window.lucide) lucide.createIcons();
+    $('#invoice-modal').classList.remove('is-hidden');
+  }
+
+  function closeInvoiceModal() { $('#invoice-modal').classList.add('is-hidden'); }
+
+  $('#invoice-modal-close').addEventListener('click', closeInvoiceModal);
+  $('#invoice-modal').addEventListener('click', (e) => { if (e.target.id === 'invoice-modal') closeInvoiceModal(); });
+  $('#invoice-print-btn').addEventListener('click', () => window.print());
+
+  $('#invoice-download-btn').addEventListener('click', async () => {
+    const order = state.lastOrder;
+    if (!order) return;
+    const btn = $('#invoice-download-btn');
+    if (!window.html2canvas || !window.jspdf) {
+      toast(t('کتابخانهٔ دانلود هنوز بارگذاری نشده؛ چند لحظه دیگر دوباره تلاش کنید.', 'Download library is still loading — please try again in a moment.'));
+      return;
+    }
+    const originalHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<span>${t('در حال آماده‌سازی…', 'Preparing…')}</span>`;
+    try {
+      const node = $('#invoice-view');
+      const canvas = await window.html2canvas(node, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save(`chiochi-invoice-${order.id}.pdf`);
+    } catch (err) {
+      toast(t('دانلود فاکتور با خطا مواجه شد.', 'Failed to download the invoice.'));
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+      if (window.lucide) lucide.createIcons();
+    }
+  });
+
+  /* ---------- auth ui ---------- */
+  let forgotUserId = null;
+
+  function showAuthView(view) {
+    state.authTab = view;
+    const isTabbed = view === 'login' || view === 'register';
+    $('.auth-tabs').classList.toggle('is-hidden', !isTabbed);
+    $('#auth-tab-login').classList.toggle('active-tab', view === 'login');
+    $('#auth-tab-register').classList.toggle('active-tab', view === 'register');
+    $('#login-form').classList.toggle('is-hidden', view !== 'login');
+    $('#register-form').classList.toggle('is-hidden', view !== 'register');
+    $('#forgot-step1-form').classList.toggle('is-hidden', view !== 'forgot1');
+    $('#forgot-step2-form').classList.toggle('is-hidden', view !== 'forgot2');
+    $('#login-error').classList.add('is-hidden');
+    $('#register-error').classList.add('is-hidden');
+    $('#forgot-step1-error').classList.add('is-hidden');
+    $('#forgot-step2-error').classList.add('is-hidden');
+  }
+  function setAuthTab(tabName) { showAuthView(tabName); }
+  $('#auth-tab-login').addEventListener('click', () => showAuthView('login'));
+  $('#auth-tab-register').addEventListener('click', () => showAuthView('register'));
+
+  function openAuthModal() {
+    showAuthView('login');
+    $('#login-form').reset();
+    $('#register-form').reset();
+    $('#forgot-step1-form').reset();
+    $('#forgot-step2-form').reset();
+    forgotUserId = null;
+    $('#auth-modal').classList.remove('is-hidden');
+  }
+  function closeAuthModal() { $('#auth-modal').classList.add('is-hidden'); }
+
+  $('#auth-modal-cancel').addEventListener('click', closeAuthModal);
+  $('#auth-modal').addEventListener('click', (e) => { if (e.target.id === 'auth-modal') closeAuthModal(); });
+
+  $('#forgot-password-link').addEventListener('click', () => {
+    $('#forgot-phone').value = $('#login-phone').value;
+    showAuthView('forgot1');
+  });
+  $('#forgot-back-to-login-1').addEventListener('click', () => showAuthView('login'));
+  $('#forgot-back-to-login-2').addEventListener('click', () => showAuthView('login'));
+
+  $('#forgot-step1-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const phone = $('#forgot-phone').value.trim();
+    const user = findUserByPhone(phone);
+    if (!user) {
+      $('#forgot-step1-error').classList.remove('is-hidden');
+      return;
+    }
+    forgotUserId = user.id;
+    $('#forgot-address').value = '';
+    $('#forgot-new-password').value = '';
+    $('#forgot-new-password-confirm').value = '';
+    showAuthView('forgot2');
+  });
+
+  $('#forgot-step2-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const user = state.users.find(u => u.id === forgotUserId);
+    const errEl = $('#forgot-step2-error');
+    if (!user) { showAuthView('forgot1'); return; }
+
+    const normalize = (s) => String(s || '').trim().replace(/\s+/g, ' ').toLowerCase();
+    const enteredAddress = $('#forgot-address').value;
+    if (!normalize(enteredAddress) || normalize(enteredAddress) !== normalize(user.address)) {
+      errEl.textContent = t('آدرس واردشده با آدرس ثبت‌شده مطابقت ندارد.', 'The address you entered does not match our records.');
+      errEl.classList.remove('is-hidden');
+      return;
+    }
+    const newPass = $('#forgot-new-password').value;
+    const confirmPass = $('#forgot-new-password-confirm').value;
+    if (newPass.length < 4) {
+      errEl.textContent = t('رمز عبور باید حداقل ۴ کاراکتر باشد.', 'Password must be at least 4 characters.');
+      errEl.classList.remove('is-hidden');
+      return;
+    }
+    if (newPass !== confirmPass) {
+      errEl.textContent = t('رمز عبور جدید و تکرار آن یکسان نیستند.', 'New password and confirmation do not match.');
+      errEl.classList.remove('is-hidden');
+      return;
+    }
+
+    const hash = await sha256(newPass);
+    user.passHash = hash || newPass;
+    saveUsers();
+    forgotUserId = null;
+
+    state.currentUserId = user.id;
+    saveSession();
+    refreshAccountUI();
+    closeAuthModal();
+    toast(t('رمز عبور با موفقیت بازیابی شد و وارد حساب شدید.', 'Password reset successfully — you are now signed in.'));
+  });
+
+  $('#login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const phone = $('#login-phone').value.trim();
+    const password = $('#login-password').value;
+    const result = await loginUser(phone, password);
+    if (!result.ok) { $('#login-error').classList.remove('is-hidden'); return; }
+    refreshAccountUI();
+    closeAuthModal();
+    toast(t('خوش آمدید!', 'Welcome back!'));
+  });
+
+  $('#register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = $('#reg-name').value.trim();
+    const phone = $('#reg-phone').value.trim();
+    const address = $('#reg-address').value.trim();
+    const password = $('#reg-password').value;
+    if (!name || !phone || password.length < 4) {
+      $('#register-error').textContent = t('لطفاً همه فیلدهای ضروری را کامل کنید (رمز حداقل ۴ کاراکتر).', 'Please fill all required fields (password min 4 characters).');
+      $('#register-error').classList.remove('is-hidden');
+      return;
+    }
+    const result = await registerUser({ name, phone, address, password });
+    if (!result.ok) {
+      $('#register-error').textContent = result.error;
+      $('#register-error').classList.remove('is-hidden');
+      return;
+    }
+    refreshAccountUI();
+    closeAuthModal();
+    toast(t('حساب کاربری با موفقیت ساخته شد.', 'Account created successfully.'));
+  });
+
+  /* ---------- account panel ---------- */
+  function renderAccountOrders() {
+    const user = currentUser();
+    const list = $('#account-orders-list');
+    list.innerHTML = '';
+    const myOrders = user ? state.orders.filter(o => o.userId === user.id).slice().reverse() : [];
+    $('#account-orders-empty').classList.toggle('is-hidden', myOrders.length !== 0);
+    myOrders.forEach(order => {
+      const card = document.createElement('div');
+      card.className = 'account-order-card';
+      const date = new Date(order.createdAt).toLocaleDateString(state.lang === 'fa' ? 'fa-IR' : 'en-US');
+      const status = order.status || 'pending';
+      card.innerHTML = `
+        <div class="flex items-center justify-between gap-3 mb-2">
+          <span class="font-bold text-sm" dir="ltr">${order.id}</span>
+          <span class="status-pill status-${status}">${statusLabel(status)}</span>
+        </div>
+        <p class="text-xs mb-2" style="color:#706a5c">${date}</p>
+        <p class="text-sm mb-2" style="color:#5e594d">${order.items.length} ${t('قلم', 'item(s)')} · <span style="color:var(--paprika);font-weight:700">${formatPrice(order.total)}</span></p>
+        <button type="button" class="view-invoice-btn btn-outline focus-ring rounded-lg px-3 py-2 text-xs">
+          ${t('مشاهده فاکتور', 'View Invoice')}</button>
+      `;
+      card.querySelector('.view-invoice-btn').addEventListener('click', () => {
+        closeAccountModal();
+        openInvoiceModal(order);
+      });
+      list.appendChild(card);
+    });
+  }
+
+  function openAccountModal() {
+    const user = currentUser();
+    if (!user) { openAuthModal(); return; }
+    $('#account-name').value = user.name;
+    $('#account-phone').value = user.phone;
+    $('#account-address').value = user.address || '';
+    renderAccountOrders();
+    $('#account-modal').classList.remove('is-hidden');
+  }
+  function closeAccountModal() { $('#account-modal').classList.add('is-hidden'); }
+
+  $('#account-toggle').addEventListener('click', () => {
+    currentUser() ? openAccountModal() : openAuthModal();
+  });
+  $('#account-modal-close').addEventListener('click', closeAccountModal);
+  $('#account-modal').addEventListener('click', (e) => { if (e.target.id === 'account-modal') closeAccountModal(); });
+
+  $('#account-save-btn').addEventListener('click', () => {
+    const user = currentUser();
+    if (!user) return;
+    user.name = $('#account-name').value.trim() || user.name;
+    user.phone = normalizePhone($('#account-phone').value.trim() || user.phone);
+    user.address = $('#account-address').value.trim();
+    saveUsers();
+    refreshAccountUI();
+    toast(t('اطلاعات ذخیره شد.', 'Info saved.'));
+  });
+
+  $('#logout-btn').addEventListener('click', () => {
+    logoutUser();
+    refreshAccountUI();
+    closeAccountModal();
+    toast(t('از حساب کاربری خارج شدید.', 'Signed out.'));
+  });
+
+  /* ---------- lightbox (enlarged product image viewer) ---------- */
+  function renderLightboxImage() {
+    const wrap = $('#lightbox-img-wrap');
+    $$('.lightbox-img', wrap).forEach(img => img.remove());
+    state.lightbox.images.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'lightbox-img' + (i === state.lightbox.index ? ' active-img' : '');
+      img.alt = state.lightbox.name;
+      wrap.insertBefore(img, $('#lightbox-prev'));
+    });
+    const multi = state.lightbox.images.length > 1;
+    $('#lightbox-prev').classList.toggle('is-hidden', !multi);
+    $('#lightbox-next').classList.toggle('is-hidden', !multi);
+
+    const dotsWrap = $('#lightbox-dots');
+    dotsWrap.innerHTML = '';
+    if (multi) {
+      state.lightbox.images.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'gallery-dot' + (i === state.lightbox.index ? ' active-dot' : '');
+        dot.setAttribute('aria-label', t(`تصویر ${faDigits(i + 1)}`, `Image ${i + 1}`));
+        dot.addEventListener('click', () => { state.lightbox.index = i; renderLightboxImage(); });
+        dotsWrap.appendChild(dot);
+      });
+    }
+    $('#lightbox-caption').textContent = state.lightbox.name;
+  }
+
+  function openLightbox(images, index, name) {
+    state.lightbox = { images, index, name };
+    renderLightboxImage();
+    $('#lightbox').classList.remove('is-hidden');
+    document.body.style.overflow = 'hidden';
+    $('#lightbox-close').focus();
+  }
+
+  function closeLightbox() {
+    $('#lightbox').classList.add('is-hidden');
+    document.body.style.overflow = '';
+  }
+
+  function lightboxStep(delta) {
+    const n = state.lightbox.images.length;
+    if (!n) return;
+    state.lightbox.index = (state.lightbox.index + delta + n) % n;
+    renderLightboxImage();
+  }
+
+  $('#lightbox-close').addEventListener('click', closeLightbox);
+  $('#lightbox-prev').addEventListener('click', () => lightboxStep(-1));
+  $('#lightbox-next').addEventListener('click', () => lightboxStep(1));
+  $('#lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if ($('#lightbox').classList.contains('is-hidden')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') lightboxStep(state.lang === 'fa' ? 1 : -1);
+    else if (e.key === 'ArrowRight') lightboxStep(state.lang === 'fa' ? -1 : 1);
+  });
+
+  /* ---------- admin: product list ---------- */
+  function renderAdminList() {
+    const wrap = $('#admin-product-list');
+    wrap.innerHTML = '';
+    $('#admin-empty').classList.toggle('is-hidden', state.products.length !== 0);
+
+    const tpl = $('#admin-product-template');
+    const frag = document.createDocumentFragment();
+
+    state.products.forEach(p => {
+      const node = tpl.content.cloneNode(true);
+      const row = node.querySelector('div.rounded-2xl');
+      row.dataset.id = p.id;
+      node.querySelectorAll('.admin-product-name').forEach(el => {
+        el.textContent = el.classList.contains('dynamic-fa') ? p.name_fa : p.name_en;
+      });
+      const discount = Math.min(90, Math.max(0, Number(p.discount_percent) || 0));
+      const metaParts = [
+        p.category || '—',
+        formatPrice(p.price),
+        p.coming_soon ? t('به‌زودی', 'Coming Soon') : (p.in_stock ? t('موجود', 'In stock') : t('ناموجود', 'Out of stock'))
+      ];
+      if (discount > 0) metaParts.push(state.lang === 'fa' ? `٪${faDigits(discount)} تخفیف` : `${discount}% off`);
+      node.querySelector('.admin-product-meta').textContent = metaParts.join(' · ');
+
+      const isConfirming = state.deleteConfirmId === p.id;
+      node.querySelector('.delete-product').classList.toggle('is-hidden', isConfirming);
+      node.querySelector('.edit-product').classList.toggle('is-hidden', isConfirming);
+      node.querySelector('.confirm-delete').classList.toggle('is-hidden', !isConfirming);
+      node.querySelector('.cancel-delete').classList.toggle('is-hidden', !isConfirming);
+
+      frag.appendChild(node);
+    });
+
+    wrap.appendChild(frag);
+  }
+
+  function renderAdminUsersList() {
+    const wrap = $('#admin-users-list');
+    wrap.innerHTML = '';
+    $('#admin-users-empty').classList.toggle('is-hidden', state.users.length !== 0);
+
+    state.users.slice().reverse().forEach(u => {
+      const orderCount = state.orders.filter(o => o.userId === u.id).length;
+      const joined = u.createdAt ? new Date(u.createdAt).toLocaleDateString(state.lang === 'fa' ? 'fa-IR' : 'en-US') : '—';
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = '1px solid rgba(93,85,60,.1)';
+      tr.innerHTML = `
+        <td class="py-2.5 pe-3 font-semibold">${escapeHtml(u.name || '—')}</td>
+        <td class="py-2.5 pe-3" dir="ltr">${escapeHtml(u.phone || '—')}</td>
+        <td class="py-2.5 pe-3" style="color:#5e594d;max-width:220px">${escapeHtml(u.address || '—')}</td>
+        <td class="py-2.5 pe-3" style="color:#706a5c">${joined}</td>
+        <td class="py-2.5 pe-3">${state.lang === 'fa' ? faDigits(orderCount) : orderCount}</td>
+      `;
+      wrap.appendChild(tr);
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function approveOrder(orderId) {
+    const order = state.orders.find(o => o.id === orderId);
+    if (!order) return;
+    order.status = 'approved';
+    saveOrders();
+    renderAdminOrdersList();
+    toast(t('سفارش تایید و فاکتور نهایی شد.', 'Order approved — invoice finalized.'));
+  }
+
+  function rejectOrder(orderId) {
+    const order = state.orders.find(o => o.id === orderId);
+    if (!order) return;
+    order.status = 'rejected';
+    saveOrders();
+    renderAdminOrdersList();
+    toast(t('سفارش رد شد.', 'Order rejected.'));
+  }
+
+  function renderAdminOrdersList() {
+    const wrap = $('#admin-orders-list');
+    wrap.innerHTML = '';
+    const orders = state.orders.slice().reverse();
+    $('#admin-orders-empty').classList.toggle('is-hidden', orders.length !== 0);
+
+    orders.forEach(order => {
+      const status = order.status || 'pending';
+      const date = new Date(order.createdAt).toLocaleDateString(state.lang === 'fa' ? 'fa-IR' : 'en-US');
+      const itemsSummary = order.items.map(it => {
+        const name = state.lang === 'fa' ? it.name_fa : it.name_en;
+        const qty = state.lang === 'fa' ? faDigits(it.qty) : it.qty;
+        return `${name} × ${qty}`;
+      }).join('، ');
+
+      const card = document.createElement('div');
+      card.className = 'admin-order-card';
+      card.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <span class="font-bold text-sm" dir="ltr">${escapeHtml(order.id)}</span>
+          <span class="status-pill status-${status}">${statusLabel(status)}</span>
+        </div>
+        <p class="text-sm font-semibold">${escapeHtml(order.customerName)} · <span dir="ltr">${escapeHtml(order.phone)}</span></p>
+        <p class="text-xs mt-1" style="color:#8a8168">${date}</p>
+        <p class="text-sm mt-2" style="color:#5e594d">${escapeHtml(itemsSummary)}</p>
+        <div class="flex items-center justify-between gap-3 mt-3">
+          <span class="font-extrabold text-sm" style="color:var(--paprika)">${formatPrice(order.total)}</span>
+          <div class="flex gap-2">
+            ${status === 'pending' ? `
+              <button type="button" class="approve-order-btn focus-ring rounded-lg px-3 py-1.5 text-xs font-bold" style="background:var(--olive);color:#fff">${t('تایید', 'Approve')}</button>
+              <button type="button" class="reject-order-btn focus-ring rounded-lg px-3 py-1.5 text-xs font-bold" style="background:var(--paprika);color:#fff">${t('رد', 'Reject')}</button>
+            ` : ''}
+            <button type="button" class="view-order-btn btn-outline focus-ring rounded-lg px-3 py-1.5 text-xs font-bold">${t('مشاهده فاکتور', 'View Invoice')}</button>
+          </div>
+        </div>
+      `;
+      const approveBtn = card.querySelector('.approve-order-btn');
+      if (approveBtn) approveBtn.addEventListener('click', () => approveOrder(order.id));
+      const rejectBtn = card.querySelector('.reject-order-btn');
+      if (rejectBtn) rejectBtn.addEventListener('click', () => rejectOrder(order.id));
+      card.querySelector('.view-order-btn').addEventListener('click', () => openInvoiceModal(order, { adminView: true }));
+      wrap.appendChild(card);
+    });
+  }
+
+  function populateForm(p) {
+    $('#edit-id').value = p.id;
+    $('#name-fa').value = p.name_fa || '';
+    $('#name-en').value = p.name_en || '';
+    $('#price').value = p.price || '';
+    $('#weight').value = p.weight || '';
+    $('#category').value = p.category || '';
+    $('#image-url-1').value = (p.images && p.images[0]) || '';
+    $('#image-url-2').value = (p.images && p.images[1]) || '';
+    $('#image-url-3').value = (p.images && p.images[2]) || '';
+    [1, 2, 3].forEach(i => {
+      const url = (p.images && p.images[i - 1]) || '';
+      const prev = $(`#image-preview-${i}`);
+      if (url) { prev.src = url; prev.classList.remove('is-hidden'); }
+      else { prev.classList.add('is-hidden'); prev.removeAttribute('src'); }
+    });
+    $('#description-fa').value = p.description_fa || '';
+    $('#description-en').value = p.description_en || '';
+    $('#in-stock').checked = !!p.in_stock;
+    $('#discount-percent').value = p.discount_percent ? String(p.discount_percent) : '';
+    $('#coming-soon').checked = !!p.coming_soon;
+
+    $('#form-title-add').classList.add('is-hidden');
+    $('#form-title-edit').classList.remove('is-hidden');
+    $('#cancel-edit').classList.remove('is-hidden');
+    $('#product-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function resetForm() {
+    $('#product-form').reset();
+    $('#edit-id').value = '';
+    $('#in-stock').checked = true;
+    $('#coming-soon').checked = false;
+    $('#discount-percent').value = '';
+    [1, 2, 3].forEach(i => {
+      const prev = $(`#image-preview-${i}`);
+      prev.classList.add('is-hidden');
+      prev.removeAttribute('src');
+    });
+    $('#form-title-add').classList.remove('is-hidden');
+    $('#form-title-edit').classList.add('is-hidden');
+    $('#cancel-edit').classList.add('is-hidden');
+  }
+
+  $('#admin-product-list').addEventListener('click', (e) => {
+    const row = e.target.closest('[data-id]');
+    if (!row) return;
+    const id = row.dataset.id;
+
+    if (e.target.closest('.edit-product')) {
+      const p = state.products.find(x => x.id === id);
+      if (p) populateForm(p);
+    } else if (e.target.closest('.delete-product')) {
+      state.deleteConfirmId = id;
+      renderAdminList();
+    } else if (e.target.closest('.cancel-delete')) {
+      state.deleteConfirmId = null;
+      renderAdminList();
+    } else if (e.target.closest('.confirm-delete')) {
+      state.products = state.products.filter(x => x.id !== id);
+      state.deleteConfirmId = null;
+      saveProducts();
+      renderAdminList();
+      renderProductGrid();
+      renderCategoryOptions();
+      toast(t('محصول حذف شد.', 'Product deleted.'));
+    }
+  });
+
+  /* ---------- product form submit ---------- */
+  $('#product-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target;
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    const id = $('#edit-id').value || uid();
+    const images = [$('#image-url-1').value, $('#image-url-2').value, $('#image-url-3').value]
+      .map(v => v.trim()).filter(Boolean);
+
+    const product = {
+      id,
+      name_fa: $('#name-fa').value.trim(),
+      name_en: $('#name-en').value.trim(),
+      price: $('#price').value.trim(),
+      weight: $('#weight').value.trim(),
+      category: $('#category').value.trim(),
+      description_fa: $('#description-fa').value.trim(),
+      description_en: $('#description-en').value.trim(),
+      images,
+      in_stock: $('#in-stock').checked,
+      coming_soon: $('#coming-soon').checked,
+      discount_percent: Math.min(90, Math.max(0, Math.round(Number($('#discount-percent').value) || 0)))
+    };
+
+    const idx = state.products.findIndex(p => p.id === id);
+    if (idx >= 0) state.products[idx] = product;
+    else state.products.push(product);
+
+    const persisted = saveProducts();
+    resetForm();
+    renderAdminList();
+    renderProductGrid();
+    renderCategoryOptions();
+
+    const status = $('#form-status');
+    status.textContent = persisted ? t('ذخیره شد ✓', 'Saved ✓') : t('محصول نمایش داده شد اما ذخیره نشد ⚠', 'Shown but not saved ⚠');
+    setTimeout(() => { status.textContent = ''; }, persisted ? 2000 : 4000);
+  });
+
+  $('#cancel-edit').addEventListener('click', resetForm);
+
+  /* ---------- product image uploads ---------- */
+  function syncWatermarkToggle() {
+    const hasWatermark = state.settings.watermarkType !== 'none' &&
+      ((state.settings.watermarkType === 'text' && state.settings.watermarkText) ||
+       (state.settings.watermarkType === 'image' && state.settings.watermarkImage));
+    const toggle = $('#watermark-toggle');
+    toggle.disabled = !hasWatermark;
+    if (!hasWatermark) {
+      toggle.checked = false;
+      toggle.dataset.userTouched = ''; // reset so it defaults back on next time a watermark is configured
+    } else if (!toggle.dataset.userTouched) {
+      toggle.checked = true; // re-enable automatically the first time a watermark becomes available
+    }
+    $('#watermark-hint').classList.toggle('is-hidden', hasWatermark);
+  }
+
+  $('#watermark-toggle').addEventListener('change', () => {
+    $('#watermark-toggle').dataset.userTouched = '1'; // remember the admin's own choice this session
+  });
+
+  function currentWatermarkConfig() {
+    if (!$('#watermark-toggle').checked) return null;
+    if (state.settings.watermarkType === 'none') return null;
+    return {
+      type: state.settings.watermarkType,
+      text: state.settings.watermarkText,
+      color: state.settings.watermarkColor,
+      image: state.settings.watermarkImage,
+      position: state.settings.watermarkPosition,
+      opacity: state.settings.watermarkOpacity,
+      size: state.settings.watermarkSize
+    };
+  }
+
+  [1, 2, 3].forEach(i => {
+    $(`#image-file-${i}`).addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const dataUrl = await readImageAsCompressedDataURL(file, { maxDim: 1100, quality: 0.82, watermark: currentWatermarkConfig() });
+        $(`#image-url-${i}`).value = dataUrl;
+        const prev = $(`#image-preview-${i}`);
+        prev.src = dataUrl;
+        prev.classList.remove('is-hidden');
+      } catch { toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.')); }
+      finally { e.target.value = ''; }
+    });
+  });
+
+  /* ---------- watermark settings panel ---------- */
+  function populateSelectLabels(select) {
+    Array.from(select.options).forEach(opt => {
+      opt.textContent = state.lang === 'fa' ? opt.dataset.fa : opt.dataset.en;
+    });
+  }
+
+  function refreshWatermarkFieldVisibility() {
+    const type = $('#wm-type').value;
+    $('#wm-text-fields').classList.toggle('is-hidden', type !== 'text');
+    $('#wm-image-fields').classList.toggle('is-hidden', type !== 'image');
+    $('#wm-shared-fields').classList.toggle('is-hidden', type === 'none');
+  }
+
+  function populateWatermarkForm() {
+    populateSelectLabels($('#wm-type'));
+    populateSelectLabels($('#wm-position'));
+    $('#wm-type').value = state.settings.watermarkType || 'none';
+    $('#wm-text').value = state.settings.watermarkText || '';
+    $('#wm-color').value = state.settings.watermarkColor || '#ffffff';
+    $('#wm-position').value = state.settings.watermarkPosition || 'bottom-right';
+    $('#wm-opacity').value = state.settings.watermarkOpacity ?? 70;
+    $('#wm-opacity-value').textContent = `${state.settings.watermarkOpacity ?? 70}%`;
+    $('#wm-size').value = state.settings.watermarkSize ?? 18;
+    $('#wm-size-value').textContent = `${state.settings.watermarkSize ?? 18}%`;
+
+    const preview = $('#wm-image-preview');
+    if (state.settings.watermarkImage) {
+      preview.src = state.settings.watermarkImage;
+      preview.classList.remove('is-hidden');
+      $('#wm-image-remove').classList.remove('is-hidden');
+    } else {
+      preview.classList.add('is-hidden');
+      $('#wm-image-remove').classList.add('is-hidden');
+    }
+
+    refreshWatermarkFieldVisibility();
+    syncWatermarkToggle();
+  }
+
+  $('#wm-type').addEventListener('change', refreshWatermarkFieldVisibility);
+  $('#wm-opacity').addEventListener('input', () => { $('#wm-opacity-value').textContent = `${$('#wm-opacity').value}%`; });
+  $('#wm-size').addEventListener('input', () => { $('#wm-size-value').textContent = `${$('#wm-size').value}%`; });
+
+  $('#wm-image-file').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const dataUrl = await readImageAsCompressedDataURL(file, { maxDim: 500, quality: 0.9, keepTransparency: true });
+      state.settings.watermarkImage = dataUrl;
+      if (saveSettings()) toast(t('تصویر واترمارک ذخیره شد.', 'Watermark image saved.'));
+      populateWatermarkForm();
+    } catch { toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.')); }
+    finally { e.target.value = ''; }
+  });
+
+  $('#wm-image-remove').addEventListener('click', () => {
+    state.settings.watermarkImage = '';
+    saveSettings();
+    populateWatermarkForm();
+    toast(t('تصویر واترمارک حذف شد.', 'Watermark image removed.'));
+  });
+
+  $('#save-watermark').addEventListener('click', () => {
+    state.settings.watermarkType = $('#wm-type').value;
+    state.settings.watermarkText = $('#wm-text').value.trim() || defaultSettings.watermarkText;
+    state.settings.watermarkColor = $('#wm-color').value || defaultSettings.watermarkColor;
+    state.settings.watermarkPosition = $('#wm-position').value;
+    state.settings.watermarkOpacity = Number($('#wm-opacity').value) || 70;
+    state.settings.watermarkSize = Number($('#wm-size').value) || 18;
+
+    if (state.settings.watermarkType === 'text' && !state.settings.watermarkText) {
+      toast(t('لطفاً متن واترمارک را وارد کنید.', 'Please enter watermark text.'));
+      return;
+    }
+    if (state.settings.watermarkType === 'image' && !state.settings.watermarkImage) {
+      toast(t('لطفاً یک تصویر واترمارک بارگذاری کنید.', 'Please upload a watermark image.'));
+      return;
+    }
+
+    saveSettings();
+    syncWatermarkToggle();
+    const status = $('#watermark-settings-status');
+    status.textContent = t('ذخیره شد ✓', 'Saved ✓');
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  });
+
+
+  /* ---------- settings ---------- */
+  function populateSettingsForm() {
+    $('#s-wa').value = state.settings.wa || '';
+    $('#s-telegram').value = state.settings.telegram || '';
+    $('#s-instagram').value = state.settings.instagram || '';
+    $('#s-eitaa').value = state.settings.eitaa || '';
+    $('#s-card').value = state.settings.card || '';
+    $('#s-pass').value = '';
+  }
+
+  function populateStorefrontForm() {
+    $('#s-tagline-fa').value = state.settings.taglineFa || '';
+    $('#s-tagline-en').value = state.settings.taglineEn || '';
+
+    const logoPrev = $('#logo-preview');
+    if (state.settings.logo) {
+      logoPrev.src = state.settings.logo;
+      logoPrev.classList.remove('is-hidden');
+      $('#logo-remove').classList.remove('is-hidden');
+    } else {
+      logoPrev.classList.add('is-hidden');
+      $('#logo-remove').classList.add('is-hidden');
+    }
+
+    const heroPrev = $('#hero-preview');
+    if (state.settings.heroImage) {
+      heroPrev.src = state.settings.heroImage;
+      heroPrev.classList.remove('is-hidden');
+      $('#hero-remove').classList.remove('is-hidden');
+    } else {
+      heroPrev.classList.add('is-hidden');
+      $('#hero-remove').classList.add('is-hidden');
+    }
+
+    syncWatermarkToggle();
+  }
+
+  $('#save-settings').addEventListener('click', async () => {
+    state.settings.wa = $('#s-wa').value.trim() || state.settings.wa;
+    state.settings.telegram = $('#s-telegram').value.trim() || state.settings.telegram;
+    state.settings.instagram = $('#s-instagram').value.trim() || state.settings.instagram;
+    state.settings.eitaa = $('#s-eitaa').value.trim() || state.settings.eitaa;
+    state.settings.card = $('#s-card').value.trim() || state.settings.card;
+
+    const newPass = $('#s-pass').value;
+    if (newPass) {
+      const hash = await sha256(newPass);
+      if (hash) { state.settings.passHash = hash; state.settings.pass = ''; }
+      else { state.settings.pass = newPass; } // insecure fallback (non-HTTPS context)
+    }
+
+    saveSettings();
+    refreshContactUI();
+    $('#s-pass').value = '';
+    const status = $('#settings-status');
+    status.textContent = t('ذخیره شد ✓', 'Saved ✓');
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  });
+
+  /* ---------- logo & storefront ---------- */
+  $('#logo-file').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const dataUrl = await readImageAsCompressedDataURL(file, { maxDim: 320, quality: 0.9, keepTransparency: true });
+      state.settings.logo = dataUrl;
+      if (saveSettings()) toast(t('لوگو بروزرسانی شد.', 'Logo updated.'));
+      populateStorefrontForm();
+      refreshStorefrontUI();
+    } catch { toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.')); }
+    finally { e.target.value = ''; }
+  });
+
+  $('#logo-remove').addEventListener('click', () => {
+    state.settings.logo = '';
+    saveSettings();
+    populateStorefrontForm();
+    refreshStorefrontUI();
+    toast(t('لوگو حذف شد.', 'Logo removed.'));
+  });
+
+  $('#hero-file').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const dataUrl = await readImageAsCompressedDataURL(file, { maxDim: 1600, quality: 0.8 });
+      state.settings.heroImage = dataUrl;
+      if (saveSettings()) toast(t('تصویر بنر بروزرسانی شد.', 'Banner image updated.'));
+      populateStorefrontForm();
+      refreshStorefrontUI();
+    } catch { toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.')); }
+    finally { e.target.value = ''; }
+  });
+
+  $('#hero-remove').addEventListener('click', () => {
+    state.settings.heroImage = '';
+    saveSettings();
+    populateStorefrontForm();
+    refreshStorefrontUI();
+    toast(t('تصویر بنر به حالت پیش‌فرض بازگشت.', 'Banner image reset to default.'));
+  });
+
+  $('#save-storefront').addEventListener('click', () => {
+    state.settings.taglineFa = $('#s-tagline-fa').value.trim() || defaultSettings.taglineFa;
+    state.settings.taglineEn = $('#s-tagline-en').value.trim() || defaultSettings.taglineEn;
+    saveSettings();
+    refreshStorefrontUI();
+    const status = $('#storefront-status');
+    status.textContent = t('ذخیره شد ✓', 'Saved ✓');
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  });
+
+  /* ---------- auth ---------- */
+  function openPasswordModal() {
+    $('#password-error').classList.add('is-hidden');
+    $('#admin-password').value = '';
+    $('#password-modal').classList.remove('is-hidden');
+    $('#admin-password').focus();
+  }
+  function closePasswordModal() { $('#password-modal').classList.add('is-hidden'); }
+
+  function openAdminPanel() {
+    $('#admin-panel').classList.remove('is-hidden');
+    populateSettingsForm();
+    populateStorefrontForm();
+    populateWatermarkForm();
+    renderAdminList();
+    renderAdminUsersList();
+    renderAdminOrdersList();
+    $('#admin-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function closeAdminPanel() { $('#admin-panel').classList.add('is-hidden'); }
+
+  $('#admin-toggle').addEventListener('click', () => {
+    if (state.authenticated) {
+      $('#admin-panel').classList.toggle('is-hidden');
+      if (!$('#admin-panel').classList.contains('is-hidden')) openAdminPanel();
+    } else {
+      openPasswordModal();
+    }
+  });
+
+  $('#password-cancel').addEventListener('click', closePasswordModal);
+
+  $('#password-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = $('#admin-password').value;
+    let ok = false;
+    if (state.settings.passHash) {
+      const hash = await sha256(input);
+      ok = hash === state.settings.passHash;
+    } else {
+      ok = input === state.settings.pass;
+    }
+
+    if (ok) {
+      state.authenticated = true;
+      closePasswordModal();
+      openAdminPanel();
+    } else {
+      $('#password-error').classList.remove('is-hidden');
+    }
+  });
+
+  $('#admin-close').addEventListener('click', closeAdminPanel);
+
+  /* ---------- card copy ---------- */
+  $('#card-number-display').addEventListener('click', async () => {
+    const digits = cardDigits(state.settings.card);
+    try {
+      await navigator.clipboard.writeText(digits);
+      toast(t('شماره کارت کپی شد.', 'Card number copied.'));
+    } catch {
+      toast(t('کپی ناموفق بود.', 'Copy failed.'));
+    }
+  });
+
+  /* ---------- export / import ---------- */
+  $('#export-btn').addEventListener('click', () => {
+    const payload = {
+      products: state.products,
+      settings: {
+        wa: state.settings.wa, telegram: state.settings.telegram, instagram: state.settings.instagram, eitaa: state.settings.eitaa,
+        card: state.settings.card, logo: state.settings.logo, heroImage: state.settings.heroImage,
+        taglineFa: state.settings.taglineFa, taglineEn: state.settings.taglineEn,
+        watermarkType: state.settings.watermarkType, watermarkText: state.settings.watermarkText,
+        watermarkColor: state.settings.watermarkColor, watermarkImage: state.settings.watermarkImage,
+        watermarkPosition: state.settings.watermarkPosition, watermarkOpacity: state.settings.watermarkOpacity,
+        watermarkSize: state.settings.watermarkSize
+      }
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `chiochi-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  $('#import-btn').addEventListener('click', () => $('#import-file').click());
+
+  $('#import-file').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (!Array.isArray(data.products)) throw new Error('invalid');
+        const proceed = window.confirm(t(
+          'محصولات فعلی جایگزین خواهند شد. ادامه می‌دهید؟',
+          'This will replace your current products. Continue?'
+        ));
+        if (!proceed) return;
+
+        state.products = data.products;
+        if (data.settings) {
+          state.settings.wa = data.settings.wa || state.settings.wa;
+          state.settings.telegram = data.settings.telegram || state.settings.telegram;
+          state.settings.instagram = data.settings.instagram || state.settings.instagram;
+          state.settings.eitaa = data.settings.eitaa || state.settings.eitaa;
+          state.settings.card = data.settings.card || state.settings.card;
+          state.settings.logo = data.settings.logo || state.settings.logo;
+          state.settings.heroImage = data.settings.heroImage || state.settings.heroImage;
+          state.settings.taglineFa = data.settings.taglineFa || state.settings.taglineFa;
+          state.settings.taglineEn = data.settings.taglineEn || state.settings.taglineEn;
+          state.settings.watermarkType = data.settings.watermarkType || state.settings.watermarkType;
+          state.settings.watermarkText = data.settings.watermarkText || state.settings.watermarkText;
+          state.settings.watermarkColor = data.settings.watermarkColor || state.settings.watermarkColor;
+          state.settings.watermarkImage = data.settings.watermarkImage || state.settings.watermarkImage;
+          state.settings.watermarkPosition = data.settings.watermarkPosition || state.settings.watermarkPosition;
+          state.settings.watermarkOpacity = data.settings.watermarkOpacity ?? state.settings.watermarkOpacity;
+          state.settings.watermarkSize = data.settings.watermarkSize ?? state.settings.watermarkSize;
+        }
+        saveProducts();
+        saveSettings();
+        renderAdminList();
+        renderProductGrid();
+        renderCategoryOptions();
+        refreshContactUI();
+        refreshStorefrontUI();
+        populateSettingsForm();
+        populateStorefrontForm();
+        populateWatermarkForm();
+        toast(t('بازیابی با موفقیت انجام شد.', 'Import successful.'));
+      } catch {
+        toast(t('فایل نامعتبر است.', 'Invalid file.'));
+      } finally {
+        e.target.value = '';
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  /* ---------- language toggle ---------- */
+  $('#language-toggle').addEventListener('click', () => {
+    state.lang = state.lang === 'fa' ? 'en' : 'fa';
+    applyLang();
+    renderCategoryOptions();
+    renderProductGrid();
+    renderAdminList();
+    refreshContactUI();
+    refreshCartBadge();
+    refreshAccountUI();
+    if (!$('#admin-panel').classList.contains('is-hidden')) {
+      populateSelectLabels($('#wm-type'));
+      populateSelectLabels($('#wm-position'));
+      renderAdminUsersList();
+      renderAdminOrdersList();
+    }
+  });
+
+  /* ---------- filters ---------- */
+  $('#search-input').addEventListener('input', debounce(renderProductGrid, 200));
+  $('#category-filter').addEventListener('change', renderProductGrid);
+  $('#stock-filter').addEventListener('change', renderProductGrid);
+
+  /* ---------- init ---------- */
+  function init() {
+    loadState();
+    applyLang();
+    $('#yr').textContent = new Date().getFullYear();
+    renderCategoryOptions();
+    renderProductGrid();
+    refreshContactUI();
+    refreshStorefrontUI();
+    refreshCartBadge();
+    refreshAccountUI();
+    if (window.lucide) lucide.createIcons();
+
+    // Render immediately from whatever's cached locally, then quietly refresh
+    // from the shared cloud store (if available) so every device stays in sync.
+    pullRemoteState().then(() => {
+      applyLang();
+      renderCategoryOptions();
+      renderProductGrid();
+      refreshContactUI();
+      refreshStorefrontUI();
+      refreshAccountUI();
+      if (!$('#admin-panel').classList.contains('is-hidden')) {
+        renderAdminList();
+        renderAdminUsersList();
+        renderAdminOrdersList();
+      }
+      if (window.lucide) lucide.createIcons();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
