@@ -16,6 +16,22 @@ const { getStore } = require('@netlify/blobs');
 const STORE_NAME = 'chiochi-data';
 const KEY = 'app-state';
 
+// Netlify is supposed to auto-configure Blobs inside Functions with zero
+// setup, but some sites hit a known bug (MissingBlobsEnvironmentError) where
+// that auto-configuration doesn't kick in. As a reliable fallback, we also
+// accept an explicit Site ID + Personal Access Token via environment
+// variables (set these in Site settings > Environment variables):
+//   BLOBS_SITE_ID  = your Project ID (Project configuration > General)
+//   BLOBS_TOKEN    = a Personal Access Token (User settings > Applications)
+function openStore() {
+  const siteID = process.env.BLOBS_SITE_ID;
+  const token = process.env.BLOBS_TOKEN;
+  if (siteID && token) {
+    return getStore({ name: STORE_NAME, siteID, token });
+  }
+  return getStore(STORE_NAME);
+}
+
 exports.handler = async (event) => {
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
@@ -28,7 +44,12 @@ exports.handler = async (event) => {
     return { statusCode: 204, headers, body: '' };
   }
 
-  const store = getStore(STORE_NAME);
+  let store;
+  try {
+    store = openStore();
+  } catch (err) {
+    return { statusCode: 500, headers, body: JSON.stringify({ error: 'store-init-failed: ' + String(err && err.message || err) }) };
+  }
 
   try {
     if (event.httpMethod === 'GET') {
