@@ -190,6 +190,12 @@
   .status-pill.status-approved{background:#e6ecd8;color:#4c5a2e}
   .status-pill.status-rejected{background:#fbe1de;color:#a1372c}
 </style>
+<link rel="manifest" href="/manifest.json">
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+  }
+</script>
 </head>
 <body>
 <div class="grain" id="app-shell" data-lang="fa" style="min-height:100vh">
