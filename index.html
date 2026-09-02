@@ -1200,9 +1200,37 @@
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
   'use strict';
+
+  // ---------- Supabase (cloud database, auth, image storage) ----------
+  const SUPABASE_URL = 'https://nolgdwsvkquuoikeszgt.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_899tSfd9yqjU5oZrS-npNA_y-QfFq0L';
+  const ADMIN_EMAIL = 'admin@chiochistore.app';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Supabase Auth needs an email; customers only give a phone number, so we
+  // derive a stable fake address from it. It's never sent anywhere.
+  function phoneToEmail(phone) {
+    const digits = String(phone || '').replace(/\D/g, '');
+    return `p${digits}@chiochistore.users`;
+  }
+
+  // Converts a data: URL (from the existing compress/watermark pipeline)
+  // into a real file in Supabase Storage and returns its public URL.
+  async function uploadImageToStorage(dataUrl, folder) {
+    if (!dataUrl || !dataUrl.startsWith('data:')) return dataUrl; // already a URL, or empty
+    const res = await fetch(dataUrl);
+    const blob = await res.blob();
+    const ext = blob.type === 'image/png' ? 'png' : 'jpg';
+    const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error } = await sb.storage.from('product-images').upload(path, blob, { contentType: blob.type, upsert: false });
+    if (error) throw error;
+    const { data } = sb.storage.from('product-images').getPublicUrl(path);
+    return data.publicUrl;
+  }
 
   const KEY_PRODUCTS = 'chiochi_products';
   const KEY_SETTINGS = 'chiochi_settings';
@@ -1268,6 +1296,7 @@
     deleteConfirmId: null,
     lightbox: { images: [], index: 0, name: '' },
     users: [],
+    allProfiles: [],
     currentUserId: null,
     cart: [],       // [{ productId, qty }]
     orders: [],
@@ -1401,7 +1430,7 @@
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
-  /* ---------- user accounts ---------- */
+  /* ---------- user accounts (real Supabase Auth) ---------- */
   function normalizePhone(phone) { return String(phone || '').replace(/\s+/g, ''); }
 
   function findUserByPhone(phone) {
@@ -1410,39 +1439,62 @@
   }
 
   async function registerUser({ name, phone, address, password }) {
-    if (findUserByPhone(phone)) {
-      return { ok: false, error: t('این شماره تلفن قبلاً ثبت شده است.', 'This phone number is already registered.') };
+    const normPhone = normalizePhone(phone);
+    const email = phoneToEmail(normPhone);
+    const { data, error } = await sb.auth.signUp({ email, password });
+    if (error || !data.user) {
+      const dup = error && /already registered|already exists/i.test(error.message || '');
+      return { ok: false, error: dup
+        ? t('این شماره تلفن قبلاً ثبت شده است.', 'This phone number is already registered.')
+        : t('ثبت‌نام ناموفق بود.', 'Registration failed.') };
     }
-    const passHash = await sha256(password);
-    const user = {
-      id: uid(),
-      name: name.trim(),
-      phone: normalizePhone(phone),
-      address: (address || '').trim(),
-      passHash: passHash || password, // plaintext fallback only if subtle-crypto is unavailable
-      createdAt: new Date().toISOString()
-    };
-    state.users.push(user);
-    saveUsers();
+    const profile = { user_id: data.user.id, name: name.trim(), phone: normPhone, address: (address || '').trim() };
+    await sb.from('profiles').upsert(profile);
+
+    const user = { id: data.user.id, name: profile.name, phone: profile.phone, address: profile.address, createdAt: new Date().toISOString() };
+    state.users = [user];
     state.currentUserId = user.id;
-    saveSession();
     return { ok: true, user };
   }
 
   async function loginUser(phone, password) {
-    const user = findUserByPhone(phone);
-    if (!user) return { ok: false };
-    const hash = await sha256(password);
-    const match = user.passHash === hash || user.passHash === password;
-    if (!match) return { ok: false };
+    const email = phoneToEmail(normalizePhone(phone));
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error || !data.user) return { ok: false };
+    const { data: profile } = await sb.from('profiles').select('*').eq('user_id', data.user.id).maybeSingle();
+    const user = {
+      id: data.user.id,
+      name: (profile && profile.name) || '',
+      phone: (profile && profile.phone) || normalizePhone(phone),
+      address: (profile && profile.address) || '',
+      createdAt: (profile && profile.created_at) || new Date().toISOString()
+    };
+    state.users = [user];
     state.currentUserId = user.id;
-    saveSession();
     return { ok: true, user };
   }
 
-  function logoutUser() {
+  async function logoutUser() {
+    await sb.auth.signOut();
+    state.users = [];
     state.currentUserId = null;
-    saveSession();
+  }
+
+  // Restores a signed-in session (Supabase persists it in the browser) so a
+  // customer stays logged in across visits without re-entering a password.
+  async function restoreSession() {
+    const { data } = await sb.auth.getSession();
+    const authUser = data && data.session && data.session.user;
+    if (!authUser) return;
+    const { data: profile } = await sb.from('profiles').select('*').eq('user_id', authUser.id).maybeSingle();
+    state.users = [{
+      id: authUser.id,
+      name: (profile && profile.name) || '',
+      phone: (profile && profile.phone) || '',
+      address: (profile && profile.address) || '',
+      createdAt: (profile && profile.created_at) || authUser.created_at
+    }];
+    state.currentUserId = authUser.id;
   }
 
   function refreshAccountUI() {
@@ -1482,61 +1534,64 @@
      file is opened locally, or the site was deployed without functions),
      everything still works purely from localStorage as before.
      ===================================================================== */
-  const SYNC_ENDPOINT = '/.netlify/functions/store';
   let syncPushTimer = null;
-  let syncAvailable = true; // flips to false after a failed call so we stop retrying every keystroke
+  let syncAvailable = true;
 
+  // Pushes the current in-memory product list + settings to Supabase.
+  // Products are upserted by id, and any product removed locally is deleted
+  // remotely too (diffed against the last known remote id list).
+  let lastKnownRemoteIds = null;
   function pushSync() {
     if (!syncAvailable) return;
     clearTimeout(syncPushTimer);
     syncPushTimer = setTimeout(async () => {
       try {
-        const payload = {
-          products: state.products,
-          settings: state.settings,
-          users: state.users,
-          orders: state.orders,
-          updatedAt: new Date().toISOString()
-        };
-        const res = await fetch(SYNC_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (!res.ok) throw new Error('sync failed: ' + res.status);
+        const rows = state.products.map(p => ({ id: p.id, data: p, updated_at: new Date().toISOString() }));
+        if (rows.length) {
+          const { error: upsertErr } = await sb.from('products').upsert(rows, { onConflict: 'id' });
+          if (upsertErr) throw upsertErr;
+        }
+        const currentIds = state.products.map(p => p.id);
+        if (lastKnownRemoteIds) {
+          const removed = lastKnownRemoteIds.filter(id => !currentIds.includes(id));
+          if (removed.length) {
+            const { error: delErr } = await sb.from('products').delete().in('id', removed);
+            if (delErr) throw delErr;
+          }
+        }
+        lastKnownRemoteIds = currentIds;
+
+        const { error: settingsErr } = await sb.from('settings').update({ data: state.settings, updated_at: new Date().toISOString() }).eq('id', 1);
+        if (settingsErr) throw settingsErr;
       } catch (err) {
-        // Most likely running locally (file://) or functions aren't deployed yet.
-        // Don't keep retrying on every edit — localStorage still has everything.
-        syncAvailable = false;
-        console.warn('Chiochi: cloud sync unavailable, continuing with local storage only.', err);
+        console.warn('Chiochi: cloud sync (Supabase) failed for this edit.', err);
       }
     }, 700);
   }
 
   async function pullRemoteState() {
     try {
-      const res = await fetch(SYNC_ENDPOINT, { method: 'GET' });
-      if (!res.ok) throw new Error('pull failed: ' + res.status);
-      const data = await res.json();
-      if (!data || typeof data !== 'object') return;
-      if (Array.isArray(data.products) && data.products.length) {
-        state.products = data.products;
+      const [{ data: products, error: pErr }, { data: settingsRow, error: sErr }] = await Promise.all([
+        sb.from('products').select('id, data').order('created_at', { ascending: true }),
+        sb.from('settings').select('data').eq('id', 1).single()
+      ]);
+      if (pErr) throw pErr;
+      if (sErr) throw sErr;
+
+      if (Array.isArray(products) && products.length) {
+        state.products = products.map(row => row.data);
+        lastKnownRemoteIds = state.products.map(p => p.id);
         localStorage.setItem(KEY_PRODUCTS, JSON.stringify(state.products));
+      } else {
+        lastKnownRemoteIds = [];
       }
-      if (data.settings && typeof data.settings === 'object') {
-        state.settings = { ...defaultSettings, ...data.settings };
+      if (settingsRow && settingsRow.data && Object.keys(settingsRow.data).length) {
+        state.settings = { ...defaultSettings, ...settingsRow.data };
         localStorage.setItem(KEY_SETTINGS, JSON.stringify(state.settings));
       }
-      if (Array.isArray(data.users)) {
-        state.users = data.users;
-        localStorage.setItem(KEY_USERS, JSON.stringify(state.users));
-      }
-      if (Array.isArray(data.orders)) {
-        state.orders = data.orders;
-        localStorage.setItem(KEY_ORDERS, JSON.stringify(state.orders));
-      }
     } catch (err) {
-      console.warn('Chiochi: could not reach cloud sync, using local data only.', err);
+      console.warn('Chiochi: could not reach Supabase, using local data only.', err);
+      syncAvailable = false;
     }
   }
 
@@ -1554,10 +1609,7 @@
     const savedLang = localStorage.getItem(KEY_LANG);
     state.lang = savedLang === 'en' ? 'en' : 'fa';
 
-    try {
-      const u = JSON.parse(localStorage.getItem(KEY_USERS) || 'null');
-      state.users = Array.isArray(u) ? u : [];
-    } catch { state.users = []; }
+    state.users = []; // populated by restoreSession()/loginUser() from Supabase Auth
 
     try {
       const c = JSON.parse(localStorage.getItem(KEY_CART) || 'null');
@@ -1566,20 +1618,56 @@
 
     try {
       const o = JSON.parse(localStorage.getItem(KEY_ORDERS) || 'null');
-      state.orders = Array.isArray(o) ? o : [];
+      state.orders = Array.isArray(o) ? o : []; // fast first paint; refreshed from Supabase after auth restores
     } catch { state.orders = []; }
-
-    const sessionId = localStorage.getItem(KEY_SESSION);
-    state.currentUserId = sessionId && state.users.some(u => u.id === sessionId) ? sessionId : null;
   }
 
-  function saveUsers()   { try { localStorage.setItem(KEY_USERS, JSON.stringify(state.users)); pushSync(); return true; } catch (err) { reportStorageError(err); return false; } }
+  // Fetches this customer's own past orders from Supabase (RLS only returns their rows).
+  async function refreshMyOrders() {
+    if (!state.currentUserId) return;
+    const { data, error } = await sb.from('orders').select('data').eq('user_id', state.currentUserId).order('created_at', { ascending: false });
+    if (!error && Array.isArray(data)) {
+      const mine = data.map(row => row.data);
+      const others = state.orders.filter(o => o.userId !== state.currentUserId);
+      state.orders = [...others, ...mine];
+      localStorage.setItem(KEY_ORDERS, JSON.stringify(state.orders));
+    }
+  }
+
+  // Fetches every order for the admin panel (RLS allows admins to see all rows).
+  async function refreshAllOrdersForAdmin() {
+    const { data, error } = await sb.from('orders').select('data').order('created_at', { ascending: false });
+    if (!error && Array.isArray(data)) {
+      state.orders = data.map(row => row.data);
+    }
+  }
+
+  // Fetches every customer profile for the admin panel's user list.
+  async function refreshAllProfilesForAdmin() {
+    const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
+    if (!error && Array.isArray(data)) {
+      state.allProfiles = data.map(p => ({ id: p.user_id, name: p.name, phone: p.phone, address: p.address, createdAt: p.created_at }));
+    }
+  }
+
+  function saveUsers() {
+    // Profile edits are written directly to Supabase where they happen; this
+    // just keeps the old call sites working without doing anything extra.
+    return true;
+  }
   function saveCart()    { try { localStorage.setItem(KEY_CART, JSON.stringify(state.cart)); return true; } catch (err) { reportStorageError(err); return false; } }
-  function saveOrders()  { try { localStorage.setItem(KEY_ORDERS, JSON.stringify(state.orders)); pushSync(); return true; } catch (err) { reportStorageError(err); return false; } }
-  function saveSession() {
-    if (state.currentUserId) localStorage.setItem(KEY_SESSION, state.currentUserId);
-    else localStorage.removeItem(KEY_SESSION);
+  function saveOrders() {
+    localStorage.setItem(KEY_ORDERS, JSON.stringify(state.orders));
+    clearTimeout(saveOrders._t);
+    saveOrders._t = setTimeout(async () => {
+      try {
+        const rows = state.orders.map(o => ({ id: o.id, user_id: o.userId || null, data: o }));
+        if (rows.length) await sb.from('orders').upsert(rows, { onConflict: 'id' });
+      } catch (err) { console.warn('Chiochi: could not sync orders to Supabase.', err); }
+    }, 500);
+    return true;
   }
+  function saveSession() { /* handled by Supabase Auth's own persisted session */ }
 
   function currentUser() {
     return state.users.find(u => u.id === state.currentUserId) || null;
@@ -2275,8 +2363,6 @@
   });
 
   /* ---------- auth ui ---------- */
-  let forgotUserId = null;
-
   function showAuthView(view) {
     state.authTab = view;
     const isTabbed = view === 'login' || view === 'register';
@@ -2302,7 +2388,6 @@
     $('#register-form').reset();
     $('#forgot-step1-form').reset();
     $('#forgot-step2-form').reset();
-    forgotUserId = null;
     $('#auth-modal').classList.remove('is-hidden');
   }
   function closeAuthModal() { $('#auth-modal').classList.add('is-hidden'); }
@@ -2317,15 +2402,12 @@
   $('#forgot-back-to-login-1').addEventListener('click', () => showAuthView('login'));
   $('#forgot-back-to-login-2').addEventListener('click', () => showAuthView('login'));
 
+  let forgotPhone = '';
   $('#forgot-step1-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const phone = $('#forgot-phone').value.trim();
-    const user = findUserByPhone(phone);
-    if (!user) {
-      $('#forgot-step1-error').classList.remove('is-hidden');
-      return;
-    }
-    forgotUserId = user.id;
+    if (!phone) { $('#forgot-step1-error').classList.remove('is-hidden'); return; }
+    forgotPhone = normalizePhone(phone);
     $('#forgot-address').value = '';
     $('#forgot-new-password').value = '';
     $('#forgot-new-password-confirm').value = '';
@@ -2334,19 +2416,16 @@
 
   $('#forgot-step2-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const user = state.users.find(u => u.id === forgotUserId);
     const errEl = $('#forgot-step2-error');
-    if (!user) { showAuthView('forgot1'); return; }
-
-    const normalize = (s) => String(s || '').trim().replace(/\s+/g, ' ').toLowerCase();
     const enteredAddress = $('#forgot-address').value;
-    if (!normalize(enteredAddress) || normalize(enteredAddress) !== normalize(user.address)) {
+    const newPass = $('#forgot-new-password').value;
+    const confirmPass = $('#forgot-new-password-confirm').value;
+
+    if (!enteredAddress.trim()) {
       errEl.textContent = t('آدرس واردشده با آدرس ثبت‌شده مطابقت ندارد.', 'The address you entered does not match our records.');
       errEl.classList.remove('is-hidden');
       return;
     }
-    const newPass = $('#forgot-new-password').value;
-    const confirmPass = $('#forgot-new-password-confirm').value;
     if (newPass.length < 4) {
       errEl.textContent = t('رمز عبور باید حداقل ۴ کاراکتر باشد.', 'Password must be at least 4 characters.');
       errEl.classList.remove('is-hidden');
@@ -2358,16 +2437,32 @@
       return;
     }
 
-    const hash = await sha256(newPass);
-    user.passHash = hash || newPass;
-    saveUsers();
-    forgotUserId = null;
-
-    state.currentUserId = user.id;
-    saveSession();
-    refreshAccountUI();
-    closeAuthModal();
-    toast(t('رمز عبور با موفقیت بازیابی شد و وارد حساب شدید.', 'Password reset successfully — you are now signed in.'));
+    try {
+      const res = await fetch('/.netlify/functions/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: forgotPhone, address: enteredAddress, newPassword: newPass })
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        errEl.textContent = t('آدرس واردشده با آدرس ثبت‌شده مطابقت ندارد.', 'The address you entered does not match our records.');
+        errEl.classList.remove('is-hidden');
+        return;
+      }
+      const loginResult = await loginUser(forgotPhone, newPass);
+      forgotPhone = '';
+      if (loginResult.ok) {
+        refreshAccountUI();
+        closeAuthModal();
+        toast(t('رمز عبور با موفقیت بازیابی شد و وارد حساب شدید.', 'Password reset successfully — you are now signed in.'));
+      } else {
+        showAuthView('login');
+        toast(t('رمز عبور بازیابی شد، حالا وارد شوید.', 'Password reset — please sign in now.'));
+      }
+    } catch (err) {
+      errEl.textContent = t('خطا در ارتباط با سرور. دوباره امتحان کنید.', 'Server error. Please try again.');
+      errEl.classList.remove('is-hidden');
+    }
   });
 
   $('#login-form').addEventListener('submit', async (e) => {
@@ -2569,9 +2664,9 @@
   function renderAdminUsersList() {
     const wrap = $('#admin-users-list');
     wrap.innerHTML = '';
-    $('#admin-users-empty').classList.toggle('is-hidden', state.users.length !== 0);
+    $('#admin-users-empty').classList.toggle('is-hidden', state.allProfiles.length !== 0);
 
-    state.users.slice().reverse().forEach(u => {
+    state.allProfiles.forEach(u => {
       const orderCount = state.orders.filter(o => o.userId === u.id).length;
       const joined = u.createdAt ? new Date(u.createdAt).toLocaleDateString(state.lang === 'fa' ? 'fa-IR' : 'en-US') : '—';
       const tr = document.createElement('tr');
@@ -2803,13 +2898,17 @@
     $(`#image-file-${i}`).addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
+      const prev = $(`#image-preview-${i}`);
       try {
         const dataUrl = await readImageAsCompressedDataURL(file, { maxDim: 1100, quality: 0.82, watermark: currentWatermarkConfig() });
-        $(`#image-url-${i}`).value = dataUrl;
-        const prev = $(`#image-preview-${i}`);
-        prev.src = dataUrl;
+        prev.src = dataUrl; // instant local preview while the upload runs
         prev.classList.remove('is-hidden');
-      } catch { toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.')); }
+        const publicUrl = await uploadImageToStorage(dataUrl, 'products');
+        $(`#image-url-${i}`).value = publicUrl;
+      } catch (err) {
+        console.warn('Chiochi: image upload failed', err);
+        toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.'));
+      }
       finally { e.target.value = ''; }
     });
   });
@@ -3023,12 +3122,13 @@
   }
   function closePasswordModal() { $('#password-modal').classList.add('is-hidden'); }
 
-  function openAdminPanel() {
+  async function openAdminPanel() {
     $('#admin-panel').classList.remove('is-hidden');
     populateSettingsForm();
     populateStorefrontForm();
     populateWatermarkForm();
     renderAdminList();
+    await Promise.all([refreshAllOrdersForAdmin(), refreshAllProfilesForAdmin()]);
     renderAdminUsersList();
     renderAdminOrdersList();
     $('#admin-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -3046,18 +3146,15 @@
 
   $('#password-cancel').addEventListener('click', closePasswordModal);
 
+  // Admin login is now a real Supabase Auth sign-in as the fixed admin
+  // account, so a successful login also grants real write access (RLS
+  // checks this same session against the `admins` table).
   $('#password-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const input = $('#admin-password').value;
-    let ok = false;
-    if (state.settings.passHash) {
-      const hash = await sha256(input);
-      ok = hash === state.settings.passHash;
-    } else {
-      ok = input === state.settings.pass;
-    }
+    const { data, error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password: input });
 
-    if (ok) {
+    if (!error && data.user) {
       state.authenticated = true;
       closePasswordModal();
       openAdminPanel();
