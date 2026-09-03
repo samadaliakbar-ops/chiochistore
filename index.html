@@ -1444,9 +1444,11 @@
     const { data, error } = await sb.auth.signUp({ email, password });
     if (error || !data.user) {
       const dup = error && /already registered|already exists/i.test(error.message || '');
-      return { ok: false, error: dup
-        ? t('این شماره تلفن قبلاً ثبت شده است.', 'This phone number is already registered.')
-        : t('ثبت‌نام ناموفق بود.', 'Registration failed.') };
+      let msg = t('ثبت‌نام ناموفق بود.', 'Registration failed.');
+      if (dup) msg = t('این شماره تلفن قبلاً ثبت شده است.', 'This phone number is already registered.');
+      else if (error && /password/i.test(error.message || '')) msg = t('رمز عبور خیلی کوتاه است (حداقل ۶ کاراکتر).', 'Password is too short (min 6 characters).');
+      else if (error && error.message) msg = error.message;
+      return { ok: false, error: msg };
     }
     const profile = { user_id: data.user.id, name: name.trim(), phone: normPhone, address: (address || '').trim() };
     await sb.from('profiles').upsert(profile);
@@ -2482,8 +2484,8 @@
     const phone = $('#reg-phone').value.trim();
     const address = $('#reg-address').value.trim();
     const password = $('#reg-password').value;
-    if (!name || !phone || password.length < 4) {
-      $('#register-error').textContent = t('لطفاً همه فیلدهای ضروری را کامل کنید (رمز حداقل ۴ کاراکتر).', 'Please fill all required fields (password min 4 characters).');
+    if (!name || !phone || password.length < 6) {
+      $('#register-error').textContent = t('لطفاً همه فیلدهای ضروری را کامل کنید (رمز حداقل ۶ کاراکتر).', 'Please fill all required fields (password min 6 characters).');
       $('#register-error').classList.remove('is-hidden');
       return;
     }
@@ -3046,18 +3048,27 @@
     state.settings.card = $('#s-card').value.trim() || state.settings.card;
 
     const newPass = $('#s-pass').value;
+    let passChangeError = '';
     if (newPass) {
-      const hash = await sha256(newPass);
-      if (hash) { state.settings.passHash = hash; state.settings.pass = ''; }
-      else { state.settings.pass = newPass; } // insecure fallback (non-HTTPS context)
+      if (newPass.length < 6) {
+        passChangeError = t('رمز جدید باید حداقل ۶ کاراکتر باشد (رمز عوض نشد).', 'New password must be at least 6 characters (password not changed).');
+      } else {
+        const { error: passErr } = await sb.auth.updateUser({ password: newPass });
+        if (passErr) passChangeError = t('تغییر رمز ناموفق بود: ', 'Password change failed: ') + passErr.message;
+      }
     }
 
     saveSettings();
     refreshContactUI();
     $('#s-pass').value = '';
     const status = $('#settings-status');
-    status.textContent = t('ذخیره شد ✓', 'Saved ✓');
-    setTimeout(() => { status.textContent = ''; }, 2000);
+    if (passChangeError) {
+      status.textContent = passChangeError;
+      setTimeout(() => { status.textContent = ''; }, 4000);
+    } else {
+      status.textContent = t('ذخیره شد ✓', 'Saved ✓');
+      setTimeout(() => { status.textContent = ''; }, 2000);
+    }
   });
 
   /* ---------- logo & storefront ---------- */
