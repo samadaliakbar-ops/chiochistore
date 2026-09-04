@@ -7,6 +7,9 @@
 <meta name="description" content="فروشگاه آنلاین چیوچی، عرضه‌کننده زعفران، پاپریکا، سیر خشک و ادویه‌جات ممتاز ایرانی. سفارش سریع از طریق واتس‌اپ و ایتا.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#dc9417">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chiochi">
 <meta property="og:title" content="چیوچی — طعم اصالت | ادویه‌جات اصیل ایرانی">
@@ -3549,6 +3552,13 @@ with Iranian farms</p>
     init();
   }
 })();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>
