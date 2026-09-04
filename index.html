@@ -300,29 +300,31 @@
 <section id="about" class="w-full" style="background:#efe3c5">
   <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-[.85fr_1.15fr] gap-10 items-center">
     <div class="relative">
-      <img src="https://images.unsplash.com/photo-1775433205046-86e060feff06?w=900&q=80"
+      <img id="about-image" src="https://images.unsplash.com/photo-1775433205046-86e060feff06?w=900&q=80"
            loading="lazy" decoding="async" alt="ادویه‌جات رنگارنگ در بازار سنتی"
            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=900&q=80';"
            class="w-full rounded-[28px]" style="aspect-ratio:4/5;object-fit:cover;box-shadow:0 26px 60px rgba(36,48,36,.22)">
       <div class="absolute -bottom-6 sm:-bottom-8 rounded-2xl px-5 py-4 panel-shadow"
            style="background:var(--ink);color:#f5dd9b;inset-inline-start:1.5rem">
-        <p class="lang-fa font-bold text-sm leading-6">بیش از یک دهه<br>همراهی با مزارع ایران</p>
-        <p class="lang-en font-bold text-sm leading-6">Over a decade<br>with Iranian farms</p>
+        <p id="about-badge-fa" class="lang-fa font-bold text-sm leading-6" style="white-space:pre-line">بیش از یک دهه
+همراهی با مزارع ایران</p>
+        <p id="about-badge-en" class="lang-en font-bold text-sm leading-6" style="white-space:pre-line">Over a decade
+with Iranian farms</p>
       </div>
     </div>
 
     <div>
       <p class="text-sm font-bold tracking-wider" style="color:var(--paprika)">
         <span class="lang-fa">درباره ما</span><span class="lang-en">About Us</span></p>
-      <h2 class="lang-fa block-text mt-2 font-extrabold" style="font-size:clamp(1.5rem,3vw,2.3rem)">روایتی از زمین تا سفره</h2>
-      <h2 class="lang-en block-text brand-serif mt-2 font-bold" style="font-size:clamp(1.5rem,3vw,2.3rem)">A Story from Soil to Table</h2>
+      <h2 id="about-title-fa" class="lang-fa block-text mt-2 font-extrabold" style="font-size:clamp(1.5rem,3vw,2.3rem)">روایتی از زمین تا سفره</h2>
+      <h2 id="about-title-en" class="lang-en block-text brand-serif mt-2 font-bold" style="font-size:clamp(1.5rem,3vw,2.3rem)">A Story from Soil to Table</h2>
 
-      <p class="lang-fa block-text mt-5 leading-8" style="color:#3c4536">
+      <p id="about-text-fa" class="lang-fa block-text mt-5 leading-8" style="color:#3c4536">
         چیوچی از دل مزارع زعفران خراسان و باغ‌های ادویه جنوب ایران آغاز شد؛ جایی‌که هر خوشه زعفران با دست چیده می‌شود
         و هر ادویه، پیش از رسیدن به آشپزخانه‌ی شما، مسیری بلند از زمین تا الک و بسته‌بندی را طی کرده است.
         ما باور داریم طعم اصیل، محصول صبر است؛ صبر کشاورزانی که فصل به فصل زمین را می‌شناسند، و صبر ما در انتخاب بهترین‌ها برای سفره‌ی شما.
       </p>
-      <p class="lang-en block-text mt-5 leading-8" style="color:#3c4536">
+      <p id="about-text-en" class="lang-en block-text mt-5 leading-8" style="color:#3c4536">
         Chiochi began in the saffron fields of Khorasan and the spice gardens of southern Iran, where every saffron
         thread is still picked by hand. Before any spice reaches your kitchen, it travels a long road from soil to sieve
         to package. We believe real flavor is the fruit of patience — the patience of farmers who know their land
@@ -330,8 +332,8 @@
       </p>
 
       <blockquote class="brand-serif mt-6 pe-4" style="border-inline-start:3px solid var(--saffron);font-style:italic;font-size:1.15rem;color:var(--paprika)">
-        <span class="lang-fa block-text">«ادویه فقط طعم نیست؛ خاطره‌ی یک سرزمین است.»</span>
-        <span class="lang-en block-text">"A spice is never just flavor — it's the memory of a land."</span>
+        <span id="about-quote-fa" class="lang-fa block-text">«ادویه فقط طعم نیست؛ خاطره‌ی یک سرزمین است.»</span>
+        <span id="about-quote-en" class="lang-en block-text">"A spice is never just flavor — it's the memory of a land."</span>
       </blockquote>
 
       <div class="grid sm:grid-cols-3 gap-4 mt-8">
@@ -841,7 +843,7 @@
           </div>
           <div>
             <label class="block text-sm font-bold mb-2">
-              <span class="lang-fa">تصویر بنر ویترین (هدر اصلی)</span><span class="lang-en">Showcase Banner Image</span></label>
+              <span class="lang-fa">تصویر بنر ویترین (هدر اصلی) — عکس ۱</span><span class="lang-en">Showcase Banner Image — Photo 1</span></label>
             <img id="hero-preview" class="hero-preview is-hidden mb-2" alt="">
             <label for="hero-file" class="upload-tile focus-ring flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
               <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
@@ -850,6 +852,42 @@
             <input id="hero-file" type="file" accept="image/*" class="is-hidden">
             <button id="hero-remove" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
               <span class="lang-fa">بازگشت به تصویر پیش‌فرض</span><span class="lang-en">Reset to default</span></button>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2">
+              <span class="lang-fa">تصویر ویترین — عکس ۲ (اختیاری)</span><span class="lang-en">Showcase Image — Photo 2 (optional)</span></label>
+            <img id="hero-preview-2" class="hero-preview is-hidden mb-2" alt="">
+            <label for="hero-file-2" class="upload-tile focus-ring flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
+              <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+              <span class="lang-fa">بارگذاری تصویر</span><span class="lang-en">Upload image</span>
+            </label>
+            <input id="hero-file-2" type="file" accept="image/*" class="is-hidden">
+            <button id="hero-remove-2" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
+              <span class="lang-fa">حذف عکس ۲</span><span class="lang-en">Remove photo 2</span></button>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2">
+              <span class="lang-fa">تصویر ویترین — عکس ۳ (اختیاری)</span><span class="lang-en">Showcase Image — Photo 3 (optional)</span></label>
+            <img id="hero-preview-3" class="hero-preview is-hidden mb-2" alt="">
+            <label for="hero-file-3" class="upload-tile focus-ring flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
+              <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+              <span class="lang-fa">بارگذاری تصویر</span><span class="lang-en">Upload image</span>
+            </label>
+            <input id="hero-file-3" type="file" accept="image/*" class="is-hidden">
+            <button id="hero-remove-3" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
+              <span class="lang-fa">حذف عکس ۳</span><span class="lang-en">Remove photo 3</span></button>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2">
+              <span class="lang-fa">تصویر ویترین — عکس ۴ (اختیاری)</span><span class="lang-en">Showcase Image — Photo 4 (optional)</span></label>
+            <img id="hero-preview-4" class="hero-preview is-hidden mb-2" alt="">
+            <label for="hero-file-4" class="upload-tile focus-ring flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
+              <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+              <span class="lang-fa">بارگذاری تصویر</span><span class="lang-en">Upload image</span>
+            </label>
+            <input id="hero-file-4" type="file" accept="image/*" class="is-hidden">
+            <button id="hero-remove-4" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
+              <span class="lang-fa">حذف عکس ۴</span><span class="lang-en">Remove photo 4</span></button>
           </div>
           <div>
             <label class="block text-sm font-bold mb-1" for="s-tagline-fa">
@@ -871,6 +909,74 @@
           <span class="lang-fa">لوگو و تصویر بنر به‌صورت محلی در همین مرورگر ذخیره می‌شوند.</span>
           <span class="lang-en">Logo and banner image are saved locally in this browser.</span>
         </p>
+      </details>
+    </div>
+
+    <!-- about us settings -->
+    <div class="p-6 sm:px-8 border-b" style="border-color:rgba(93,85,60,.1);background:#fffbf0">
+      <details>
+        <summary class="cursor-pointer font-bold text-sm" style="color:var(--olive)">
+          <span class="lang-fa">📖 بخش درباره ما</span>
+          <span class="lang-en">📖 About Us Section</span></summary>
+        <div class="grid sm:grid-cols-2 gap-6 mt-4">
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-bold mb-2">
+              <span class="lang-fa">تصویر بخش درباره ما</span><span class="lang-en">About Us Image</span></label>
+            <img id="about-preview" class="hero-preview is-hidden mb-2" alt="">
+            <label for="about-file" class="upload-tile focus-ring flex items-center justify-center gap-2 px-3 py-3 text-sm font-bold" style="color:var(--olive)">
+              <i data-lucide="upload" width="16" height="16" aria-hidden="true"></i>
+              <span class="lang-fa">بارگذاری تصویر</span><span class="lang-en">Upload image</span>
+            </label>
+            <input id="about-file" type="file" accept="image/*" class="is-hidden">
+            <button id="about-remove" type="button" class="btn-outline focus-ring rounded-full px-4 py-1.5 text-xs mt-2 is-hidden">
+              <span class="lang-fa">بازگشت به تصویر پیش‌فرض</span><span class="lang-en">Reset to default</span></button>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-about-title-fa">
+              <span class="lang-fa">عنوان (فارسی)</span><span class="lang-en">Title (FA)</span></label>
+            <input id="s-about-title-fa" type="text" class="field focus-ring">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-about-title-en">
+              <span class="lang-fa">عنوان (انگلیسی)</span><span class="lang-en">Title (EN)</span></label>
+            <input id="s-about-title-en" type="text" class="field focus-ring" dir="ltr">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-bold mb-1" for="s-about-text-fa">
+              <span class="lang-fa">متن (فارسی)</span><span class="lang-en">Body text (FA)</span></label>
+            <textarea id="s-about-text-fa" rows="5" class="field focus-ring"></textarea>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-sm font-bold mb-1" for="s-about-text-en">
+              <span class="lang-fa">متن (انگلیسی)</span><span class="lang-en">Body text (EN)</span></label>
+            <textarea id="s-about-text-en" rows="5" class="field focus-ring" dir="ltr"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-about-quote-fa">
+              <span class="lang-fa">نقل‌قول (فارسی)</span><span class="lang-en">Quote (FA)</span></label>
+            <input id="s-about-quote-fa" type="text" class="field focus-ring">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-about-quote-en">
+              <span class="lang-fa">نقل‌قول (انگلیسی)</span><span class="lang-en">Quote (EN)</span></label>
+            <input id="s-about-quote-en" type="text" class="field focus-ring" dir="ltr">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-about-badge-fa">
+              <span class="lang-fa">برچسب کوچک روی عکس (فارسی)</span><span class="lang-en">Small badge on image (FA)</span></label>
+            <input id="s-about-badge-fa" type="text" class="field focus-ring">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-1" for="s-about-badge-en">
+              <span class="lang-fa">برچسب کوچک روی عکس (انگلیسی)</span><span class="lang-en">Small badge on image (EN)</span></label>
+            <input id="s-about-badge-en" type="text" class="field focus-ring" dir="ltr">
+          </div>
+        </div>
+        <div class="flex items-center gap-3 mt-4">
+          <button id="save-about" type="button" class="btn-gold focus-ring rounded-full px-5 py-2 text-sm">
+            <span class="lang-fa">ذخیره درباره ما</span><span class="lang-en">Save About Us</span></button>
+          <span id="about-status" class="text-sm font-semibold" style="color:var(--olive)" aria-live="polite"></span>
+        </div>
       </details>
     </div>
 
@@ -1250,8 +1356,20 @@
     card: '6219861000000000',
     logo: '',
     heroImage: '',
+    heroImage2: '',
+    heroImage3: '',
+    heroImage4: '',
     taglineFa: 'بهترین ادویه‌جات ایرانی، مستقیم از مزرعه تا سفره شما',
     taglineEn: 'Finest Iranian spices, from farm to your table',
+    aboutImage: '',
+    aboutBadgeFa: 'بیش از یک دهه\nهمراهی با مزارع ایران',
+    aboutBadgeEn: 'Over a decade\nwith Iranian farms',
+    aboutTitleFa: 'روایتی از زمین تا سفره',
+    aboutTitleEn: 'A Story from Soil to Table',
+    aboutTextFa: 'چیوچی از دل مزارع زعفران خراسان و باغ‌های ادویه جنوب ایران آغاز شد؛ جایی‌که هر خوشه زعفران با دست چیده می‌شود و هر ادویه، پیش از رسیدن به آشپزخانه‌ی شما، مسیری بلند از زمین تا الک و بسته‌بندی را طی کرده است. ما باور داریم طعم اصیل، محصول صبر است؛ صبر کشاورزانی که فصل به فصل زمین را می‌شناسند، و صبر ما در انتخاب بهترین‌ها برای سفره‌ی شما.',
+    aboutTextEn: "Chiochi began in the saffron fields of Khorasan and the spice gardens of southern Iran, where every saffron thread is still picked by hand. Before any spice reaches your kitchen, it travels a long road from soil to sieve to package. We believe real flavor is the fruit of patience — the patience of farmers who know their land season after season, and our own patience in choosing only the best for your table.",
+    aboutQuoteFa: 'ادویه فقط طعم نیست؛ خاطره‌ی یک سرزمین است.',
+    aboutQuoteEn: "A spice is never just flavor — it's the memory of a land.",
     watermarkType: 'none',       // 'none' | 'text' | 'image'
     watermarkText: 'Chiochi',
     watermarkColor: '#ffffff',
@@ -1721,8 +1839,24 @@
     $('#card-number-display').textContent = formatCard(state.settings.card);
   }
 
+  /* ---------- about us section ---------- */
+  function refreshAboutUI() {
+    const s = state.settings;
+    $('#about-title-fa').textContent = s.aboutTitleFa || defaultSettings.aboutTitleFa;
+    $('#about-title-en').textContent = s.aboutTitleEn || defaultSettings.aboutTitleEn;
+    $('#about-text-fa').textContent = s.aboutTextFa || defaultSettings.aboutTextFa;
+    $('#about-text-en').textContent = s.aboutTextEn || defaultSettings.aboutTextEn;
+    $('#about-quote-fa').textContent = `«${s.aboutQuoteFa || defaultSettings.aboutQuoteFa}»`;
+    $('#about-quote-en').textContent = `"${s.aboutQuoteEn || defaultSettings.aboutQuoteEn}"`;
+    $('#about-badge-fa').textContent = s.aboutBadgeFa || defaultSettings.aboutBadgeFa;
+    $('#about-badge-en').textContent = s.aboutBadgeEn || defaultSettings.aboutBadgeEn;
+    const img = $('#about-image');
+    if (s.aboutImage) img.src = s.aboutImage;
+  }
+
   /* ---------- storefront (logo, banner, tagline) ---------- */
   function refreshStorefrontUI() {
+    refreshAboutUI();
     const logoImg = $('#site-logo-img');
     const fallback = $('#site-logo-fallback');
     if (state.settings.logo) {
@@ -1744,7 +1878,9 @@
     const wrap = $('#hero-slideshow');
     // Build the rotation: the admin's custom banner (if set) plays first, then the default spice photos.
     const slides = [];
-    if (state.settings.heroImage) slides.push({ src: state.settings.heroImage, alt: 'ادویه‌جات و زعفران ایرانی' });
+    const customHero = [state.settings.heroImage, state.settings.heroImage2, state.settings.heroImage3, state.settings.heroImage4]
+      .filter(Boolean);
+    customHero.forEach(src => slides.push({ src, alt: 'ادویه‌جات و زعفران ایرانی' }));
     HERO_SLIDES.forEach(s => slides.push(s));
 
     wrap.innerHTML = '';
@@ -3027,17 +3163,43 @@
       $('#logo-remove').classList.add('is-hidden');
     }
 
-    const heroPrev = $('#hero-preview');
-    if (state.settings.heroImage) {
-      heroPrev.src = state.settings.heroImage;
-      heroPrev.classList.remove('is-hidden');
-      $('#hero-remove').classList.remove('is-hidden');
-    } else {
-      heroPrev.classList.add('is-hidden');
-      $('#hero-remove').classList.add('is-hidden');
-    }
+    [['', 'heroImage'], ['-2', 'heroImage2'], ['-3', 'heroImage3'], ['-4', 'heroImage4']].forEach(([suffix, key]) => {
+      const prev = $('#hero-preview' + suffix);
+      const removeBtn = $('#hero-remove' + suffix);
+      if (state.settings[key]) {
+        prev.src = state.settings[key];
+        prev.classList.remove('is-hidden');
+        removeBtn.classList.remove('is-hidden');
+      } else {
+        prev.classList.add('is-hidden');
+        removeBtn.classList.add('is-hidden');
+      }
+    });
 
     syncWatermarkToggle();
+    populateAboutForm();
+  }
+
+  function populateAboutForm() {
+    const s = state.settings;
+    $('#s-about-title-fa').value = s.aboutTitleFa || defaultSettings.aboutTitleFa;
+    $('#s-about-title-en').value = s.aboutTitleEn || defaultSettings.aboutTitleEn;
+    $('#s-about-text-fa').value = s.aboutTextFa || defaultSettings.aboutTextFa;
+    $('#s-about-text-en').value = s.aboutTextEn || defaultSettings.aboutTextEn;
+    $('#s-about-quote-fa').value = s.aboutQuoteFa || defaultSettings.aboutQuoteFa;
+    $('#s-about-quote-en').value = s.aboutQuoteEn || defaultSettings.aboutQuoteEn;
+    $('#s-about-badge-fa').value = s.aboutBadgeFa || defaultSettings.aboutBadgeFa;
+    $('#s-about-badge-en').value = s.aboutBadgeEn || defaultSettings.aboutBadgeEn;
+
+    const prev = $('#about-preview');
+    if (s.aboutImage) {
+      prev.src = s.aboutImage;
+      prev.classList.remove('is-hidden');
+      $('#about-remove').classList.remove('is-hidden');
+    } else {
+      prev.classList.add('is-hidden');
+      $('#about-remove').classList.add('is-hidden');
+    }
   }
 
   $('#save-settings').addEventListener('click', async () => {
@@ -3112,6 +3274,66 @@
     populateStorefrontForm();
     refreshStorefrontUI();
     toast(t('تصویر بنر به حالت پیش‌فرض بازگشت.', 'Banner image reset to default.'));
+  });
+
+  [2, 3, 4].forEach(n => {
+    $(`#hero-file-${n}`).addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const dataUrl = await readImageAsCompressedDataURL(file, { maxDim: 1600, quality: 0.8 });
+        state.settings['heroImage' + n] = dataUrl;
+        if (saveSettings()) toast(t('تصویر بروزرسانی شد.', 'Image updated.'));
+        populateStorefrontForm();
+        refreshStorefrontUI();
+      } catch { toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.')); }
+      finally { e.target.value = ''; }
+    });
+    $(`#hero-remove-${n}`).addEventListener('click', () => {
+      state.settings['heroImage' + n] = '';
+      saveSettings();
+      populateStorefrontForm();
+      refreshStorefrontUI();
+      toast(t('عکس حذف شد.', 'Photo removed.'));
+    });
+  });
+
+  $('#about-file').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const dataUrl = await readImageAsCompressedDataURL(file, { maxDim: 1200, quality: 0.85 });
+      state.settings.aboutImage = dataUrl;
+      if (saveSettings()) toast(t('تصویر بروزرسانی شد.', 'Image updated.'));
+      populateAboutForm();
+      refreshAboutUI();
+    } catch { toast(t('خطا در بارگذاری تصویر.', 'Failed to load image.')); }
+    finally { e.target.value = ''; }
+  });
+
+  $('#about-remove').addEventListener('click', () => {
+    state.settings.aboutImage = '';
+    saveSettings();
+    populateAboutForm();
+    refreshAboutUI();
+    toast(t('تصویر به حالت پیش‌فرض بازگشت.', 'Image reset to default.'));
+  });
+
+  $('#save-about').addEventListener('click', () => {
+    state.settings.aboutTitleFa = $('#s-about-title-fa').value.trim() || defaultSettings.aboutTitleFa;
+    state.settings.aboutTitleEn = $('#s-about-title-en').value.trim() || defaultSettings.aboutTitleEn;
+    state.settings.aboutTextFa = $('#s-about-text-fa').value.trim() || defaultSettings.aboutTextFa;
+    state.settings.aboutTextEn = $('#s-about-text-en').value.trim() || defaultSettings.aboutTextEn;
+    state.settings.aboutQuoteFa = $('#s-about-quote-fa').value.trim() || defaultSettings.aboutQuoteFa;
+    state.settings.aboutQuoteEn = $('#s-about-quote-en').value.trim() || defaultSettings.aboutQuoteEn;
+    state.settings.aboutBadgeFa = $('#s-about-badge-fa').value.trim() || defaultSettings.aboutBadgeFa;
+    state.settings.aboutBadgeEn = $('#s-about-badge-en').value.trim() || defaultSettings.aboutBadgeEn;
+
+    saveSettings();
+    refreshAboutUI();
+    const status = $('#about-status');
+    status.textContent = t('ذخیره شد ✓', 'Saved ✓');
+    setTimeout(() => { status.textContent = ''; }, 2000);
   });
 
   $('#save-storefront').addEventListener('click', () => {
